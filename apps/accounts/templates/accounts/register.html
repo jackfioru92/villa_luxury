@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}Registrati - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-villa-50 pt-24 pb-16 flex items-center">
+    <div class="container mx-auto px-4">
+        <div class="max-w-md mx-auto">
+            <!-- Logo/Brand -->
+            <div class="text-center mb-8">
+                <a href="{% url 'core:home' %}" class="inline-block">
+                    <h1 class="text-3xl font-serif font-semibold text-villa-900">
+                        {{ SITE_NAME }}
+                    </h1>
+                </a>
+                <p class="text-villa-600 mt-2">Crea il tuo account</p>
+            </div>
+
+            <!-- Social Register -->
+            <div class="mb-8">
+                <a href="{% provider_login_url 'google' %}" class="w-full flex items-center justify-center gap-3 px-6 py-3 border border-villa-200 rounded-lg bg-white shadow-sm hover:bg-villa-50 transition-all font-semibold text-villa-700">
+                    <svg class="w-5 h-5" viewBox="0 0 48 48"><g><path d="M44.5 20H24v8.5h11.7C34.7 33.9 29.8 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.2 5.1 29.4 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21c10.5 0 20-7.6 20-21 0-1.3-.1-2.7-.3-4z" fill="#FFC107"/><path d="M6.3 14.7l7 5.1C15.5 17.1 19.4 14 24 14c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.2 5.1 29.4 3 24 3c-7.1 0-13.2 3.1-17.2 8z" fill="#FF3D00"/><path d="M24 44c5.6 0 10.4-1.8 13.9-4.9l-6.4-5.2C29.7 35.6 27 36.5 24 36.5c-5.7 0-10.5-3.8-12.2-9l-7 5.4C6.8 40.7 14.8 44 24 44z" fill="#4CAF50"/><path d="M44.5 20H24v8.5h11.7c-1.1 3.1-4.2 5.5-7.7 5.5-2.2 0-4.2-.7-5.7-2.1l-7 5.4C18.5 41.2 21.1 44 24 44c10.5 0 20-7.6 20-21 0-1.3-.1-2.7-.3-4z" fill="#1976D2"/></g></svg>
+                    Registrati con Google
+                </a>
+            </div>
+
+            <!-- Register Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        {% for error in form.non_field_errors %}
+                        <p class="text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="id_first_name" class="form-label">Nome</label>
+                            <input type="text" 
+                                   name="first_name" 
+                                   id="id_first_name"
+                                   required
+                                   value="{{ form.first_name.value|default:'' }}"
+                                   class="form-input {% if form.first_name.errors %}border-red-500{% endif %}"
+                                   placeholder="Mario">
+                            {% if form.first_name.errors %}
+                            <p class="text-sm text-red-500 mt-1">{{ form.first_name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="id_last_name" class="form-label">Cognome</label>
+                            <input type="text" 
+                                   name="last_name" 
+                                   id="id_last_name"
+                                   required
+                                   value="{{ form.last_name.value|default:'' }}"
+                                   class="form-input {% if form.last_name.errors %}border-red-500{% endif %}"
+                                   placeholder="Rossi">
+                            {% if form.last_name.errors %}
+                            <p class="text-sm text-red-500 mt-1">{{ form.last_name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="id_email" class="form-label">Email</label>
+                        <input type="email" 
+                               name="email" 
+                               id="id_email"
+                               required
+                               autocomplete="email"
+                               value="{{ form.email.value|default:'' }}"
+                               class="form-input {% if form.email.errors %}border-red-500{% endif %}"
+                               placeholder="mario.rossi@email.com">
+                        {% if form.email.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="id_phone" class="form-label">Telefono</label>
+                        <input type="tel" 
+                               name="phone" 
+                               id="id_phone"
+                               value="{{ form.phone.value|default:'' }}"
+                               class="form-input {% if form.phone.errors %}border-red-500{% endif %}"
+                               placeholder="+39 333 1234567">
+                        {% if form.phone.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ form.phone.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="id_password1" class="form-label">Password</label>
+                        <div class="relative" x-data="{ show: false }">
+                            <input :type="show ? 'text' : 'password'" 
+                                   name="password1" 
+                                   id="id_password1"
+                                   required
+                                   autocomplete="new-password"
+                                   class="form-input pr-10 {% if form.password1.errors %}border-red-500{% endif %}"
+                                   placeholder="••••••••">
+                            <button type="button" 
+                                    @click="show = !show"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-villa-400 hover:text-villa-600">
+                                <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                <svg x-show="show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                                </svg>
+                            </button>
+                        </div>
+                        {% if form.password1.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ form.password1.errors.0 }}</p>
+                        {% endif %}
+                        <p class="text-xs text-villa-500 mt-1">
+                            Minimo 8 caratteri, con lettere e numeri
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <label for="id_password2" class="form-label">Conferma Password</label>
+                        <input type="password" 
+                               name="password2" 
+                               id="id_password2"
+                               required
+                               autocomplete="new-password"
+                               class="form-input {% if form.password2.errors %}border-red-500{% endif %}"
+                               placeholder="••••••••">
+                        {% if form.password2.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ form.password2.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-start space-x-3 cursor-pointer">
+                            <input type="checkbox" name="terms_accepted" required
+                                   class="mt-1 w-5 h-5 rounded border-villa-300 text-gold-500 focus:ring-gold-500">
+                            <span class="text-sm text-villa-600">
+                                Accetto i <a href="{% url 'core:terms' %}" target="_blank" class="text-gold-500 underline">Termini e Condizioni</a> 
+                                e la <a href="{% url 'core:privacy' %}" target="_blank" class="text-gold-500 underline">Privacy Policy</a> *
+                            </span>
+                        </label>
+                        <label class="flex items-start space-x-3 cursor-pointer">
+                            <input type="checkbox" name="newsletter"
+                                   class="mt-1 w-5 h-5 rounded border-villa-300 text-gold-500 focus:ring-gold-500">
+                            <span class="text-sm text-villa-600">
+                                Desidero ricevere offerte e novità via email
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full">
+                        Crea Account
+                    </button>
+                </form>
+                
+                <!-- Divider -->
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-villa-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white text-villa-500">oppure</span>
+                    </div>
+                </div>
+                
+                <!-- Login Link -->
+                <p class="text-center text-villa-600">
+                    Hai già un account?
+                    <a href="{% url 'accounts:login' %}" class="text-gold-500 font-semibold hover:underline">
+                        Accedi
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

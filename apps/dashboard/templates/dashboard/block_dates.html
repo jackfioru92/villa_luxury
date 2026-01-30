@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blocca Date - Dashboard - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+                Blocca Date
+            </h1>
+            <p class="text-villa-600 mt-2">
+                Rendi non disponibili date specifiche per manutenzione o uso personale
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-4 gap-6">
+            
+            <!-- Sidebar Navigation -->
+            <div class="lg:col-span-1">
+                {% include 'dashboard/partials/sidebar.html' with active='block_dates' %}
+            </div>
+            
+            <!-- Main Content -->
+            <div class="lg:col-span-3 space-y-6">
+                
+                <!-- Add Block Form -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-semibold text-villa-900 mb-6">Blocca Nuove Date</h2>
+                    
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="form-label">Unità</label>
+                                <select name="unit" required class="form-input">
+                                    <option value="">Seleziona unità...</option>
+                                    {% for unit in units %}
+                                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Motivo</label>
+                                <input type="text" name="reason" 
+                                       class="form-input" 
+                                       placeholder="Es: Manutenzione, Uso personale...">
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="form-label">Data Inizio</label>
+                                <input type="date" name="start_date" required class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">Data Fine</label>
+                                <input type="date" name="end_date" required class="form-input">
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <button type="submit" class="btn-primary">
+                                <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Blocca Date
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Existing Blocks -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b border-villa-100">
+                        <h2 class="font-semibold text-villa-900">Date Bloccate</h2>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-villa-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Unità</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Data Inizio</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Data Fine</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Motivo</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-villa-500 uppercase">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-villa-100">
+                                {% for block in blocked_dates %}
+                                <tr class="hover:bg-villa-50">
+                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                        {{ block.unit.name }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                        {{ block.start_date|date:"d M Y" }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                        {{ block.end_date|date:"d M Y" }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                        {{ block.reason|default:"-" }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <form method="post" action="{% url 'dashboard:delete_block' block.id %}" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit" 
+                                                    onclick="return confirm('Sei sicuro di voler rimuovere questo blocco?')"
+                                                    class="text-red-500 hover:underline text-sm">
+                                                Rimuovi
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="px-6 py-12 text-center text-villa-500">
+                                        Nessuna data bloccata
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

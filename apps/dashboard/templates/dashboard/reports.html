@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Report - Dashboard - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+                Report
+            </h1>
+            <p class="text-villa-600 mt-2">
+                Statistiche e report delle prenotazioni
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-4 gap-6">
+            
+            <!-- Sidebar Navigation -->
+            <div class="lg:col-span-1">
+                {% include 'dashboard/partials/sidebar.html' with active='reports' %}
+            </div>
+            
+            <!-- Main Content -->
+            <div class="lg:col-span-3 space-y-6">
+                
+                <!-- Period Selector -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <form method="get" class="flex flex-wrap items-end gap-4">
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="form-label text-sm">Dal</label>
+                            <input type="date" name="from_date" 
+                                   value="{{ from_date|date:'Y-m-d' }}" 
+                                   class="form-input">
+                        </div>
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="form-label text-sm">Al</label>
+                            <input type="date" name="to_date" 
+                                   value="{{ to_date|date:'Y-m-d' }}" 
+                                   class="form-input">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-primary">
+                                Applica
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <p class="text-sm text-villa-500">Prenotazioni Totali</p>
+                        <p class="text-3xl font-semibold text-villa-900 mt-2">{{ stats.total_bookings }}</p>
+                        <div class="mt-2 flex items-center text-sm">
+                            <span class="text-green-500">{{ stats.confirmed_bookings }}</span>
+                            <span class="text-villa-400 mx-1">confermate</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <p class="text-sm text-villa-500">Fatturato Totale</p>
+                        <p class="text-3xl font-semibold text-villa-900 mt-2">€{{ stats.total_revenue|floatformat:0 }}</p>
+                        <div class="mt-2 flex items-center text-sm">
+                            <span class="text-green-500">€{{ stats.collected_revenue|floatformat:0 }}</span>
+                            <span class="text-villa-400 mx-1">incassato</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <p class="text-sm text-villa-500">Notti Prenotate</p>
+                        <p class="text-3xl font-semibold text-villa-900 mt-2">{{ stats.total_nights }}</p>
+                        <div class="mt-2 flex items-center text-sm">
+                            <span class="text-villa-400">Media:</span>
+                            <span class="text-villa-600 ml-1">{{ stats.avg_nights|floatformat:1 }} notti</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts Row -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    
+                    <!-- Revenue Chart -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-semibold text-villa-900 mb-4">Fatturato Mensile</h3>
+                        <canvas id="revenue-chart" height="200"></canvas>
+                    </div>
+                    
+                    <!-- Bookings by Unit -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-semibold text-villa-900 mb-4">Prenotazioni per Unità</h3>
+                        <canvas id="units-chart" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Export Section -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="font-semibold text-villa-900 mb-4">Esporta Dati</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="?export=csv&from_date={{ from_date|date:'Y-m-d' }}&to_date={{ to_date|date:'Y-m-d' }}" 
+                           class="btn-outline">
+                            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Esporta CSV
+                        </a>
+                        <a href="?export=excel&from_date={{ from_date|date:'Y-m-d' }}&to_date={{ to_date|date:'Y-m-d' }}" 
+                           class="btn-outline">
+                            <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Esporta Excel
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Detailed Table -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b border-villa-100">
+                        <h3 class="font-semibold text-villa-900">Riepilogo per Unità</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-villa-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Unità</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Prenotazioni</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Notti</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Occupazione</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Fatturato</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-villa-100">
+                                {% for unit_stat in unit_stats %}
+                                <tr class="hover:bg-villa-50">
+                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                        {{ unit_stat.name }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                        {{ unit_stat.bookings }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                        {{ unit_stat.nights }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <span class="text-sm text-villa-600 mr-2">{{ unit_stat.occupancy }}%</span>
+                                            <div class="flex-1 bg-villa-200 rounded-full h-2 max-w-[100px]">
+                                                <div class="bg-gold-500 rounded-full h-2" style="width: {{ unit_stat.occupancy }}%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                        €{{ unit_stat.revenue|floatformat:0 }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    // Revenue Chart
+    const revenueCtx = document.getElementById('revenue-chart').getContext('2d');
+    new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ monthly_labels|safe }},
+            datasets: [{
+                label: 'Fatturato €',
+                data: {{ monthly_revenue|safe }},
+                backgroundColor: '#B8860B',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '€' + value;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Units Chart
+    const unitsCtx = document.getElementById('units-chart').getContext('2d');
+    new Chart(unitsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: {{ unit_labels|safe }},
+            datasets: [{
+                data: {{ unit_bookings|safe }},
+                backgroundColor: [
+                    '#B8860B',
+                    '#6B5B4F',
+                    '#8B7355',
+                    '#A67C52',
+                    '#D4A574'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

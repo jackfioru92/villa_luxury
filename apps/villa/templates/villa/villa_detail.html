@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ villa.name }} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative h-[70vh] min-h-[500px] flex items-center justify-center">
+    <div class="absolute inset-0 bg-villa-900">
+        {% if villa.main_image %}
+        <img src="{{ villa.main_image.url }}" alt="{{ villa.name }}" 
+             class="w-full h-full object-cover opacity-70">
+        {% endif %}
+    </div>
+    <div class="relative z-10 text-center text-white px-4">
+        <h1 class="text-5xl lg:text-6xl font-serif font-semibold mb-4">
+            {{ villa.name }}
+        </h1>
+        {% if villa.tagline %}
+        <p class="text-xl text-white/90 max-w-2xl mx-auto">
+            {{ villa.tagline }}
+        </p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Villa Description -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="prose prose-lg prose-villa mx-auto">
+                {{ villa.description|safe }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Units Section -->
+{% if units %}
+<section class="py-20 bg-villa-50">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="section-subtitle">Le Nostre Sistemazioni</span>
+            <h2 class="section-title">Scegli il Tuo Soggiorno</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for unit in units %}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group">
+                <div class="aspect-4-3 overflow-hidden">
+                    {% if unit.main_image %}
+                    <img src="{{ unit.main_image.url }}" alt="{{ unit.name }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                    <div class="w-full h-full bg-villa-200"></div>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-serif font-semibold text-villa-900 mb-2">
+                        {{ unit.name }}
+                    </h3>
+                    <p class="text-villa-600 text-sm mb-4 line-clamp-2">
+                        {{ unit.description_short }}
+                    </p>
+                    
+                    <div class="flex items-center justify-between text-sm text-villa-500 mb-4">
+                        <span>{{ unit.max_guests }} ospiti</span>
+                        <span>{{ unit.bedrooms }} camere</span>
+                        <span>{{ unit.bathrooms }} bagni</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-villa-100">
+                        <div class="price-tag">
+                            <span class="amount">€{{ unit.base_price|floatformat:0 }}</span>
+                            <span class="period">/notte</span>
+                        </div>
+                        <a href="{% url 'booking:wizard' %}?unit={{ unit.id }}" class="btn-primary text-sm">
+                            Prenota
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Gallery Preview -->
+{% if gallery %}
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="section-subtitle">Galleria</span>
+            <h2 class="section-title">Scopri i Nostri Spazi</h2>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {% for image in gallery %}
+            <div class="aspect-square overflow-hidden rounded-lg">
+                <img src="{{ image.image.url }}" alt="{{ image.caption }}"
+                     class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-8">
+            <a href="{% url 'villa:gallery' %}" class="btn-outline">
+                Vedi Tutta la Galleria
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="py-20 bg-villa-900 text-white">
+    <div class="container mx-auto px-4 lg:px-8 text-center">
+        <h2 class="text-4xl font-serif font-semibold mb-6">
+            Pronto per la Tua Esperienza di Lusso?
+        </h2>
+        <p class="text-white/80 text-lg max-w-2xl mx-auto mb-8">
+            Prenota ora il tuo soggiorno e vivi momenti indimenticabili.
+        </p>
+        <a href="{% url 'booking:wizard' %}" class="btn-white">
+            Prenota Ora
+        </a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ unit.name }} - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="relative h-[60vh] min-h-[400px] flex items-end">
+    <div class="absolute inset-0 bg-villa-900">
+        {% if unit.main_image %}
+        <img src="{{ unit.main_image.url }}" alt="{{ unit.name }}" 
+             class="w-full h-full object-cover opacity-80">
+        {% endif %}
+    </div>
+    <div class="relative z-10 container mx-auto px-4 lg:px-8 pb-12">
+        <nav class="text-white/70 text-sm mb-4">
+            <a href="{% url 'core:home' %}" class="hover:text-white">Home</a>
+            <span class="mx-2">/</span>
+            <a href="{% url 'villa:list' %}" class="hover:text-white">Villa</a>
+            <span class="mx-2">/</span>
+            <span class="text-white">{{ unit.name }}</span>
+        </nav>
+        <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-white">
+            {{ unit.name }}
+        </h1>
+    </div>
+</section>
+
+<!-- Content -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-12">
+            
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Quick Stats -->
+                <div class="flex flex-wrap gap-6 mb-8 pb-8 border-b border-villa-200">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                        </svg>
+                        <span class="text-villa-700">{{ unit.max_guests }} ospiti max</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span class="text-villa-700">{{ unit.bedrooms }} camere</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                        </svg>
+                        <span class="text-villa-700">{{ unit.bathrooms }} bagni</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                        </svg>
+                        <span class="text-villa-700">{{ unit.size_sqm }} m²</span>
+                    </div>
+                </div>
+                
+                <!-- Description -->
+                <div class="prose prose-lg prose-villa max-w-none mb-12">
+                    {{ unit.description|safe }}
+                </div>
+                
+                <!-- Amenities -->
+                {% if unit.amenities.exists %}
+                <div class="mb-12">
+                    <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-6">Servizi e Comfort</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {% for amenity in unit.amenities.all %}
+                        <div class="flex items-center space-x-3 text-villa-700">
+                            {% if amenity.icon %}
+                            <span class="text-gold-500">{{ amenity.icon|safe }}</span>
+                            {% else %}
+                            <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            {% endif %}
+                            <span>{{ amenity.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar - Booking Card -->
+            <div class="lg:col-span-1">
+                <div class="bg-villa-50 rounded-xl p-6 sticky top-24">
+                    <div class="text-center mb-6">
+                        <span class="text-sm text-villa-500">A partire da</span>
+                        <div class="price-tag">
+                            <span class="text-3xl font-serif font-bold text-villa-900">€{{ unit.base_price|floatformat:0 }}</span>
+                            <span class="text-villa-500">/notte</span>
+                        </div>
+                    </div>
+                    
+                    {% if unit.min_nights > 1 %}
+                    <p class="text-sm text-villa-500 text-center mb-4">
+                        Soggiorno minimo: {{ unit.min_nights }} notti
+                    </p>
+                    {% endif %}
+                    
+                    <a href="{% url 'booking:wizard' %}?unit={{ unit.id }}" class="btn-primary w-full text-center mb-4">
+                        Verifica Disponibilità
+                    </a>
+                    
+                    <p class="text-xs text-villa-500 text-center">
+                        Prenota ora, paga l'acconto online
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+{% if gallery %}
+<section class="py-16 bg-villa-50">
+    <div class="container mx-auto px-4 lg:px-8">
+        <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-8 text-center">Galleria</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {% for image in gallery %}
+            <div class="aspect-square overflow-hidden rounded-lg">
+                <img src="{{ image.image.url }}" alt="{{ image.caption }}"
+                     class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Other Units -->
+{% if other_units %}
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-8 text-center">
+            Altre Sistemazioni
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for other in other_units %}
+            <a href="{% url 'villa:unit_detail' other.villa.slug other.slug %}" 
+               class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow">
+                <div class="aspect-4-3 overflow-hidden">
+                    {% if other.main_image %}
+                    <img src="{{ other.main_image.url }}" alt="{{ other.name }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-villa-900">{{ other.name }}</h3>
+                    <p class="text-gold-500 font-semibold mt-2">€{{ other.base_price|floatformat:0 }}/notte</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

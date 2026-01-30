@@ -1,0 +1,16 @@
+{
+  "name": "villa_luxury",
+  "version": "1.0.0",
+  "description": "Villa Luxury - Sito prenotazioni",
+  "scripts": {
+    "tailwind:build": "npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css",
+    "tailwind:watch": "npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch",
+    "tailwind:prod": "npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/aspect-ratio": "^0.4.2"
+  }
+}

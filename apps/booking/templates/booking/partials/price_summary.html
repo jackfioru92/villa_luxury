@@ -1,0 +1,89 @@
+<!-- Price Summary Partial - HTMX -->
+<div class="bg-villa-50 rounded-lg p-6">
+    {% if price_data %}
+    <h3 class="font-semibold text-villa-900 mb-4">Riepilogo Prezzo</h3>
+    
+    <dl class="space-y-2">
+        <div class="flex justify-between text-sm">
+            <dt class="text-villa-600">{{ price_data.nights }} notti x €{{ price_data.price_per_night|floatformat:0 }}</dt>
+            <dd class="font-medium text-villa-900">€{{ price_data.base_total|floatformat:0 }}</dd>
+        </div>
+        
+        {% if price_data.cleaning_fee %}
+        <div class="flex justify-between text-sm">
+            <dt class="text-villa-600">Pulizia finale</dt>
+            <dd class="font-medium text-villa-900">€{{ price_data.cleaning_fee|floatformat:0 }}</dd>
+        </div>
+        {% endif %}
+        
+        {% if price_data.extra_guest_fee %}
+        <div class="flex justify-between text-sm">
+            <dt class="text-villa-600">Ospiti extra ({{ price_data.extra_guests }})</dt>
+            <dd class="font-medium text-villa-900">€{{ price_data.extra_guest_fee|floatformat:0 }}</dd>
+        </div>
+        {% endif %}
+        
+        {% if price_data.discount > 0 %}
+        <div class="flex justify-between text-sm text-green-600">
+            <dt>Sconto {{ price_data.discount_type }}</dt>
+            <dd class="font-medium">-€{{ price_data.discount|floatformat:0 }}</dd>
+        </div>
+        {% endif %}
+        
+        <hr class="border-villa-200 my-2">
+        
+        <div class="flex justify-between text-lg">
+            <dt class="font-semibold text-villa-900">Totale</dt>
+            <dd class="font-bold text-villa-900">€{{ price_data.total|floatformat:0 }}</dd>
+        </div>
+    </dl>
+    
+    <div class="mt-4 pt-4 border-t border-villa-200">
+        <div class="flex justify-between text-sm">
+            <dt class="text-villa-600">Acconto da versare (30%)</dt>
+            <dd class="font-bold text-gold-500 text-lg">€{{ price_data.deposit|floatformat:0 }}</dd>
+        </div>
+        <p class="text-xs text-villa-500 mt-1">
+            Saldo di €{{ price_data.balance|floatformat:0 }} al check-in
+        </p>
+    </div>
+    
+    {% if price_data.available == False %}
+    <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
+        <p class="text-sm text-red-600">
+            <svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Le date selezionate non sono disponibili.
+        </p>
+    </div>
+    {% endif %}
+    
+    {% elif error %}
+    <div class="text-center py-8">
+        <p class="text-red-500">{{ error }}</p>
+    </div>
+    {% else %}
+    <div class="text-center text-villa-500 py-8">
+        <svg class="w-12 h-12 mx-auto mb-4 text-villa-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <p>Seleziona le date per vedere il prezzo</p>
+    </div>
+    {% endif %}
+</div>
+
+{% if price_data %}
+<script>
+    // Update Alpine.js state with new price data
+    if (typeof Alpine !== 'undefined') {
+        const wizard = document.querySelector('[x-data]');
+        if (wizard && wizard._x_dataStack) {
+            wizard._x_dataStack[0].totalAmount = {{ price_data.total|floatformat:0 }};
+            wizard._x_dataStack[0].depositAmount = {{ price_data.deposit|floatformat:0 }};
+        }
+    }
+</script>
+{% endif %}
