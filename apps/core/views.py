@@ -40,3 +40,8 @@ class PrivacyView(TemplateView):
 class TermsView(TemplateView):
     """Terms and conditions page."""
     template_name = 'core/terms.html'
+
+
+class MaintenanceView(TemplateView):
+    """Maintenance page view."""
+    template_name = 'maintenance.html'

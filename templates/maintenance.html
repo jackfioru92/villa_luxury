@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sito in Manutenzione - Altesia Suite</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-blue-50 min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-2xl w-full text-center">
+        <!-- Logo o Icona -->
+        <div class="mb-8">
+            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-blue-100 text-blue-600 pulse-animation">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Titolo -->
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Sito in Manutenzione
+        </h1>
+
+        <!-- Sottotitolo -->
+        <p class="text-xl text-gray-600 mb-8">
+            Stiamo lavorando per offrirti un'esperienza migliore
+        </p>
+
+        <!-- Descrizione -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <p class="text-gray-700 mb-4 leading-relaxed">
+                Il nostro sito è temporaneamente non disponibile per manutenzione programmata. 
+                Stiamo implementando importanti miglioramenti per garantirti un servizio ancora più efficiente.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+                Ci scusiamo per l'inconveniente e ti invitiamo a riprovare tra poco.
+            </p>
+        </div>
+
+        <!-- Info contatto -->
+        <div class="text-gray-600">
+            <p class="mb-2">Per informazioni urgenti, contattaci:</p>
+            <a href="mailto:info@altesiasuite.com" class="text-blue-600 hover:text-blue-800 font-semibold transition">
+                info@altesiasuite.com
+            </a>
+        </div>
+
+        <!-- Progress bar animato -->
+        <div class="mt-12">
+            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div class="bg-blue-600 h-2 rounded-full animate-pulse"></div>
+            </div>
+            <p class="text-sm text-gray-500 mt-3">Torneremo online a breve...</p>
+        </div>
+    </div>
+</body>
+</html>
