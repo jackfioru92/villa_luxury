@@ -4,15 +4,15 @@
 {% block title %}Prenota - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-villa-900">
+            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900">
                 Prenota il Tuo Soggiorno
             </h1>
-            <p class="text-villa-600 text-lg mt-4">
+            <p class="text-primary-600 text-lg mt-4">
                 Seleziona le date e completa la prenotazione in pochi semplici passi.
             </p>
         </div>
@@ -30,8 +30,8 @@
                         <div class="flex flex-col items-center">
                             <div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
                                  :class="currentStep > index + 1 ? 'bg-green-500 text-white' : 
-                                         currentStep === index + 1 ? 'bg-gold-500 text-white' : 
-                                         'bg-villa-200 text-villa-500'">
+                                         currentStep === index + 1 ? 'bg-tertiary-500 text-white' : 
+                                         'bg-primary-200 text-primary-500'">
                                 <template x-if="currentStep > index + 1">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -41,12 +41,12 @@
                                     <span x-text="index + 1"></span>
                                 </template>
                             </div>
-                            <span class="text-sm mt-2 text-villa-600" x-text="stepName"></span>
+                            <span class="text-sm mt-2 text-primary-600" x-text="stepName"></span>
                         </div>
                         <!-- Connector Line -->
                         <template x-if="index < steps.length - 1">
                             <div class="w-16 lg:w-24 h-1 mx-2 transition-all"
-                                 :class="currentStep > index + 1 ? 'bg-green-500' : 'bg-villa-200'"></div>
+                                 :class="currentStep > index + 1 ? 'bg-green-500' : 'bg-primary-200'"></div>
                         </template>
                     </div>
                 </template>
@@ -58,37 +58,37 @@
                 <!-- Step 1: Select Unit -->
                 <div x-show="currentStep === 1" x-transition>
                     <div class="p-8">
-                        <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-6">
+                        <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
                             Seleziona la Sistemazione
                         </h2>
                         
                         <div class="grid md:grid-cols-2 gap-6">
                             {% for unit in units %}
-                            <div class="border-2 rounded-lg p-4 cursor-pointer transition-all hover:border-gold-400"
-                                 :class="selectedUnit === '{{ unit.id }}' ? 'border-gold-500 bg-gold-50' : 'border-villa-200'"
+                            <div class="border-2 rounded-lg p-4 cursor-pointer transition-all hover:border-tertiary-400"
+                                 :class="selectedUnit === '{{ unit.id }}' ? 'border-tertiary-500 bg-tertiary-50' : 'border-primary-200'"
                                  @click="selectUnit('{{ unit.id }}', '{{ unit.name }}', {{ unit.base_price }}, {{ unit.min_nights }}, {{ unit.max_guests }})">
                                 <div class="flex items-start space-x-4">
-                                    <div class="w-24 h-24 bg-villa-100 rounded-lg overflow-hidden flex-shrink-0">
+                                    <div class="w-24 h-24 bg-primary-100 rounded-lg overflow-hidden flex-shrink-0">
                                         {% if unit.main_image %}
                                         <img src="{{ unit.main_image.url }}" alt="{{ unit.name }}" class="w-full h-full object-cover">
                                         {% endif %}
                                     </div>
                                     <div class="flex-1">
-                                        <h3 class="font-semibold text-villa-900">{{ unit.name }}</h3>
-                                        <p class="text-sm text-villa-600 mt-1">{{ unit.description_short|truncatewords:15 }}</p>
-                                        <div class="flex items-center space-x-3 mt-2 text-sm text-villa-500">
+                                        <h3 class="font-semibold text-primary-900">{{ unit.name }}</h3>
+                                        <p class="text-sm text-primary-600 mt-1">{{ unit.description_short|truncatewords:15 }}</p>
+                                        <div class="flex items-center space-x-3 mt-2 text-sm text-primary-500">
                                             <span>{{ unit.max_guests }} ospiti</span>
                                             <span>{{ unit.bedrooms }} camere</span>
                                         </div>
                                         <div class="mt-2">
-                                            <span class="text-lg font-serif font-semibold text-villa-900">€{{ unit.base_price|floatformat:0 }}</span>
-                                            <span class="text-sm text-villa-500">/notte</span>
+                                            <span class="text-lg font-serif font-semibold text-primary-900">€{{ unit.base_price|floatformat:0 }}</span>
+                                            <span class="text-sm text-primary-500">/notte</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% empty %}
-                            <p class="text-villa-600 col-span-2 text-center py-8">
+                            <p class="text-primary-600 col-span-2 text-center py-8">
                                 Nessuna unità disponibile al momento.
                             </p>
                             {% endfor %}
@@ -99,7 +99,7 @@
                 <!-- Step 2: Select Dates -->
                 <div x-show="currentStep === 2" x-transition>
                     <div class="p-8">
-                        <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-6">
+                        <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
                             Seleziona le Date
                         </h2>
                         
@@ -148,8 +148,8 @@
                                  hx-get="{% url 'booking:htmx_price' %}"
                                  hx-trigger="priceUpdate from:body"
                                  hx-include="[name='unit'], [name='check_in'], [name='check_out'], [name='num_guests']"
-                                 class="bg-villa-50 rounded-lg p-6">
-                                <div class="text-center text-villa-500 py-8">
+                                 class="bg-primary-50 rounded-lg p-6">
+                                <div class="text-center text-primary-500 py-8">
                                     Seleziona le date per vedere il prezzo
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                 <!-- Step 3: Guest Info -->
                 <div x-show="currentStep === 3" x-transition>
                     <div class="p-8">
-                        <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-6">
+                        <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
                             I Tuoi Dati
                         </h2>
                         
@@ -234,16 +234,16 @@
                             <div class="space-y-3">
                                 <label class="flex items-start space-x-3 cursor-pointer">
                                     <input type="checkbox" name="terms_accepted" required
-                                           class="mt-1 w-5 h-5 rounded border-villa-300 text-gold-500 focus:ring-gold-500">
-                                    <span class="text-sm text-villa-600">
-                                        Accetto i <a href="{% url 'core:terms' %}" target="_blank" class="text-gold-500 underline">Termini e Condizioni</a> *
+                                           class="mt-1 w-5 h-5 rounded border-primary-300 text-tertiary-500 focus:ring-gold-500">
+                                    <span class="text-sm text-primary-600">
+                                        Accetto i <a href="{% url 'core:terms' %}" target="_blank" class="text-tertiary-500 underline">Termini e Condizioni</a> *
                                     </span>
                                 </label>
                                 <label class="flex items-start space-x-3 cursor-pointer">
                                     <input type="checkbox" name="privacy_accepted" required
-                                           class="mt-1 w-5 h-5 rounded border-villa-300 text-gold-500 focus:ring-gold-500">
-                                    <span class="text-sm text-villa-600">
-                                        Accetto la <a href="{% url 'core:privacy' %}" target="_blank" class="text-gold-500 underline">Privacy Policy</a> *
+                                           class="mt-1 w-5 h-5 rounded border-primary-300 text-tertiary-500 focus:ring-gold-500">
+                                    <span class="text-sm text-primary-600">
+                                        Accetto la <a href="{% url 'core:privacy' %}" target="_blank" class="text-tertiary-500 underline">Privacy Policy</a> *
                                     </span>
                                 </label>
                             </div>
@@ -254,34 +254,34 @@
                 <!-- Step 4: Payment -->
                 <div x-show="currentStep === 4" x-transition>
                     <div class="p-8">
-                        <h2 class="text-2xl font-serif font-semibold text-villa-900 mb-6">
+                        <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
                             Riepilogo e Pagamento
                         </h2>
                         
                         <!-- Booking Summary -->
-                        <div class="bg-villa-50 rounded-lg p-6 mb-8">
-                            <h3 class="font-semibold text-villa-900 mb-4">Riepilogo Prenotazione</h3>
+                        <div class="bg-primary-50 rounded-lg p-6 mb-8">
+                            <h3 class="font-semibold text-primary-900 mb-4">Riepilogo Prenotazione</h3>
                             <dl class="space-y-3">
                                 <div class="flex justify-between">
-                                    <dt class="text-villa-600">Sistemazione:</dt>
+                                    <dt class="text-primary-600">Sistemazione:</dt>
                                     <dd class="font-medium" x-text="selectedUnitName"></dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-villa-600">Check-in:</dt>
+                                    <dt class="text-primary-600">Check-in:</dt>
                                     <dd class="font-medium" x-text="formatDate(checkIn)"></dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-villa-600">Check-out:</dt>
+                                    <dt class="text-primary-600">Check-out:</dt>
                                     <dd class="font-medium" x-text="formatDate(checkOut)"></dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-villa-600">Ospiti:</dt>
+                                    <dt class="text-primary-600">Ospiti:</dt>
                                     <dd class="font-medium" x-text="numGuests"></dd>
                                 </div>
-                                <hr class="border-villa-200">
+                                <hr class="border-primary-200">
                                 <div class="flex justify-between text-lg">
-                                    <dt class="font-semibold text-villa-900">Acconto da pagare:</dt>
-                                    <dd class="font-bold text-gold-500" x-text="'€' + depositAmount"></dd>
+                                    <dt class="font-semibold text-primary-900">Acconto da pagare:</dt>
+                                    <dd class="font-bold text-tertiary-500" x-text="'€' + depositAmount"></dd>
                                 </div>
                             </dl>
                         </div>
@@ -300,7 +300,7 @@
                         
                         <div class="flex items-center justify-center space-x-4 py-4">
                             <img src="https://cdn.brandfolder.io/KGT2DTA4/at/8vbr8k4mr5xjwk4hxq4t9vs/Stripe_wordmark_-_blurple.svg" alt="Stripe" class="h-8">
-                            <span class="text-villa-400">|</span>
+                            <span class="text-primary-400">|</span>
                             <div class="flex space-x-2">
                                 <img src="https://cdn-icons-png.flaticon.com/128/196/196578.png" alt="Visa" class="h-8">
                                 <img src="https://cdn-icons-png.flaticon.com/128/196/196561.png" alt="Mastercard" class="h-8">
@@ -310,7 +310,7 @@
                 </div>
                 
                 <!-- Navigation Buttons -->
-                <div class="px-8 py-6 bg-villa-50 border-t border-villa-100 flex justify-between">
+                <div class="px-8 py-6 bg-primary-50 border-t border-primary-100 flex justify-between">
                     <button @click="prevStep()" 
                             x-show="currentStep > 1"
                             class="btn-outline">
@@ -324,7 +324,7 @@
                     <button @click="nextStep()" 
                             x-show="currentStep < 4"
                             :disabled="!canProceed()"
-                            :class="canProceed() ? 'btn-primary' : 'bg-villa-300 text-white cursor-not-allowed px-6 py-3 rounded-sm'"
+                            :class="canProceed() ? 'btn-primary' : 'bg-primary-300 text-white cursor-not-allowed px-6 py-3 rounded-sm'"
                             class="ml-auto">
                         Continua
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

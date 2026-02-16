@@ -6,7 +6,7 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="relative h-[70vh] min-h-[500px] flex items-center justify-center">
-    <div class="absolute inset-0 bg-villa-900">
+    <div class="absolute inset-0 bg-primary-900">
         {% if villa.main_image %}
         <img src="{{ villa.main_image.url }}" alt="{{ villa.name }}" 
              class="w-full h-full object-cover opacity-70">
@@ -37,7 +37,7 @@
 
 <!-- Units Section -->
 {% if units %}
-<section class="py-20 bg-villa-50">
+<section class="py-20 bg-primary-50">
     <div class="container mx-auto px-4 lg:px-8">
         <div class="text-center mb-16">
             <span class="section-subtitle">Le Nostre Sistemazioni</span>
@@ -52,24 +52,24 @@
                     <img src="{{ unit.main_image.url }}" alt="{{ unit.name }}"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     {% else %}
-                    <div class="w-full h-full bg-villa-200"></div>
+                    <div class="w-full h-full bg-primary-200"></div>
                     {% endif %}
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-serif font-semibold text-villa-900 mb-2">
+                    <h3 class="text-xl font-serif font-semibold text-primary-900 mb-2">
                         {{ unit.name }}
                     </h3>
-                    <p class="text-villa-600 text-sm mb-4 line-clamp-2">
+                    <p class="text-primary-600 text-sm mb-4 line-clamp-2">
                         {{ unit.description_short }}
                     </p>
                     
-                    <div class="flex items-center justify-between text-sm text-villa-500 mb-4">
+                    <div class="flex items-center justify-between text-sm text-primary-500 mb-4">
                         <span>{{ unit.max_guests }} ospiti</span>
                         <span>{{ unit.bedrooms }} camere</span>
                         <span>{{ unit.bathrooms }} bagni</span>
                     </div>
                     
-                    <div class="flex items-center justify-between pt-4 border-t border-villa-100">
+                    <div class="flex items-center justify-between pt-4 border-t border-primary-100">
                         <div class="price-tag">
                             <span class="amount">€{{ unit.base_price|floatformat:0 }}</span>
                             <span class="period">/notte</span>
@@ -114,7 +114,7 @@
 {% endif %}
 
 <!-- CTA -->
-<section class="py-20 bg-villa-900 text-white">
+<section class="py-20 bg-primary-900 text-white">
     <div class="container mx-auto px-4 lg:px-8 text-center">
         <h2 class="text-4xl font-serif font-semibold mb-6">
             Pronto per la Tua Esperienza di Lusso?

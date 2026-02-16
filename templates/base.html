@@ -24,7 +24,7 @@
     <!-- Fonts - Luxury look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
@@ -40,7 +40,7 @@
         [x-cloak] { display: none !important; }
         
         .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
-        .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+        .font-sans { font-family: 'Poppins', system-ui, sans-serif; }
         
         /* Smooth page transitions */
         .htmx-settling { transition: opacity 0.3s ease-in-out; }
@@ -48,14 +48,14 @@
         
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f5f3ef; }
-        ::-webkit-scrollbar-thumb { background: #b8ad9a; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #9c8e78; }
+        ::-webkit-scrollbar-track { background: #f0f9f6; }
+        ::-webkit-scrollbar-thumb { background: #2E4A46; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #254037; }
     </style>
     
     {% block extra_css %}{% endblock %}
 </head>
-<body class="font-sans bg-villa-50 text-villa-900 antialiased" 
+<body class="font-sans bg-primary-50 text-primary-900 antialiased" 
       x-data="{ mobileMenuOpen: false, scrolled: false }"
       @scroll.window="scrolled = window.scrollY > 50">
     
@@ -69,7 +69,7 @@
     <div class="fixed top-20 right-4 z-50 space-y-2" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)">
         {% for message in messages %}
         <div class="px-6 py-4 rounded-lg shadow-lg 
-            {% if message.tags == 'error' %}bg-red-500{% elif message.tags == 'success' %}bg-green-500{% elif message.tags == 'warning' %}bg-amber-500{% else %}bg-villa-600{% endif %} 
+            {% if message.tags == 'error' %}bg-red-500{% elif message.tags == 'success' %}bg-green-500{% elif message.tags == 'warning' %}bg-amber-500{% else %}bg-primary-600{% endif %} 
             text-white flex items-center justify-between"
             x-transition:enter="transform ease-out duration-300 transition"
             x-transition:enter-start="translate-y-2 opacity-0"

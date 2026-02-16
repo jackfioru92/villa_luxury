@@ -9,7 +9,9 @@
     }
     
     body {
-        @apply font-sans bg-villa-50 text-villa-900 antialiased;
+        @apply font-sans antialiased;
+        background-color: #f0f9f6;
+        color: #1D1D1B;
     }
     
     h1, h2, h3, h4, h5, h6 {
@@ -21,14 +23,18 @@
 @layer components {
     /* Form inputs */
     .form-input {
-        @apply w-full px-4 py-3 border border-villa-300 rounded-sm
-               bg-white text-villa-900 placeholder-villa-400
-               focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent
+        @apply w-full px-4 py-3 rounded-sm
+               bg-white placeholder-gray-400
+               focus:outline-none focus:ring-2 focus:border-transparent
                transition-all duration-200;
+        border: 1px solid #92d1b7;
+        color: #1D1D1B;
+        --tw-ring-color: #2E4A46;
     }
     
     .form-label {
-        @apply block text-sm font-medium text-villa-700 mb-2;
+        @apply block text-sm font-medium mb-2;
+        color: #254037;
     }
     
     .form-error {
@@ -43,23 +49,37 @@
     }
     
     .btn-primary {
-        @apply btn bg-gold-500 text-white hover:bg-gold-600 
-               focus:ring-gold-500 shadow-lg hover:shadow-xl;
+        @apply btn text-white shadow-lg hover:shadow-xl;
+        background-color: #2E4A46;
+        --tw-ring-color: #2E4A46;
+    }
+    .btn-primary:hover {
+        background-color: #254037;
     }
     
     .btn-secondary {
-        @apply btn bg-villa-900 text-white hover:bg-villa-800 
-               focus:ring-villa-500;
+        @apply btn text-white;
+        background-color: #1D1D1B;
+    }
+    .btn-secondary:hover {
+        background-color: #262626;
     }
     
     .btn-outline {
-        @apply btn bg-transparent border-2 border-villa-300 text-villa-700
-               hover:bg-villa-100 focus:ring-villa-500;
+        @apply btn bg-transparent border-2;
+        border-color: #92d1b7;
+        color: #254037;
+    }
+    .btn-outline:hover {
+        background-color: #f0f9f6;
     }
     
     .btn-white {
-        @apply btn bg-white text-villa-900 hover:bg-villa-50 
-               focus:ring-white shadow-lg;
+        @apply btn bg-white shadow-lg;
+        color: #1D1D1B;
+    }
+    .btn-white:hover {
+        background-color: #f7f7f7;
     }
     
     /* Cards */
@@ -73,22 +93,24 @@
     
     /* Section title */
     .section-subtitle {
-        @apply text-gold-500 font-semibold tracking-wider uppercase;
+        @apply font-semibold tracking-wider uppercase;
+        color: #2E4A46;
     }
     
     .section-title {
-        @apply text-4xl lg:text-5xl font-serif font-semibold text-villa-900 mt-3 mb-6;
+        @apply text-4xl lg:text-5xl font-serif font-semibold mt-3 mb-6;
+        color: #1D1D1B;
     }
     
     /* Luxury decorative line */
     .luxury-line {
-        @apply w-20 h-1 bg-gold-500 mx-auto;
+        @apply w-20 h-1 mx-auto;
+        background-color: #2E4A46;
     }
 }
 
 /* Utility classes */
 @layer utilities {
-    /* Text clamp for line limiting */
     .line-clamp-2 {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -103,32 +125,16 @@
         overflow: hidden;
     }
     
-    /* Aspect ratios */
-    .aspect-4-3 {
-        aspect-ratio: 4 / 3;
-    }
+    .aspect-4-3 { aspect-ratio: 4 / 3; }
+    .aspect-3-4 { aspect-ratio: 3 / 4; }
+    .aspect-16-9 { aspect-ratio: 16 / 9; }
     
-    .aspect-3-4 {
-        aspect-ratio: 3 / 4;
-    }
-    
-    .aspect-16-9 {
-        aspect-ratio: 16 / 9;
-    }
-    
-    /* Loading states */
-    .htmx-request .htmx-indicator {
-        display: block;
-    }
-    
-    .htmx-indicator {
-        display: none;
-    }
+    .htmx-request .htmx-indicator { display: block; }
+    .htmx-indicator { display: none; }
 }
 
 /* Calendar and additional component styles */
 @layer components {
-    /* Calendar styling for booking */
     .calendar-day {
         width: 2.5rem;
         height: 2.5rem;
@@ -141,50 +147,33 @@
         transition: all 0.2s;
     }
     
-    .calendar-day-available {
-        color: #6B5B4F;
-    }
-    
-    .calendar-day-available:hover {
-        background-color: #FBF5E8;
-    }
+    .calendar-day-available { color: #1D1D1B; }
+    .calendar-day-available:hover { background-color: #f0f9f6; }
     
     .calendar-day-unavailable {
-        background-color: #F5F3EF;
-        color: #A39B8F;
+        background-color: #ededed;
+        color: #8a8a8a;
         cursor: not-allowed;
     }
     
     .calendar-day-selected {
-        background-color: #B8860B;
+        background-color: #2E4A46;
         color: white;
         font-weight: 500;
     }
     
     .calendar-day-in-range {
-        background-color: #FBF5E8;
-        color: #926D09;
+        background-color: #e0f2ec;
+        color: #254037;
     }
     
     .calendar-day-today {
-        box-shadow: 0 0 0 2px #B8860B, 0 0 0 4px white;
+        box-shadow: 0 0 0 2px #2E4A46, 0 0 0 4px white;
     }
     
-    /* Price display */
-    .price-tag {
-        font-family: 'Cormorant Garamond', serif;
-    }
-    
-    .price-tag .amount {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #3D3027;
-    }
-    
-    .price-tag .period {
-        font-size: 0.875rem;
-        color: #857A6F;
-    }
+    .price-tag { font-family: 'Cormorant Garamond', serif; }
+    .price-tag .amount { font-size: 1.5rem; font-weight: 600; color: #1D1D1B; }
+    .price-tag .period { font-size: 0.875rem; color: #6b6b6b; }
 }
 
 /* Animations */
@@ -194,7 +183,7 @@
 }
 
 .shimmer {
-    background: linear-gradient(90deg, #f5f3ef 25%, #e8e4dc 50%, #f5f3ef 75%);
+    background: linear-gradient(90deg, #f0f9f6 25%, #e0f2ec 50%, #f0f9f6 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
 }

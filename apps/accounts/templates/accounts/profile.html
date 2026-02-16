@@ -4,15 +4,15 @@
 {% block title %}Il Mio Profilo - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
                 Il Mio Profilo
             </h1>
-            <p class="text-villa-600 mt-2">
+            <p class="text-primary-600 mt-2">
                 Gestisci le tue informazioni personali
             </p>
         </div>
@@ -23,30 +23,30 @@
             <div class="lg:col-span-1">
                 <nav class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <a href="{% url 'accounts:profile' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 bg-gold-50 border-l-4 border-gold-500">
-                        <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 bg-tertiary-50 border-l-4 border-tertiary-500">
+                        <svg class="w-5 h-5 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
-                        <span class="font-medium text-villa-900">Profilo</span>
+                        <span class="font-medium text-primary-900">Profilo</span>
                     </a>
                     <a href="{% url 'accounts:my_bookings' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="text-villa-600">Le Mie Prenotazioni</span>
+                        <span class="text-primary-600">Le Mie Prenotazioni</span>
                     </a>
                     <a href="{% url 'accounts:password_change' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
-                        <span class="text-villa-600">Cambia Password</span>
+                        <span class="text-primary-600">Cambia Password</span>
                     </a>
-                    <hr class="border-villa-100">
+                    <hr class="border-primary-100">
                     <a href="{% url 'accounts:logout' %}" 
                        class="flex items-center space-x-3 px-6 py-4 hover:bg-red-50 text-red-500 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,9 +100,9 @@
                                    name="email" 
                                    id="id_email"
                                    value="{{ user.email }}"
-                                   class="form-input bg-villa-50"
+                                   class="form-input bg-primary-50"
                                    readonly>
-                            <p class="text-xs text-villa-500 mt-1">L'email non può essere modificata</p>
+                            <p class="text-xs text-primary-500 mt-1">L'email non può essere modificata</p>
                         </div>
                         
                         <div>
@@ -115,7 +115,7 @@
                                    placeholder="+39 333 1234567">
                         </div>
                         
-                        <hr class="border-villa-200">
+                        <hr class="border-primary-200">
                         
                         <div class="flex justify-end">
                             <button type="submit" class="btn-primary">
@@ -127,15 +127,15 @@
                 
                 <!-- Account Info -->
                 <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
-                    <h2 class="text-xl font-semibold text-villa-900 mb-4">Informazioni Account</h2>
+                    <h2 class="text-xl font-semibold text-primary-900 mb-4">Informazioni Account</h2>
                     <dl class="space-y-3">
                         <div class="flex justify-between">
-                            <dt class="text-villa-600">Registrato il:</dt>
-                            <dd class="font-medium text-villa-900">{{ user.date_joined|date:"d F Y" }}</dd>
+                            <dt class="text-primary-600">Registrato il:</dt>
+                            <dd class="font-medium text-primary-900">{{ user.date_joined|date:"d F Y" }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-villa-600">Ultimo accesso:</dt>
-                            <dd class="font-medium text-villa-900">{{ user.last_login|date:"d F Y H:i" }}</dd>
+                            <dt class="text-primary-600">Ultimo accesso:</dt>
+                            <dd class="font-medium text-primary-900">{{ user.last_login|date:"d F Y H:i" }}</dd>
                         </div>
                     </dl>
                 </div>

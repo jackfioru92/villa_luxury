@@ -4,15 +4,15 @@
 {% block title %}Blocca Date - Dashboard - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
                 Blocca Date
             </h1>
-            <p class="text-villa-600 mt-2">
+            <p class="text-primary-600 mt-2">
                 Rendi non disponibili date specifiche per manutenzione o uso personale
             </p>
         </div>
@@ -29,7 +29,7 @@
                 
                 <!-- Add Block Form -->
                 <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-xl font-semibold text-villa-900 mb-6">Blocca Nuove Date</h2>
+                    <h2 class="text-xl font-semibold text-primary-900 mb-6">Blocca Nuove Date</h2>
                     
                     <form method="post" class="space-y-6">
                         {% csrf_token %}
@@ -76,34 +76,34 @@
                 
                 <!-- Existing Blocks -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 border-b border-villa-100">
-                        <h2 class="font-semibold text-villa-900">Date Bloccate</h2>
+                    <div class="px-6 py-4 border-b border-primary-100">
+                        <h2 class="font-semibold text-primary-900">Date Bloccate</h2>
                     </div>
                     
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-villa-50">
+                            <thead class="bg-primary-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Unità</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Data Inizio</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Data Fine</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Motivo</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-villa-500 uppercase">Azioni</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Unità</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Data Inizio</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Data Fine</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Motivo</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">Azioni</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-villa-100">
                                 {% for block in blocked_dates %}
-                                <tr class="hover:bg-villa-50">
-                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                <tr class="hover:bg-primary-50">
+                                    <td class="px-6 py-4 text-sm font-medium text-primary-900">
                                         {{ block.unit.name }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                    <td class="px-6 py-4 text-sm text-primary-600">
                                         {{ block.start_date|date:"d M Y" }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                    <td class="px-6 py-4 text-sm text-primary-600">
                                         {{ block.end_date|date:"d M Y" }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                    <td class="px-6 py-4 text-sm text-primary-600">
                                         {{ block.reason|default:"-" }}
                                     </td>
                                     <td class="px-6 py-4 text-right">
@@ -119,7 +119,7 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="5" class="px-6 py-12 text-center text-villa-500">
+                                    <td colspan="5" class="px-6 py-12 text-center text-primary-500">
                                         Nessuna data bloccata
                                     </td>
                                 </tr>

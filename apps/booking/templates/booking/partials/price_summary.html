@@ -1,25 +1,25 @@
 <!-- Price Summary Partial - HTMX -->
-<div class="bg-villa-50 rounded-lg p-6">
+<div class="bg-primary-50 rounded-lg p-6">
     {% if price_data %}
-    <h3 class="font-semibold text-villa-900 mb-4">Riepilogo Prezzo</h3>
+    <h3 class="font-semibold text-primary-900 mb-4">Riepilogo Prezzo</h3>
     
     <dl class="space-y-2">
         <div class="flex justify-between text-sm">
-            <dt class="text-villa-600">{{ price_data.nights }} notti x €{{ price_data.price_per_night|floatformat:0 }}</dt>
-            <dd class="font-medium text-villa-900">€{{ price_data.base_total|floatformat:0 }}</dd>
+            <dt class="text-primary-600">{{ price_data.nights }} notti x €{{ price_data.price_per_night|floatformat:0 }}</dt>
+            <dd class="font-medium text-primary-900">€{{ price_data.base_total|floatformat:0 }}</dd>
         </div>
         
         {% if price_data.cleaning_fee %}
         <div class="flex justify-between text-sm">
-            <dt class="text-villa-600">Pulizia finale</dt>
-            <dd class="font-medium text-villa-900">€{{ price_data.cleaning_fee|floatformat:0 }}</dd>
+            <dt class="text-primary-600">Pulizia finale</dt>
+            <dd class="font-medium text-primary-900">€{{ price_data.cleaning_fee|floatformat:0 }}</dd>
         </div>
         {% endif %}
         
         {% if price_data.extra_guest_fee %}
         <div class="flex justify-between text-sm">
-            <dt class="text-villa-600">Ospiti extra ({{ price_data.extra_guests }})</dt>
-            <dd class="font-medium text-villa-900">€{{ price_data.extra_guest_fee|floatformat:0 }}</dd>
+            <dt class="text-primary-600">Ospiti extra ({{ price_data.extra_guests }})</dt>
+            <dd class="font-medium text-primary-900">€{{ price_data.extra_guest_fee|floatformat:0 }}</dd>
         </div>
         {% endif %}
         
@@ -30,20 +30,20 @@
         </div>
         {% endif %}
         
-        <hr class="border-villa-200 my-2">
+        <hr class="border-primary-200 my-2">
         
         <div class="flex justify-between text-lg">
-            <dt class="font-semibold text-villa-900">Totale</dt>
-            <dd class="font-bold text-villa-900">€{{ price_data.total|floatformat:0 }}</dd>
+            <dt class="font-semibold text-primary-900">Totale</dt>
+            <dd class="font-bold text-primary-900">€{{ price_data.total|floatformat:0 }}</dd>
         </div>
     </dl>
     
-    <div class="mt-4 pt-4 border-t border-villa-200">
+    <div class="mt-4 pt-4 border-t border-primary-200">
         <div class="flex justify-between text-sm">
-            <dt class="text-villa-600">Acconto da versare (30%)</dt>
-            <dd class="font-bold text-gold-500 text-lg">€{{ price_data.deposit|floatformat:0 }}</dd>
+            <dt class="text-primary-600">Acconto da versare (30%)</dt>
+            <dd class="font-bold text-tertiary-500 text-lg">€{{ price_data.deposit|floatformat:0 }}</dd>
         </div>
-        <p class="text-xs text-villa-500 mt-1">
+        <p class="text-xs text-primary-500 mt-1">
             Saldo di €{{ price_data.balance|floatformat:0 }} al check-in
         </p>
     </div>
@@ -65,8 +65,8 @@
         <p class="text-red-500">{{ error }}</p>
     </div>
     {% else %}
-    <div class="text-center text-villa-500 py-8">
-        <svg class="w-12 h-12 mx-auto mb-4 text-villa-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="text-center text-primary-500 py-8">
+        <svg class="w-12 h-12 mx-auto mb-4 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
         </svg>

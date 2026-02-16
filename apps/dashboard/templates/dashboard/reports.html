@@ -4,15 +4,15 @@
 {% block title %}Report - Dashboard - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
                 Report
             </h1>
-            <p class="text-villa-600 mt-2">
+            <p class="text-primary-600 mt-2">
                 Statistiche e report delle prenotazioni
             </p>
         </div>
@@ -53,29 +53,29 @@
                 <!-- Stats Cards -->
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <p class="text-sm text-villa-500">Prenotazioni Totali</p>
-                        <p class="text-3xl font-semibold text-villa-900 mt-2">{{ stats.total_bookings }}</p>
+                        <p class="text-sm text-primary-500">Prenotazioni Totali</p>
+                        <p class="text-3xl font-semibold text-primary-900 mt-2">{{ stats.total_bookings }}</p>
                         <div class="mt-2 flex items-center text-sm">
                             <span class="text-green-500">{{ stats.confirmed_bookings }}</span>
-                            <span class="text-villa-400 mx-1">confermate</span>
+                            <span class="text-primary-400 mx-1">confermate</span>
                         </div>
                     </div>
                     
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <p class="text-sm text-villa-500">Fatturato Totale</p>
-                        <p class="text-3xl font-semibold text-villa-900 mt-2">€{{ stats.total_revenue|floatformat:0 }}</p>
+                        <p class="text-sm text-primary-500">Fatturato Totale</p>
+                        <p class="text-3xl font-semibold text-primary-900 mt-2">€{{ stats.total_revenue|floatformat:0 }}</p>
                         <div class="mt-2 flex items-center text-sm">
                             <span class="text-green-500">€{{ stats.collected_revenue|floatformat:0 }}</span>
-                            <span class="text-villa-400 mx-1">incassato</span>
+                            <span class="text-primary-400 mx-1">incassato</span>
                         </div>
                     </div>
                     
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <p class="text-sm text-villa-500">Notti Prenotate</p>
-                        <p class="text-3xl font-semibold text-villa-900 mt-2">{{ stats.total_nights }}</p>
+                        <p class="text-sm text-primary-500">Notti Prenotate</p>
+                        <p class="text-3xl font-semibold text-primary-900 mt-2">{{ stats.total_nights }}</p>
                         <div class="mt-2 flex items-center text-sm">
-                            <span class="text-villa-400">Media:</span>
-                            <span class="text-villa-600 ml-1">{{ stats.avg_nights|floatformat:1 }} notti</span>
+                            <span class="text-primary-400">Media:</span>
+                            <span class="text-primary-600 ml-1">{{ stats.avg_nights|floatformat:1 }} notti</span>
                         </div>
                     </div>
                 </div>
@@ -85,20 +85,20 @@
                     
                     <!-- Revenue Chart -->
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <h3 class="font-semibold text-villa-900 mb-4">Fatturato Mensile</h3>
+                        <h3 class="font-semibold text-primary-900 mb-4">Fatturato Mensile</h3>
                         <canvas id="revenue-chart" height="200"></canvas>
                     </div>
                     
                     <!-- Bookings by Unit -->
                     <div class="bg-white rounded-xl shadow-lg p-6">
-                        <h3 class="font-semibold text-villa-900 mb-4">Prenotazioni per Unità</h3>
+                        <h3 class="font-semibold text-primary-900 mb-4">Prenotazioni per Unità</h3>
                         <canvas id="units-chart" height="200"></canvas>
                     </div>
                 </div>
                 
                 <!-- Export Section -->
                 <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h3 class="font-semibold text-villa-900 mb-4">Esporta Dati</h3>
+                    <h3 class="font-semibold text-primary-900 mb-4">Esporta Dati</h3>
                     <div class="flex flex-wrap gap-4">
                         <a href="?export=csv&from_date={{ from_date|date:'Y-m-d' }}&to_date={{ to_date|date:'Y-m-d' }}" 
                            class="btn-outline">
@@ -121,41 +121,41 @@
                 
                 <!-- Detailed Table -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 border-b border-villa-100">
-                        <h3 class="font-semibold text-villa-900">Riepilogo per Unità</h3>
+                    <div class="px-6 py-4 border-b border-primary-100">
+                        <h3 class="font-semibold text-primary-900">Riepilogo per Unità</h3>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-villa-50">
+                            <thead class="bg-primary-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Unità</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Prenotazioni</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Notti</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Occupazione</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Fatturato</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Unità</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Prenotazioni</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Notti</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Occupazione</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Fatturato</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-villa-100">
                                 {% for unit_stat in unit_stats %}
-                                <tr class="hover:bg-villa-50">
-                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                <tr class="hover:bg-primary-50">
+                                    <td class="px-6 py-4 text-sm font-medium text-primary-900">
                                         {{ unit_stat.name }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                    <td class="px-6 py-4 text-sm text-primary-600">
                                         {{ unit_stat.bookings }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-600">
+                                    <td class="px-6 py-4 text-sm text-primary-600">
                                         {{ unit_stat.nights }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <span class="text-sm text-villa-600 mr-2">{{ unit_stat.occupancy }}%</span>
-                                            <div class="flex-1 bg-villa-200 rounded-full h-2 max-w-[100px]">
-                                                <div class="bg-gold-500 rounded-full h-2" style="width: {{ unit_stat.occupancy }}%"></div>
+                                            <span class="text-sm text-primary-600 mr-2">{{ unit_stat.occupancy }}%</span>
+                                            <div class="flex-1 bg-primary-200 rounded-full h-2 max-w-[100px]">
+                                                <div class="bg-tertiary-500 rounded-full h-2" style="width: {{ unit_stat.occupancy }}%"></div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                    <td class="px-6 py-4 text-sm font-medium text-primary-900">
                                         €{{ unit_stat.revenue|floatformat:0 }}
                                     </td>
                                 </tr>

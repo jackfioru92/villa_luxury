@@ -4,16 +4,16 @@
 {% block title %}Dashboard Admin - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>
-                <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+                <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
                     Dashboard
                 </h1>
-                <p class="text-villa-600 mt-2">
+                <p class="text-primary-600 mt-2">
                     Benvenuto, {{ user.first_name|default:user.email }}
                 </p>
             </div>
@@ -36,20 +36,20 @@
             <div class="lg:col-span-1">
                 <nav class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <a href="{% url 'dashboard:overview' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 bg-gold-50 border-l-4 border-gold-500">
-                        <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 bg-tertiary-50 border-l-4 border-tertiary-500">
+                        <svg class="w-5 h-5 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
-                        <span class="font-medium text-villa-900">Panoramica</span>
+                        <span class="font-medium text-primary-900">Panoramica</span>
                     </a>
                     <a href="{% url 'dashboard:booking_list' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
-                        <span class="text-villa-600">Prenotazioni</span>
+                        <span class="text-primary-600">Prenotazioni</span>
                         {% if pending_count > 0 %}
                         <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
                             {{ pending_count }}
@@ -57,28 +57,28 @@
                         {% endif %}
                     </a>
                     <a href="{% url 'dashboard:calendar' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="text-villa-600">Calendario</span>
+                        <span class="text-primary-600">Calendario</span>
                     </a>
                     <a href="{% url 'dashboard:block_dates' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
                         </svg>
-                        <span class="text-villa-600">Blocca Date</span>
+                        <span class="text-primary-600">Blocca Date</span>
                     </a>
                     <a href="{% url 'dashboard:reports' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
-                        <span class="text-villa-600">Report</span>
+                        <span class="text-primary-600">Report</span>
                     </a>
                 </nav>
             </div>
@@ -91,8 +91,8 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-villa-500">Prenotazioni Oggi</p>
-                                <p class="text-3xl font-semibold text-villa-900 mt-1">{{ today_bookings|default:0 }}</p>
+                                <p class="text-sm text-primary-500">Prenotazioni Oggi</p>
+                                <p class="text-3xl font-semibold text-primary-900 mt-1">{{ today_bookings|default:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                                 <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,8 +106,8 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-villa-500">Check-in Oggi</p>
-                                <p class="text-3xl font-semibold text-villa-900 mt-1">{{ today_checkins|default:0 }}</p>
+                                <p class="text-sm text-primary-500">Check-in Oggi</p>
+                                <p class="text-3xl font-semibold text-primary-900 mt-1">{{ today_checkins|default:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                                 <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,8 +121,8 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-villa-500">Check-out Oggi</p>
-                                <p class="text-3xl font-semibold text-villa-900 mt-1">{{ today_checkouts|default:0 }}</p>
+                                <p class="text-sm text-primary-500">Check-out Oggi</p>
+                                <p class="text-3xl font-semibold text-primary-900 mt-1">{{ today_checkouts|default:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
                                 <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,11 +136,11 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-villa-500">Fatturato Mese</p>
-                                <p class="text-3xl font-semibold text-villa-900 mt-1">€{{ month_revenue|default:0|floatformat:0 }}</p>
+                                <p class="text-sm text-primary-500">Fatturato Mese</p>
+                                <p class="text-3xl font-semibold text-primary-900 mt-1">€{{ month_revenue|default:0|floatformat:0 }}</p>
                             </div>
-                            <div class="w-12 h-12 bg-gold-100 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 bg-tertiary-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                           d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
@@ -154,9 +154,9 @@
                     
                     <!-- Recent Bookings -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                        <div class="px-6 py-4 border-b border-villa-100 flex items-center justify-between">
-                            <h2 class="font-semibold text-villa-900">Ultime Prenotazioni</h2>
-                            <a href="{% url 'dashboard:booking_list' %}" class="text-sm text-gold-500 hover:underline">
+                        <div class="px-6 py-4 border-b border-primary-100 flex items-center justify-between">
+                            <h2 class="font-semibold text-primary-900">Ultime Prenotazioni</h2>
+                            <a href="{% url 'dashboard:booking_list' %}" class="text-sm text-tertiary-500 hover:underline">
                                 Vedi tutte →
                             </a>
                         </div>
@@ -165,21 +165,21 @@
                             <div class="px-6 py-4">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="font-medium text-villa-900">{{ booking.guest_first_name }} {{ booking.guest_last_name }}</p>
-                                        <p class="text-sm text-villa-500">
+                                        <p class="font-medium text-primary-900">{{ booking.guest_first_name }} {{ booking.guest_last_name }}</p>
+                                        <p class="text-sm text-primary-500">
                                             {{ booking.check_in|date:"d M" }} - {{ booking.check_out|date:"d M" }}
                                         </p>
                                     </div>
                                     <span class="text-sm px-2 py-1 rounded-full
                                            {% if booking.status == 'confirmed' %}bg-green-100 text-green-700
                                            {% elif booking.status == 'pending' %}bg-yellow-100 text-yellow-700
-                                           {% else %}bg-villa-100 text-villa-700{% endif %}">
+                                           {% else %}bg-primary-100 text-primary-700{% endif %}">
                                         {{ booking.get_status_display }}
                                     </span>
                                 </div>
                             </div>
                             {% empty %}
-                            <div class="px-6 py-8 text-center text-villa-500">
+                            <div class="px-6 py-8 text-center text-primary-500">
                                 Nessuna prenotazione recente
                             </div>
                             {% endfor %}
@@ -188,12 +188,12 @@
                     
                     <!-- Quick Actions -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                        <div class="px-6 py-4 border-b border-villa-100">
-                            <h2 class="font-semibold text-villa-900">Azioni Rapide</h2>
+                        <div class="px-6 py-4 border-b border-primary-100">
+                            <h2 class="font-semibold text-primary-900">Azioni Rapide</h2>
                         </div>
                         <div class="p-6 space-y-4">
                             <a href="{% url 'dashboard:block_dates' %}" 
-                               class="flex items-center space-x-4 p-4 rounded-lg border border-villa-200 hover:border-gold-300 hover:bg-gold-50 transition-colors">
+                               class="flex items-center space-x-4 p-4 rounded-lg border border-primary-200 hover:border-tertiary-300 hover:bg-tertiary-50 transition-colors">
                                 <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
                                     <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -201,13 +201,13 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-villa-900">Blocca Date</p>
-                                    <p class="text-sm text-villa-500">Rendi non disponibili date specifiche</p>
+                                    <p class="font-medium text-primary-900">Blocca Date</p>
+                                    <p class="text-sm text-primary-500">Rendi non disponibili date specifiche</p>
                                 </div>
                             </a>
                             
                             <a href="{% url 'admin:villa_seasonprice_changelist' %}" target="_blank"
-                               class="flex items-center space-x-4 p-4 rounded-lg border border-villa-200 hover:border-gold-300 hover:bg-gold-50 transition-colors">
+                               class="flex items-center space-x-4 p-4 rounded-lg border border-primary-200 hover:border-tertiary-300 hover:bg-tertiary-50 transition-colors">
                                 <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                                     <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -215,13 +215,13 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-villa-900">Gestisci Prezzi</p>
-                                    <p class="text-sm text-villa-500">Modifica prezzi stagionali</p>
+                                    <p class="font-medium text-primary-900">Gestisci Prezzi</p>
+                                    <p class="text-sm text-primary-500">Modifica prezzi stagionali</p>
                                 </div>
                             </a>
                             
                             <a href="{% url 'dashboard:reports' %}" 
-                               class="flex items-center space-x-4 p-4 rounded-lg border border-villa-200 hover:border-gold-300 hover:bg-gold-50 transition-colors">
+                               class="flex items-center space-x-4 p-4 rounded-lg border border-primary-200 hover:border-tertiary-300 hover:bg-tertiary-50 transition-colors">
                                 <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                                     <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -229,8 +229,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-villa-900">Esporta Report</p>
-                                    <p class="text-sm text-villa-500">Scarica statistiche e prenotazioni</p>
+                                    <p class="font-medium text-primary-900">Esporta Report</p>
+                                    <p class="text-sm text-primary-500">Scarica statistiche e prenotazioni</p>
                                 </div>
                             </a>
                         </div>
@@ -239,54 +239,54 @@
                 
                 <!-- Upcoming Check-ins -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 border-b border-villa-100">
-                        <h2 class="font-semibold text-villa-900">Prossimi Arrivi (7 giorni)</h2>
+                    <div class="px-6 py-4 border-b border-primary-100">
+                        <h2 class="font-semibold text-primary-900">Prossimi Arrivi (7 giorni)</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-villa-50">
+                            <thead class="bg-primary-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Check-in</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Ospite</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Unità</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Notti</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">Totale</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-villa-500 uppercase">Azioni</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Check-in</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Ospite</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Unità</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Notti</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Totale</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">Azioni</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-villa-100">
                                 {% for booking in upcoming_checkins %}
-                                <tr class="hover:bg-villa-50">
-                                    <td class="px-6 py-4 text-sm text-villa-900">
+                                <tr class="hover:bg-primary-50">
+                                    <td class="px-6 py-4 text-sm text-primary-900">
                                         {{ booking.check_in|date:"D d M" }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-villa-900">
+                                        <div class="text-sm font-medium text-primary-900">
                                             {{ booking.guest_first_name }} {{ booking.guest_last_name }}
                                         </div>
-                                        <div class="text-sm text-villa-500">
+                                        <div class="text-sm text-primary-500">
                                             {{ booking.guest_email }}
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-900">
+                                    <td class="px-6 py-4 text-sm text-primary-900">
                                         {{ booking.unit.name }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-villa-900">
+                                    <td class="px-6 py-4 text-sm text-primary-900">
                                         {{ booking.nights }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-medium text-villa-900">
+                                    <td class="px-6 py-4 text-sm font-medium text-primary-900">
                                         €{{ booking.total_amount|floatformat:0 }}
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <a href="{% url 'dashboard:booking_detail' booking.id %}" 
-                                           class="text-gold-500 hover:underline text-sm">
+                                           class="text-tertiary-500 hover:underline text-sm">
                                             Dettagli
                                         </a>
                                     </td>
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="6" class="px-6 py-8 text-center text-villa-500">
+                                    <td colspan="6" class="px-6 py-8 text-center text-primary-500">
                                         Nessun arrivo previsto nei prossimi 7 giorni
                                     </td>
                                 </tr>

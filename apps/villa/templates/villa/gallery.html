@@ -4,14 +4,14 @@
 {% block title %}Galleria - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <div class="text-center mb-12">
-            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-villa-900">
+            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900">
                 Galleria Fotografica
             </h1>
-            <p class="text-villa-600 text-lg mt-4">
+            <p class="text-primary-600 text-lg mt-4">
                 Esplora tutti gli spazi della nostra villa
             </p>
         </div>
@@ -28,7 +28,7 @@
             </div>
             {% empty %}
             <div class="col-span-full text-center py-16">
-                <p class="text-villa-500">Nessuna immagine disponibile.</p>
+                <p class="text-primary-500">Nessuna immagine disponibile.</p>
             </div>
             {% endfor %}
             
@@ -44,7 +44,7 @@
                  @keydown.escape.window="lightbox = false"
                  class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
                 <button @click="lightbox = false" 
-                        class="absolute top-4 right-4 text-white hover:text-gold-400">
+                        class="absolute top-4 right-4 text-white hover:text-tertiary-400">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
@@ -59,18 +59,18 @@
             <nav class="flex items-center space-x-2">
                 {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}" 
-                   class="px-4 py-2 border border-villa-300 rounded-sm hover:bg-villa-100">
+                   class="px-4 py-2 border border-primary-300 rounded-sm hover:bg-primary-100">
                     ← Precedente
                 </a>
                 {% endif %}
                 
-                <span class="px-4 py-2 text-villa-600">
+                <span class="px-4 py-2 text-primary-600">
                     Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}
                 </span>
                 
                 {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}" 
-                   class="px-4 py-2 border border-villa-300 rounded-sm hover:bg-villa-100">
+                   class="px-4 py-2 border border-primary-300 rounded-sm hover:bg-primary-100">
                     Successiva →
                 </a>
                 {% endif %}

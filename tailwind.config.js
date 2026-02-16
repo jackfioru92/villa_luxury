@@ -8,19 +8,45 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Luxury villa palette
-        'villa': {
-          50: '#faf9f7',
-          100: '#f5f3ef',
-          200: '#e8e4dc',
-          300: '#d4cdc0',
-          400: '#b8ad9a',
-          500: '#9c8e78',
-          600: '#8a7d69',
-          700: '#736858',
-          800: '#5f564a',
-          900: '#4e473e',
-          950: '#2a2521',
+        // Luxury villa palette - updated with new colors
+        'primary': {
+          50: '#f0f9f6',
+          100: '#e0f2ec',
+          200: '#c1e5d6',
+          300: '#92d1b7',
+          400: '#5bb691',
+          500: '#3d9b73',
+          600: '#2E4A46',
+          700: '#254037',
+          800: '#1f352e',
+          900: '#192924',
+          950: '#0d1512',
+        },
+        'secondary': {
+          50: '#f7f7f7',
+          100: '#ededed',
+          200: '#d4d4d4',
+          300: '#b3b3b3',
+          400: '#8a8a8a',
+          500: '#6b6b6b',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#1D1D1B',
+          950: '#0a0a0a',
+        },
+        'tertiary': {
+          50: '#fefdfb',
+          100: '#fdf9f2',
+          200: '#f9f0e1',
+          300: '#f3e4c8',
+          400: '#e9d09f',
+          500: '#E7D4A2',
+          600: '#d4c086',
+          700: '#b8a46b',
+          800: '#9c8957',
+          900: '#827449',
+          950: '#463d26',
         },
         'gold': {
           400: '#d4af37',
@@ -30,7 +56,7 @@ module.exports = {
       },
       fontFamily: {
         'serif': ['Cormorant Garamond', 'Georgia', 'serif'],
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'sans': ['Poppins', 'system-ui', 'sans-serif'],
       },
       spacing: {
         '128': '32rem',

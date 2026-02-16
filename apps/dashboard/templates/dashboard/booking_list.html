@@ -4,16 +4,16 @@
 {% block title %}Prenotazioni - Dashboard - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>
-                <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+                <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
                     Prenotazioni
                 </h1>
-                <p class="text-villa-600 mt-2">
+                <p class="text-primary-600 mt-2">
                     Gestisci tutte le prenotazioni
                 </p>
             </div>
@@ -80,52 +80,52 @@
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-villa-50">
+                            <thead class="bg-primary-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
                                         Prenotazione
                                     </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
                                         Ospite
                                     </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
                                         Date
                                     </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
                                         Stato
                                     </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-villa-500 uppercase">
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
                                         Totale
                                     </th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-villa-500 uppercase">
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">
                                         Azioni
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-villa-100">
                                 {% for booking in bookings %}
-                                <tr class="hover:bg-villa-50">
+                                <tr class="hover:bg-primary-50">
                                     <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-villa-900">
+                                        <div class="text-sm font-medium text-primary-900">
                                             #{{ booking.booking_number }}
                                         </div>
-                                        <div class="text-xs text-villa-500">
+                                        <div class="text-xs text-primary-500">
                                             {{ booking.unit.name }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-villa-900">
+                                        <div class="text-sm font-medium text-primary-900">
                                             {{ booking.guest_first_name }} {{ booking.guest_last_name }}
                                         </div>
-                                        <div class="text-xs text-villa-500">
+                                        <div class="text-xs text-primary-500">
                                             {{ booking.guest_email }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-villa-900">
+                                        <div class="text-sm text-primary-900">
                                             {{ booking.check_in|date:"d M" }} - {{ booking.check_out|date:"d M Y" }}
                                         </div>
-                                        <div class="text-xs text-villa-500">
+                                        <div class="text-xs text-primary-500">
                                             {{ booking.nights }} notti • {{ booking.num_guests }} ospiti
                                         </div>
                                     </td>
@@ -135,12 +135,12 @@
                                                {% elif booking.status == 'pending' %}bg-yellow-100 text-yellow-800
                                                {% elif booking.status == 'completed' %}bg-blue-100 text-blue-800
                                                {% elif booking.status == 'cancelled' %}bg-red-100 text-red-800
-                                               {% else %}bg-villa-100 text-villa-800{% endif %}">
+                                               {% else %}bg-primary-100 text-primary-800{% endif %}">
                                             {{ booking.get_status_display }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-villa-900">
+                                        <div class="text-sm font-medium text-primary-900">
                                             €{{ booking.total_amount|floatformat:0 }}
                                         </div>
                                         {% if booking.deposit_paid %}
@@ -151,7 +151,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <a href="{% url 'dashboard:booking_detail' booking.id %}" 
-                                           class="text-gold-500 hover:underline text-sm">
+                                           class="text-tertiary-500 hover:underline text-sm">
                                             Dettagli →
                                         </a>
                                     </td>
@@ -159,11 +159,11 @@
                                 {% empty %}
                                 <tr>
                                     <td colspan="6" class="px-6 py-12 text-center">
-                                        <svg class="w-12 h-12 mx-auto mb-4 text-villa-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-12 h-12 mx-auto mb-4 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                         </svg>
-                                        <p class="text-villa-500">Nessuna prenotazione trovata</p>
+                                        <p class="text-primary-500">Nessuna prenotazione trovata</p>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -173,23 +173,23 @@
                     
                     <!-- Pagination -->
                     {% if is_paginated %}
-                    <div class="px-6 py-4 border-t border-villa-100 flex items-center justify-between">
-                        <p class="text-sm text-villa-500">
+                    <div class="px-6 py-4 border-t border-primary-100 flex items-center justify-between">
+                        <p class="text-sm text-primary-500">
                             Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} di {{ page_obj.paginator.count }}
                         </p>
                         <div class="flex items-center space-x-2">
                             {% if page_obj.has_previous %}
                             <a href="?page={{ page_obj.previous_page_number }}" 
-                               class="px-3 py-1 border border-villa-200 rounded-sm hover:bg-villa-50">
+                               class="px-3 py-1 border border-primary-200 rounded-sm hover:bg-primary-50">
                                 ←
                             </a>
                             {% endif %}
-                            <span class="px-3 py-1 bg-gold-500 text-white rounded-sm">
+                            <span class="px-3 py-1 bg-tertiary-500 text-white rounded-sm">
                                 {{ page_obj.number }}
                             </span>
                             {% if page_obj.has_next %}
                             <a href="?page={{ page_obj.next_page_number }}" 
-                               class="px-3 py-1 border border-villa-200 rounded-sm hover:bg-villa-50">
+                               class="px-3 py-1 border border-primary-200 rounded-sm hover:bg-primary-50">
                                 →
                             </a>
                             {% endif %}

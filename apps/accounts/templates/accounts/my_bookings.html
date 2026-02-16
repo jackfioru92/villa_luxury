@@ -4,15 +4,15 @@
 {% block title %}Le Mie Prenotazioni - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-villa-50 pt-24 pb-16">
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
     <div class="container mx-auto px-4 lg:px-8">
         
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-villa-900">
+            <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
                 Le Mie Prenotazioni
             </h1>
-            <p class="text-villa-600 mt-2">
+            <p class="text-primary-600 mt-2">
                 Visualizza e gestisci le tue prenotazioni
             </p>
         </div>
@@ -23,30 +23,30 @@
             <div class="lg:col-span-1">
                 <nav class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <a href="{% url 'accounts:profile' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
-                        <span class="text-villa-600">Profilo</span>
+                        <span class="text-primary-600">Profilo</span>
                     </a>
                     <a href="{% url 'accounts:my_bookings' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 bg-gold-50 border-l-4 border-gold-500">
-                        <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 bg-tertiary-50 border-l-4 border-tertiary-500">
+                        <svg class="w-5 h-5 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="font-medium text-villa-900">Le Mie Prenotazioni</span>
+                        <span class="font-medium text-primary-900">Le Mie Prenotazioni</span>
                     </a>
                     <a href="{% url 'accounts:password_change' %}" 
-                       class="flex items-center space-x-3 px-6 py-4 hover:bg-villa-50 transition-colors">
-                        <svg class="w-5 h-5 text-villa-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
+                        <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
-                        <span class="text-villa-600">Cambia Password</span>
+                        <span class="text-primary-600">Cambia Password</span>
                     </a>
-                    <hr class="border-villa-100">
+                    <hr class="border-primary-100">
                     <a href="{% url 'accounts:logout' %}" 
                        class="flex items-center space-x-3 px-6 py-4 hover:bg-red-50 text-red-500 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,9 +78,9 @@
                 
                 {% for group in booking_groups %}
                 {% if group.grouper %}
-                <h2 class="text-xl font-semibold text-villa-900">Prenotazioni Imminenti</h2>
+                <h2 class="text-xl font-semibold text-primary-900">Prenotazioni Imminenti</h2>
                 {% else %}
-                <h2 class="text-xl font-semibold text-villa-900 mt-8">Prenotazioni Passate</h2>
+                <h2 class="text-xl font-semibold text-primary-900 mt-8">Prenotazioni Passate</h2>
                 {% endif %}
                 
                 {% for booking in group.list %}
@@ -93,19 +93,19 @@
                                            {% if booking.status == 'confirmed' %}bg-green-100 text-green-700
                                            {% elif booking.status == 'pending' %}bg-yellow-100 text-yellow-700
                                            {% elif booking.status == 'cancelled' %}bg-red-100 text-red-700
-                                           {% else %}bg-villa-100 text-villa-700{% endif %}">
+                                           {% else %}bg-primary-100 text-primary-700{% endif %}">
                                         {{ booking.get_status_display }}
                                     </span>
-                                    <span class="text-sm text-villa-500">
+                                    <span class="text-sm text-primary-500">
                                         #{{ booking.booking_number }}
                                     </span>
                                 </div>
                                 
-                                <h3 class="text-lg font-semibold text-villa-900">
+                                <h3 class="text-lg font-semibold text-primary-900">
                                     {{ booking.unit.name }}
                                 </h3>
                                 
-                                <div class="flex items-center space-x-4 mt-2 text-sm text-villa-600">
+                                <div class="flex items-center space-x-4 mt-2 text-sm text-primary-600">
                                     <span class="flex items-center">
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -124,11 +124,11 @@
                             </div>
                             
                             <div class="text-right">
-                                <p class="text-2xl font-serif font-semibold text-villa-900">
+                                <p class="text-2xl font-serif font-semibold text-primary-900">
                                     €{{ booking.total_amount|floatformat:0 }}
                                 </p>
                                 {% if booking.status == 'confirmed' and booking.balance_amount > 0 %}
-                                <p class="text-sm text-villa-500">
+                                <p class="text-sm text-primary-500">
                                     Saldo: €{{ booking.balance_amount|floatformat:0 }}
                                 </p>
                                 {% endif %}
@@ -136,12 +136,12 @@
                         </div>
                     </div>
                     
-                    <div class="px-6 py-4 bg-villa-50 border-t border-villa-100 flex items-center justify-between">
-                        <span class="text-sm text-villa-500">
+                    <div class="px-6 py-4 bg-primary-50 border-t border-primary-100 flex items-center justify-between">
+                        <span class="text-sm text-primary-500">
                             Prenotato il {{ booking.created_at|date:"d F Y" }}
                         </span>
                         <a href="{% url 'booking:detail' booking.booking_number %}" 
-                           class="text-gold-500 font-medium hover:underline text-sm">
+                           class="text-tertiary-500 font-medium hover:underline text-sm">
                             Vedi Dettagli →
                         </a>
                     </div>
@@ -152,14 +152,14 @@
                 {% else %}
                 <!-- Empty State -->
                 <div class="bg-white rounded-xl shadow-lg p-12 text-center">
-                    <svg class="w-16 h-16 mx-auto mb-6 text-villa-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-16 h-16 mx-auto mb-6 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
-                    <h3 class="text-xl font-semibold text-villa-900 mb-2">
+                    <h3 class="text-xl font-semibold text-primary-900 mb-2">
                         Nessuna prenotazione
                     </h3>
-                    <p class="text-villa-600 mb-6">
+                    <p class="text-primary-600 mb-6">
                         Non hai ancora effettuato prenotazioni.
                     </p>
                     <a href="{% url 'booking:wizard' %}" class="btn-primary">
