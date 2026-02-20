@@ -2,45 +2,39 @@
 
 <!-- Navbar -->
 <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-     :class="scrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg py-2' : 'bg-transparent py-4'">
-    <div class="container mx-auto px-4 lg:px-8">
-        <div class="flex items-center justify-between">
+     :class="scrolled ? 'bg-tertiary-500/95 backdrop-blur-sm shadow-lg py-2' : 'bg-transparent pt-8'">
+    <div class="mx-auto px-2 lg:px-4 max-w-screen-2xl">
+        <div class="flex items-center justify-between"
+             :class="scrolled ? 'h-16' : 'h-14'">
             
             <!-- Logo -->
             <a href="{% url 'core:home' %}" class="flex items-center">
-                <span class="text-2xl lg:text-3xl font-serif font-semibold transition-colors"
-                      :class="scrolled ? 'text-primary-900' : 'text-white'">
-                    {{ SITE_NAME|default:"Villa Luxury" }}
-                </span>
+                <img x-show="!scrolled" src="/media/logo/altesia_bianca.png" alt="Altesia" style="width: 280px;" x-cloak>
+                <img x-show="scrolled" src="/media/logo/altesia_verde.png" alt="Altesia" style="width: 200px;">
             </a>
             
             <!-- Desktop Menu -->
             <div class="hidden lg:flex items-center space-x-8">
-                <a href="{% url 'core:home' %}" 
-                   class="font-medium transition-colors hover:text-tertiary-500"
-                   :class="scrolled ? 'text-primary-700' : 'text-white'">
-                    Home
-                </a>
                 <a href="{% url 'villa:list' %}" 
-                   class="font-medium transition-colors hover:text-tertiary-500"
-                   :class="scrolled ? 'text-primary-700' : 'text-white'">
+                   class="font-medium transition-colors tracking-wide text-sm uppercase"
+                   :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
                     La Villa
                 </a>
-                <a href="{% url 'villa:gallery' %}" 
-                   class="font-medium transition-colors hover:text-tertiary-500"
-                   :class="scrolled ? 'text-primary-700' : 'text-white'">
-                    Gallery
+                <a href="#esperienze" 
+                   class="font-medium transition-colors tracking-wide text-sm uppercase"
+                   :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
+                    Esperienze
                 </a>
-                <a href="{% url 'core:contact' %}" 
-                   class="font-medium transition-colors hover:text-tertiary-500"
-                   :class="scrolled ? 'text-primary-700' : 'text-white'">
-                    Contatti
+                <a href="#gallery" 
+                   class="font-medium transition-colors tracking-wide text-sm uppercase"
+                   :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
+                    Gallery
                 </a>
                 
                 <!-- CTA Button -->
                 <a href="{% url 'booking:wizard' %}" 
-                   class="px-6 py-2.5 bg-tertiary-500 text-white font-medium rounded-sm 
-                          hover:bg-tertiary-600 transition-colors shadow-lg">
+                   class="px-6 py-2 font-semibold rounded-sm transition-colors shadow-lg tracking-wide text-sm uppercase"
+                   :class="scrolled ? 'bg-primary-800 text-white hover:bg-primary-700' : 'bg-tertiary-500 text-primary-900 hover:bg-tertiary-600'">
                     Prenota Ora
                 </a>
                 
@@ -49,7 +43,7 @@
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" 
                             class="flex items-center space-x-2 transition-colors"
-                            :class="scrolled ? 'text-primary-700' : 'text-white'">
+                            :class="scrolled ? 'text-primary-800' : 'text-white'">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -80,9 +74,12 @@
                 </div>
                 {% else %}
                 <a href="{% url 'accounts:login' %}" 
-                   class="font-medium transition-colors hover:text-tertiary-500"
-                   :class="scrolled ? 'text-primary-700' : 'text-white'">
-                    Accedi
+                   class="font-medium transition-colors"
+                   :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
                 </a>
                 {% endif %}
             </div>
@@ -90,7 +87,7 @@
             <!-- Mobile Menu Button -->
             <button @click="mobileMenuOpen = !mobileMenuOpen" 
                     class="lg:hidden p-2 rounded-lg transition-colors"
-                    :class="scrolled ? 'text-primary-700 hover:bg-primary-100' : 'text-white hover:bg-white/10'">
+                   :class="scrolled ? 'text-primary-800 hover:bg-primary-100' : 'text-white hover:bg-white/10'">
                 <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
@@ -112,10 +109,9 @@
          @click.away="mobileMenuOpen = false"
          class="lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl">
         <div class="container mx-auto px-4 py-6 space-y-4">
-            <a href="{% url 'core:home' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Home</a>
             <a href="{% url 'villa:list' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">La Villa</a>
-            <a href="{% url 'villa:gallery' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Gallery</a>
-            <a href="{% url 'core:contact' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Contatti</a>
+            <a href="#esperienze" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Esperienze</a>
+            <a href="#gallery" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Gallery</a>
             
             <hr class="border-primary-100">
             
@@ -132,7 +128,7 @@
             {% endif %}
             
             <a href="{% url 'booking:wizard' %}" 
-               class="block w-full px-6 py-3 bg-tertiary-500 text-white text-center font-medium rounded-sm hover:bg-tertiary-600">
+               class="block w-full px-6 py-3 bg-tertiary-500 text-primary-900 text-center font-semibold rounded-sm hover:bg-tertiary-600">
                 Prenota Ora
             </a>
         </div>
