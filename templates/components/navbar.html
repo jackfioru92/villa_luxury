@@ -9,31 +9,31 @@
             
             <!-- Logo -->
             <a href="{% url 'core:home' %}" class="flex items-center">
-                <img x-show="!scrolled" src="/media/logo/altesia_bianca.png" alt="Altesia" style="width: 235px;" x-cloak>
-                <img x-show="scrolled" src="/media/logo/altesia_verde.png" alt="Altesia" style="width: 170px;">
+                <img x-show="!scrolled" src="/media/logo/altesia_bianca.png" alt="Altesia" style="width: 232px;" x-cloak>
+                <img x-show="scrolled" src="/media/logo/altesia_verde.png" alt="Altesia" style="width: 167px;">
             </a>
             
             <!-- Desktop Menu -->
             <div class="hidden lg:flex items-center space-x-8">
                 <a href="{% url 'villa:list' %}" 
-                   class="font-medium transition-colors tracking-wide text-sm uppercase"
+                   class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
                     La Villa
                 </a>
                 <a href="#esperienze" 
-                   class="font-medium transition-colors tracking-wide text-sm uppercase"
+                   class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
                     Esperienze
                 </a>
                 <a href="#gallery" 
-                   class="font-medium transition-colors tracking-wide text-sm uppercase"
+                   class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
                     Gallery
                 </a>
                 
                 <!-- CTA Button -->
                 <a href="{% url 'booking:wizard' %}" 
-                   class="px-6 py-2 font-semibold rounded-sm transition-colors shadow-lg tracking-wide text-sm uppercase"
+                   class="px-6 py-2 font-semibold rounded-sm transition-colors shadow-lg tracking-wide text-base uppercase"
                    :class="scrolled ? 'bg-primary-800 text-white hover:bg-primary-700' : 'bg-tertiary-500 text-primary-900 hover:bg-tertiary-600'">
                     Prenota Ora
                 </a>
