@@ -9,6 +9,9 @@ urlpatterns = [
     path('cerca/', views.BookingSearchView.as_view(), name='search'),
     path('conferma/<str:booking_number>/', views.BookingConfirmationView.as_view(), name='confirmation'),
     
+    # API endpoint
+    path('api/create/', views.BookingCreateAPIView.as_view(), name='api_create'),
+    
     # HTMX endpoints
     path('htmx/calendar/', views.HTMXAvailabilityCalendarView.as_view(), name='htmx_calendar'),
     path('htmx/price/', views.HTMXPriceCalculationView.as_view(), name='htmx_price'),

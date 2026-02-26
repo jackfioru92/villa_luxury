@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from allauth.account.views import ConfirmEmailView
 
 app_name = 'accounts'
 
@@ -12,6 +13,11 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('profile/edit/', views.ProfileEditView.as_view(), name='profile_edit'),
     path('prenotazioni/', views.MyBookingsView.as_view(), name='my_bookings'),
+    
+    # Email verification
+    path('email/verify/', views.EmailVerificationSentView.as_view(), name='email_verification_sent'),
+    path('email/verify/<key>/', views.CustomConfirmEmailView.as_view(), name='account_confirm_email'),
+    path('email/resend/', views.ResendVerificationEmailView.as_view(), name='resend_verification'),
     
     # Password reset
     path('password/reset/', 

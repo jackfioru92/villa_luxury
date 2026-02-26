@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Verifica Email - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-primary-50 pt-24 pb-16 flex items-center">
+    <div class="container mx-auto px-4">
+        <div class="max-w-md mx-auto text-center">
+            
+            <!-- Icon -->
+            <div class="mb-8">
+                <div class="w-20 h-20 mx-auto bg-tertiary-100 rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-tertiary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Message -->
+            <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-primary-900 mb-4">
+                Controlla la tua email
+            </h1>
+            <p class="text-primary-600 mb-8 leading-relaxed">
+                Ti abbiamo inviato un'email con un link per verificare il tuo account. 
+                Clicca sul link nell'email per completare la registrazione.
+            </p>
+
+            <!-- Info box -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 text-left">
+                <h3 class="font-semibold text-primary-800 mb-3">Non trovi l'email?</h3>
+                <ul class="text-sm text-primary-600 space-y-2">
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 mt-0.5 text-tertiary-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Controlla la cartella <strong>Spam</strong> o <strong>Posta indesiderata</strong>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 mt-0.5 text-tertiary-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        L'email potrebbe impiegare qualche minuto ad arrivare
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg class="w-4 h-4 mt-0.5 text-tertiary-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Verifica che l'indirizzo email sia corretto
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Resend form -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <p class="text-sm text-primary-600 mb-4">Non hai ricevuto nulla? Rinvia l'email di verifica:</p>
+                <form method="post" action="{% url 'accounts:resend_verification' %}" class="flex flex-col sm:flex-row gap-3">
+                    {% csrf_token %}
+                    <input type="email" name="email" required
+                           class="form-input flex-1"
+                           placeholder="La tua email">
+                    <button type="submit" class="btn-primary whitespace-nowrap">
+                        Rinvia email
+                    </button>
+                </form>
+            </div>
+
+            <!-- Back to login -->
+            <a href="{% url 'accounts:login' %}" class="text-tertiary-500 hover:underline font-medium">
+                ← Torna al login
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -5,7 +5,7 @@
 
 {% block content %}
 <!-- Hero Section - Full screen with main photo -->
-<section class="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+<section class="relative h-screen min-h-[500px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
     <!-- Background Image -->
     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/media/villa/Home%20sito.JPG');"></div>
     
@@ -17,13 +17,13 @@
          x-data="{ show: false }" x-init="setTimeout(() => show = true, 200)"
          x-show="show" x-transition:enter="transition ease-out duration-700"
          x-transition:enter-start="opacity-0 translate-y-6"
-         x-transition:enter-end="opacity-100 translate-y-0" style="margin-top: -100px;">
-        <div class="mx-auto overflow-hidden" style="width: 750px; max-height: 90%; margin-top: -250px;">
+         x-transition:enter-end="opacity-100 translate-y-0" class="mt-0 md:-mt-[100px]">
+        <div class="mx-auto overflow-hidden w-full max-w-[400px] sm:max-w-[550px] md:max-w-[750px] -mt-[80px] sm:-mt-[150px] md:-mt-[250px]">
             <img src="/media/logo/altesia_no_sottotitolo.png" alt="Altesia" class="block w-full">
         </div>
-        <p class="text-2xl md:text-3xl text-white mb-10 font-bold tracking-wide" style="text-shadow: 5px 5px 15px rgba(0,0,0,0.9), 2px 2px 8px rgba(0,0,0,0.7); margin-top: -250px;">
-            La vostra esperienza di lusso in Umbria
-        </p>
+        <p class="text-lg sm:text-2xl md:text-3xl text-white mb-10 font-bold tracking-wide -mt-[100px] sm:-mt-[180px] md:-mt-[280px]" style="text-shadow: 5px 5px 15px rgba(0,0,0,0.9), 2px 2px 8px rgba(0,0,0,0.7);">
+                    La vostra esperienza di lusso in Umbria
+                </p>
     </div>
     
     <!-- Scroll indicator -->

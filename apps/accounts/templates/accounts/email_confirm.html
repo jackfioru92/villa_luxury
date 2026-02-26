@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Conferma Email - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-primary-50 pt-24 pb-16 flex items-center">
+    <div class="container mx-auto px-4">
+        <div class="max-w-md mx-auto text-center">
+            
+            {% if confirmation %}
+            <!-- Conferma riuscita -->
+            <div class="mb-8">
+                <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-primary-900 mb-4">
+                Email verificata!
+            </h1>
+            <p class="text-primary-600 mb-8">
+                Il tuo indirizzo email <strong>{{ confirmation.email_address.email }}</strong> è stato verificato con successo.
+                Ora puoi accedere al tuo account.
+            </p>
+
+            <a href="{% url 'accounts:login' %}" class="btn-primary inline-block px-8">
+                Accedi
+            </a>
+
+            {% else %}
+            <!-- Link non valido o scaduto -->
+            <div class="mb-8">
+                <div class="w-20 h-20 mx-auto bg-red-100 rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-primary-900 mb-4">
+                Link non valido
+            </h1>
+            <p class="text-primary-600 mb-8">
+                Questo link di verifica non è valido o è scaduto. 
+                Puoi richiedere un nuovo link di verifica.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'accounts:resend_verification' %}" class="btn-primary inline-block px-8">
+                    Rinvia email di verifica
+                </a>
+                <a href="{% url 'accounts:login' %}" class="text-tertiary-500 hover:underline font-medium self-center">
+                    Torna al login
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

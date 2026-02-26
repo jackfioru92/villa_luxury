@@ -4,13 +4,14 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserProfileForm
 from .forms_phone import PhoneOnlyForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from allauth.account.models import EmailAddress
 
 # View per richiedere il telefono dopo login social
 @method_decorator(login_required, name='dispatch')
@@ -36,17 +37,38 @@ from django.utils.deprecation import MiddlewareMixin
 
 # Middleware per forzare inserimento telefono dopo login social
 class PhoneRequiredMiddleware(MiddlewareMixin):
+    """Redirect authenticated users without phone to phone_required page."""
+    
+    EXEMPT_URLS = [
+        '/account/phone-required/',
+        '/account/logout/',
+        '/account/login/',
+        '/account/register/',
+        '/account/email/',    # email verification URLs
+        '/accounts/',         # allauth URLs
+        '/admin/',
+        '/static/',
+        '/media/',
+    ]
+
     def process_request(self, request):
-        if request.user.is_authenticated and hasattr(request.user, 'phone') and not request.user.phone:
-            if request.path not in [reverse_lazy('accounts:phone_required'), reverse_lazy('accounts:logout')]:
-                if request.session.pop('phone_required', False):
-                    return redirect('accounts:phone_required')
-
-                # Se già autenticato ma manca il telefono, forza la pagina
-                if request.path != reverse_lazy('accounts:phone_required'):
-                    return redirect('accounts:phone_required')
-
-        return None
+        if not request.user.is_authenticated:
+            return None
+        
+        # Skip if user already has phone
+        if getattr(request.user, 'phone', None):
+            return None
+        
+        # Skip staff/admin users
+        if request.user.is_staff:
+            return None
+        
+        # Skip exempt URLs
+        for url in self.EXEMPT_URLS:
+            if request.path.startswith(url):
+                return None
+        
+        return redirect('accounts:phone_required')
 
 class CustomLoginView(LoginView):
     """Custom login view."""
@@ -61,6 +83,18 @@ class CustomLoginView(LoginView):
         return reverse_lazy('core:home')
 
     def form_valid(self, form):
+        user = form.get_user()
+        # Controlla se l'email è verificata
+        try:
+            email_address = EmailAddress.objects.get(user=user, email=user.email)
+            if not email_address.verified:
+                messages.warning(
+                    self.request,
+                    _('Devi verificare la tua email prima di accedere. Controlla la tua casella di posta.')
+                )
+                return redirect('accounts:email_verification_sent')
+        except EmailAddress.DoesNotExist:
+            pass  # Utenti creati prima della verifica o admin
         messages.success(self.request, _('Benvenuto!'))
         return super().form_valid(form)
 
@@ -88,12 +122,18 @@ class RegisterView(View):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            # Crea EmailAddress e invia email di verifica tramite allauth
+            email_address, created = EmailAddress.objects.get_or_create(
+                user=user,
+                email=user.email,
+                defaults={'primary': True, 'verified': False}
+            )
+            email_address.send_confirmation(request, signup=True)
             messages.success(
                 request,
-                _('Account creato con successo! Benvenuto.')
+                _('Account creato! Ti abbiamo inviato un\'email di verifica. Controlla la tua casella di posta.')
             )
-            return redirect('core:home')
+            return redirect('accounts:email_verification_sent')
         return render(request, self.template_name, {'form': form})
 
 
@@ -137,3 +177,47 @@ class MyBookingsView(LoginRequiredMixin, TemplateView):
         context['all_bookings'] = bookings
         
         return context
+
+
+# ── Email Verification Views ──────────────────────────────────────
+
+class EmailVerificationSentView(TemplateView):
+    """Pagina mostrata dopo la registrazione: 'Controlla la tua email'."""
+    template_name = 'accounts/email_verification_sent.html'
+
+
+from allauth.account.views import ConfirmEmailView as AllauthConfirmEmailView
+
+class CustomConfirmEmailView(AllauthConfirmEmailView):
+    """Conferma email cliccando il link nella mail."""
+    template_name = 'accounts/email_confirm.html'
+
+    def get(self, *args, **kwargs):
+        """Con ACCOUNT_CONFIRM_EMAIL_ON_GET=True, conferma automaticamente al click."""
+        response = super().get(*args, **kwargs)
+        return response
+
+    def get_redirect_url(self):
+        messages.success(self.request, _('Email verificata con successo! Ora puoi accedere.'))
+        return reverse('accounts:login')
+
+
+class ResendVerificationEmailView(View):
+    """Rinvia l'email di verifica."""
+
+    def post(self, request):
+        email = request.POST.get('email', '').strip()
+        if email:
+            try:
+                email_address = EmailAddress.objects.get(email=email, verified=False)
+                email_address.send_confirmation(request, signup=False)
+                messages.success(request, _('Email di verifica inviata! Controlla la tua casella di posta.'))
+            except EmailAddress.DoesNotExist:
+                # Non rivelare se l'email esiste o meno
+                messages.success(request, _('Se l\'indirizzo è registrato, riceverai un\'email di verifica.'))
+        else:
+            messages.error(request, _('Inserisci un indirizzo email.'))
+        return redirect('accounts:email_verification_sent')
+
+    def get(self, request):
+        return render(request, 'accounts/email_verification_sent.html', {'show_resend_form': True})

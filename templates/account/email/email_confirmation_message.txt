@@ -1,0 +1,14 @@
+{% load account %}{% load i18n %}{% autoescape off %}
+Ciao{% if user.first_name %} {{ user.first_name }}{% endif %},
+
+Grazie per esserti registrato su Villa Luxury!
+
+Per completare la registrazione, verifica il tuo indirizzo email cliccando sul link seguente:
+
+{{ activate_url }}
+
+Se non hai creato tu questo account, ignora questa email.
+
+A presto,
+Il team di Villa Luxury
+{% endautoescape %}

@@ -23,12 +23,12 @@
              x-init="init()">
             
             <!-- Progress Steps -->
-            <div class="flex items-center justify-center mb-12">
+            <div class="flex items-center justify-center mb-8 md:mb-12 px-2">
                 <template x-for="(stepName, index) in steps" :key="index">
                     <div class="flex items-center">
                         <!-- Step Circle -->
                         <div class="flex flex-col items-center">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-sm md:text-base font-semibold transition-all"
                                  :class="currentStep > index + 1 ? 'bg-green-500 text-white' : 
                                          currentStep === index + 1 ? 'bg-tertiary-500 text-white' : 
                                          'bg-primary-200 text-primary-500'">
@@ -41,11 +41,11 @@
                                     <span x-text="index + 1"></span>
                                 </template>
                             </div>
-                            <span class="text-sm mt-2 text-primary-600" x-text="stepName"></span>
+                            <span class="text-[10px] sm:text-xs md:text-sm mt-1 md:mt-2 text-primary-600 text-center" x-text="stepName"></span>
                         </div>
                         <!-- Connector Line -->
                         <template x-if="index < steps.length - 1">
-                            <div class="w-16 lg:w-24 h-1 mx-2 transition-all"
+                            <div class="w-8 sm:w-12 md:w-16 lg:w-24 h-1 mx-1 md:mx-2 transition-all"
                                  :class="currentStep > index + 1 ? 'bg-green-500' : 'bg-primary-200'"></div>
                         </template>
                     </div>
@@ -104,14 +104,14 @@
                         </h2>
                         
                         <div class="grid lg:grid-cols-2 gap-8">
-                            <!-- Date Inputs -->
+                            <!-- Date Inputs + Calendar -->
                             <div class="space-y-6">
                                 <div>
                                     <label class="form-label">Check-in</label>
                                     <input type="date" 
                                            x-model="checkIn"
                                            :min="minDate"
-                                           @change="updatePrice()"
+                                           @change="updatePrice(); loadCalendar()"
                                            class="form-input">
                                 </div>
                                 <div>
@@ -140,6 +140,24 @@
                                         </svg>
                                         Soggiorno minimo: <strong x-text="minNights"></strong> notti
                                     </p>
+                                </div>
+
+                                <!-- Availability Calendar -->
+                                <div>
+                                    <h3 class="text-sm font-semibold text-primary-700 uppercase tracking-wider mb-3">
+                                        Disponibilità
+                                    </h3>
+                                    <div id="availability-calendar"
+                                         x-init="$watch('selectedUnit', value => { if(value) loadCalendar() })"
+                                         class="min-h-[100px]">
+                                        <div class="text-center text-primary-400 py-8 text-sm">
+                                            <svg class="w-10 h-10 mx-auto mb-2 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                            </svg>
+                                            Seleziona una sistemazione per vedere la disponibilità
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -382,12 +400,19 @@ function bookingWizard() {
         
         // State
         isSubmitting: false,
+        calendarLoaded: false,
+        selectingCheckOut: false,
         
         init() {
             // Set min date to tomorrow
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             this.minDate = tomorrow.toISOString().split('T')[0];
+            
+            // Load calendar if unit pre-selected
+            if (this.selectedUnit) {
+                this.$nextTick(() => this.loadCalendar());
+            }
         },
         
         selectUnit(id, name, price, minNights, maxGuests) {
@@ -397,6 +422,36 @@ function bookingWizard() {
             this.minNights = minNights;
             this.maxGuests = maxGuests;
             this.numGuests = 1;
+        },
+        
+        loadCalendar() {
+            if (!this.selectedUnit) return;
+            const calEl = document.getElementById('availability-calendar');
+            if (!calEl) return;
+            const url = `{% url 'booking:htmx_calendar' %}?unit=${this.selectedUnit}`;
+            htmx.ajax('GET', url, {target: '#availability-calendar', swap: 'innerHTML'});
+            this.calendarLoaded = true;
+        },
+        
+        selectDate(dateStr) {
+            if (!this.checkIn || this.selectingCheckOut === false) {
+                // Selecting check-in
+                this.checkIn = dateStr;
+                this.selectingCheckOut = true;
+                this.checkOut = '';
+            } else {
+                // Selecting check-out
+                if (dateStr > this.checkIn) {
+                    this.checkOut = dateStr;
+                    this.selectingCheckOut = false;
+                    this.updatePrice();
+                } else {
+                    // Clicked a date before check-in, reset
+                    this.checkIn = dateStr;
+                    this.checkOut = '';
+                    this.selectingCheckOut = true;
+                }
+            }
         },
         
         updatePrice() {
@@ -448,34 +503,71 @@ function bookingWizard() {
             this.isSubmitting = true;
             
             const form = document.getElementById('guest-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                this.isSubmitting = false;
+                return;
+            }
+            
             const formData = new FormData(form);
             
-            formData.append('unit', this.selectedUnit);
-            formData.append('check_in', this.checkIn);
-            formData.append('check_out', this.checkOut);
-            formData.append('num_guests', this.numGuests);
+            // Build JSON payload with all booking data
+            const payload = {
+                unit: this.selectedUnit,
+                check_in: this.checkIn,
+                check_out: this.checkOut,
+                num_guests: parseInt(this.numGuests),
+                first_name: formData.get('first_name'),
+                last_name: formData.get('last_name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                country: formData.get('country') || '',
+                arrival_time: formData.get('arrival_time') || '',
+                notes: formData.get('notes') || '',
+                terms_accepted: formData.has('terms_accepted'),
+                privacy_accepted: formData.has('privacy_accepted'),
+            };
             
             try {
-                const response = await fetch('{% url "booking:htmx_step" step=3 %}', {
+                const response = await fetch('{% url "booking:api_create" %}', {
                     method: 'POST',
-                    body: formData,
+                    body: JSON.stringify(payload),
                     headers: {
+                        'Content-Type': 'application/json',
                         'X-CSRFToken': '{{ csrf_token }}'
                     }
                 });
                 
-                if (response.ok) {
-                    // Redirect to payment
-                    window.location.href = '/payment/checkout/' + this.bookingId + '/';
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Redirect to payment checkout
+                    window.location.href = result.payment_url;
                 } else {
-                    alert('Si è verificato un errore. Riprova.');
+                    this.showError(result.error || 'Si è verificato un errore. Riprova.');
                 }
             } catch (error) {
-                console.error(error);
-                alert('Si è verificato un errore. Riprova.');
+                console.error('Booking error:', error);
+                this.showError('Errore di connessione. Verifica la tua connessione e riprova.');
             }
             
             this.isSubmitting = false;
+        },
+        
+        showError(message) {
+            // Show error notification at top of page
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-20 right-4 z-50 px-6 py-4 rounded-lg shadow-lg bg-red-500 text-white flex items-center justify-between max-w-md';
+            errorDiv.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="ml-4 hover:opacity-75">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            `;
+            document.body.appendChild(errorDiv);
+            setTimeout(() => errorDiv.remove(), 6000);
         }
     }
 }

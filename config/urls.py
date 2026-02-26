@@ -6,6 +6,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Allauth requires these URL names without namespace
+from apps.accounts.views import CustomConfirmEmailView, EmailVerificationSentView
+
 urlpatterns = [
     # Django admin
     path('admin/', admin.site.urls),
@@ -24,8 +27,13 @@ urlpatterns = [
     
     # User accounts
     path('account/', include('apps.accounts.urls', namespace='accounts')),
-    # Social login (allauth)
+    # Social login (allauth) - PRIMA delle override per url resolution
     path('accounts/', include('allauth.urls')),
+    
+    # Override allauth email verification URLs (senza namespace, richiesto da allauth internamente)
+    # Devono essere DOPO allauth.urls per fare override del reverse()
+    path('account/email/verify/<key>/', CustomConfirmEmailView.as_view(), name='account_confirm_email'),
+    path('account/email/verify/', EmailVerificationSentView.as_view(), name='account_email_verification_sent'),
     
     # Admin dashboard
     path('dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
