@@ -5,9 +5,110 @@ from datetime import date, timedelta
 from decimal import Decimal
 from typing import Optional, List, Dict, Tuple
 from django.conf import settings
+from django.core.mail import send_mail
 from django.db.models import Q
 from apps.villa.models import BookableUnit, SeasonPrice
 from apps.booking.models import BlockedDate, Booking, BookingPriceDetail
+
+
+def send_new_booking_notification(booking: Booking):
+    """
+    Invia email di notifica all'admin quando viene creata una nuova prenotazione.
+    """
+    try:
+        subject = f'[{settings.SITE_NAME}] Nuova prenotazione #{booking.booking_number}'
+        
+        message = (
+            f"Nuova prenotazione ricevuta!\n"
+            f"{'=' * 50}\n\n"
+            f"Numero prenotazione: {booking.booking_number}\n"
+            f"Ospite: {booking.guest_full_name}\n"
+            f"Email: {booking.guest_email}\n"
+            f"Telefono: {booking.guest_phone}\n\n"
+            f"Sistemazione: {booking.unit.name}\n"
+            f"Check-in: {booking.check_in.strftime('%d/%m/%Y')}\n"
+            f"Check-out: {booking.check_out.strftime('%d/%m/%Y')}\n"
+            f"Notti: {booking.nights}\n"
+            f"Ospiti: {booking.num_guests}\n\n"
+            f"Totale: €{booking.total_amount}\n"
+            f"Acconto richiesto: €{booking.deposit_amount}\n\n"
+            f"Stato: In attesa di pagamento\n\n"
+            f"Accedi alla dashboard per gestire la prenotazione:\n"
+            f"https://altesiasuite.com/dashboard/prenotazioni/{booking.id}/\n"
+        )
+        
+        if booking.guest_notes:
+            message += f"\nNote ospite:\n{booking.guest_notes}\n"
+        
+        recipient = getattr(settings, 'CONTACT_EMAIL', settings.DEFAULT_FROM_EMAIL)
+        
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient],
+            fail_silently=True,
+        )
+    except Exception:
+        # Non bloccare la prenotazione se l'email fallisce
+        pass
+
+
+def send_booking_confirmation_to_guest(booking: Booking):
+    """
+    Invia email di conferma all'ospite quando la prenotazione viene confermata.
+    """
+    try:
+        subject = f'Prenotazione Confermata #{booking.booking_number} - Altesia Suite'
+        
+        message = (
+            f"Gentile {booking.guest_first_name},\n\n"
+            f"La tua prenotazione è stata confermata! Ti aspettiamo.\n\n"
+            f"{'=' * 50}\n"
+            f"DETTAGLI PRENOTAZIONE\n"
+            f"{'=' * 50}\n\n"
+            f"Numero prenotazione: {booking.booking_number}\n"
+            f"Sistemazione: {booking.unit.name}\n\n"
+            f"Check-in: {booking.check_in.strftime('%A %d %B %Y')}\n"
+            f"   Orario: dalle 15:00\n"
+            f"Check-out: {booking.check_out.strftime('%A %d %B %Y')}\n"
+            f"   Orario: entro le 10:00\n\n"
+            f"Notti: {booking.nights}\n"
+            f"Ospiti: {booking.num_guests}\n\n"
+            f"{'=' * 50}\n"
+            f"RIEPILOGO PAGAMENTO\n"
+            f"{'=' * 50}\n\n"
+            f"Totale soggiorno: €{booking.total_amount}\n"
+            f"Acconto pagato: €{booking.deposit_amount}\n"
+            f"Saldo da pagare in loco: €{booking.balance_due}\n\n"
+        )
+        
+        if booking.guest_notes:
+            message += f"Le tue note: {booking.guest_notes}\n\n"
+        
+        message += (
+            f"{'=' * 50}\n"
+            f"INFORMAZIONI UTILI\n"
+            f"{'=' * 50}\n\n"
+            f"Indirizzo: Vocabolo Petroro 74, 06059 Todi (PG), Umbria\n"
+            f"Coordinate GPS: 42.7580, 12.4066\n\n"
+            f"Per qualsiasi domanda o richiesta speciale,\n"
+            f"non esitare a contattarci:\n"
+            f"Email: info@altesiasuite.com\n"
+            f"Telefono: +39 XXX XXX XXXX\n\n"
+            f"Ti aspettiamo!\n"
+            f"Il team di Altesia Suite\n"
+        )
+        
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[booking.guest_email],
+            fail_silently=True,
+        )
+    except Exception:
+        pass
 
 
 class AvailabilityService:
@@ -254,6 +355,9 @@ class BookingService:
                 season_name=item['season']
             )
         
+        # Invia notifica email all'admin
+        send_new_booking_notification(booking)
+        
         return booking
 
     @staticmethod
@@ -270,6 +374,10 @@ class BookingService:
             raise ValueError("Le date non sono più disponibili")
         
         booking.confirm()
+        
+        # Invia email di conferma all'ospite
+        send_booking_confirmation_to_guest(booking)
+        
         return booking
 
     @staticmethod

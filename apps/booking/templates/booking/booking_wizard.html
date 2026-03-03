@@ -125,8 +125,8 @@
                                 <div>
                                     <label class="form-label">Numero Ospiti</label>
                                     <select x-model="numGuests" @change="updatePrice()" class="form-input">
-                                        <template x-for="n in maxGuests" :key="n">
-                                            <option :value="n" x-text="n + ' ospite' + (n > 1 ? 'i' : '')"></option>
+                                        <template x-for="n in 15" :key="n">
+                                            <option :value="n" x-text="n + (n === 1 ? ' ospite' : ' ospiti')"></option>
                                         </template>
                                     </select>
                                 </div>
@@ -205,13 +205,13 @@
                                 <div>
                                     <label class="form-label">Nome *</label>
                                     <input type="text" name="first_name" required
-                                           value="{{ user.first_name|default:'' }}"
+                                           x-model="guestFirstName"
                                            class="form-input" placeholder="Mario">
                                 </div>
                                 <div>
                                     <label class="form-label">Cognome *</label>
                                     <input type="text" name="last_name" required
-                                           value="{{ user.last_name|default:'' }}"
+                                           x-model="guestLastName"
                                            class="form-input" placeholder="Rossi">
                                 </div>
                             </div>
@@ -220,13 +220,13 @@
                                 <div>
                                     <label class="form-label">Email *</label>
                                     <input type="email" name="email" required
-                                           value="{{ user.email|default:'' }}"
+                                           x-model="guestEmail"
                                            class="form-input" placeholder="mario.rossi@email.com">
                                 </div>
                                 <div>
                                     <label class="form-label">Telefono *</label>
                                     <input type="tel" name="phone" required
-                                           value="{{ user.phone|default:'' }}"
+                                           x-model="guestPhone"
                                            class="form-input" placeholder="+39 333 1234567">
                                 </div>
                             </div>
@@ -234,24 +234,28 @@
                             <div>
                                 <label class="form-label">Paese</label>
                                 <input type="text" name="country"
+                                       x-model="guestCountry"
                                        class="form-input" placeholder="Italia">
                             </div>
                             
                             <div>
                                 <label class="form-label">Orario di arrivo previsto</label>
                                 <input type="time" name="arrival_time"
+                                       x-model="guestArrivalTime"
                                        class="form-input">
                             </div>
                             
                             <div>
                                 <label class="form-label">Note o richieste speciali</label>
                                 <textarea name="notes" rows="3"
+                                          x-model="guestNotes"
                                           class="form-input" placeholder="Eventuali richieste..."></textarea>
                             </div>
                             
                             <div class="space-y-3">
                                 <label class="flex items-start space-x-3 cursor-pointer">
                                     <input type="checkbox" name="terms_accepted" required
+                                           x-model="termsAccepted"
                                            class="mt-1 w-5 h-5 rounded border-primary-300 text-tertiary-500 focus:ring-gold-500">
                                     <span class="text-sm text-primary-600">
                                         Accetto i <a href="{% url 'core:terms' %}" target="_blank" class="text-tertiary-500 underline">Termini e Condizioni</a> *
@@ -259,6 +263,7 @@
                                 </label>
                                 <label class="flex items-start space-x-3 cursor-pointer">
                                     <input type="checkbox" name="privacy_accepted" required
+                                           x-model="privacyAccepted"
                                            class="mt-1 w-5 h-5 rounded border-primary-300 text-tertiary-500 focus:ring-gold-500">
                                     <span class="text-sm text-primary-600">
                                         Accetto la <a href="{% url 'core:privacy' %}" target="_blank" class="text-tertiary-500 underline">Privacy Policy</a> *
@@ -398,6 +403,17 @@ function bookingWizard() {
         totalAmount: 0,
         depositAmount: 0,
         
+        // Guest form fields (non pre-compilare per staff/admin)
+        guestFirstName: {% if user.is_authenticated and not user.is_staff %}'{{ user.first_name|default:"" }}'{% else %}''{% endif %},
+        guestLastName: {% if user.is_authenticated and not user.is_staff %}'{{ user.last_name|default:"" }}'{% else %}''{% endif %},
+        guestEmail: {% if user.is_authenticated and not user.is_staff %}'{{ user.email|default:"" }}'{% else %}''{% endif %},
+        guestPhone: {% if user.is_authenticated and not user.is_staff %}'{{ user.phone|default:"" }}'{% else %}''{% endif %},
+        guestCountry: '',
+        guestArrivalTime: '',
+        guestNotes: '',
+        termsAccepted: false,
+        privacyAccepted: false,
+        
         // State
         isSubmitting: false,
         calendarLoaded: false,
@@ -409,9 +425,27 @@ function bookingWizard() {
             tomorrow.setDate(tomorrow.getDate() + 1);
             this.minDate = tomorrow.toISOString().split('T')[0];
             
+            // Read dates from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const checkinParam = urlParams.get('checkin');
+            const checkoutParam = urlParams.get('checkout');
+            
+            if (checkinParam && checkinParam >= this.minDate) {
+                this.checkIn = checkinParam;
+            }
+            if (checkoutParam && checkoutParam > this.checkIn) {
+                this.checkOut = checkoutParam;
+                this.selectingCheckOut = false;
+            }
+            
             // Load calendar if unit pre-selected
             if (this.selectedUnit) {
                 this.$nextTick(() => this.loadCalendar());
+            }
+            
+            // If dates are pre-filled and unit selected, update price
+            if (this.checkIn && this.checkOut && this.selectedUnit) {
+                this.$nextTick(() => this.updatePrice());
             }
         },
         
@@ -470,8 +504,16 @@ function bookingWizard() {
                 return nights >= this.minNights;
             }
             if (this.currentStep === 3) {
-                const form = document.getElementById('guest-form');
-                return form.checkValidity();
+                // Validazione email base
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const emailValid = emailRegex.test(this.guestEmail.trim());
+                
+                return this.guestFirstName.trim() !== '' && 
+                       this.guestLastName.trim() !== '' && 
+                       emailValid && 
+                       this.guestPhone.trim() !== '' &&
+                       this.termsAccepted && 
+                       this.privacyAccepted;
             }
             return true;
         },

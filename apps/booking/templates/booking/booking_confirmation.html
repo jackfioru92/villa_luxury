@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+
+{% block title %}Prenotazione Confermata - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        
+        <div class="max-w-2xl mx-auto">
+            
+            <!-- Success Message -->
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900 mb-4">
+                    Prenotazione Confermata!
+                </h1>
+                <p class="text-primary-600 text-lg">
+                    Grazie per aver prenotato. Riceverai una email di conferma a breve.
+                </p>
+            </div>
+            
+            <!-- Booking Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                
+                <!-- Header -->
+                <div class="bg-tertiary-500 text-white px-6 py-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm uppercase tracking-wider">Numero prenotazione</span>
+                        <span class="font-mono text-lg font-semibold">{{ booking.booking_number }}</span>
+                    </div>
+                </div>
+                
+                <!-- Details -->
+                <div class="p-6 space-y-6">
+                    
+                    <!-- Unit Info -->
+                    <div class="flex items-start space-x-4">
+                        {% if booking.unit.main_image %}
+                        <img src="{{ booking.unit.main_image.url }}" 
+                             alt="{{ booking.unit.name }}" 
+                             class="w-24 h-24 object-cover rounded-lg flex-shrink-0">
+                        {% else %}
+                        <div class="w-24 h-24 bg-primary-100 rounded-lg flex-shrink-0"></div>
+                        {% endif %}
+                        <div>
+                            <h2 class="font-semibold text-primary-900 text-lg">{{ booking.unit.name }}</h2>
+                            {% if booking.unit.address %}
+                            <p class="text-sm text-primary-500 mt-1">{{ booking.unit.address }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <hr class="border-primary-100">
+                    
+                    <!-- Date & Guest Info -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-sm font-semibold text-primary-500 uppercase tracking-wider mb-3">Soggiorno</h3>
+                            <dl class="space-y-2">
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Check-in</dt>
+                                    <dd class="font-medium text-primary-900">{{ booking.check_in|date:"l d M Y" }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Check-out</dt>
+                                    <dd class="font-medium text-primary-900">{{ booking.check_out|date:"l d M Y" }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Notti</dt>
+                                    <dd class="font-medium text-primary-900">{{ booking.nights }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Ospiti</dt>
+                                    <dd class="font-medium text-primary-900">{{ booking.num_guests }}</dd>
+                                </div>
+                            </dl>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-semibold text-primary-500 uppercase tracking-wider mb-3">Ospite</h3>
+                            <dl class="space-y-2">
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Nome</dt>
+                                    <dd class="font-medium text-primary-900">{{ booking.guest_first_name }} {{ booking.guest_last_name }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Email</dt>
+                                    <dd class="font-medium text-primary-900 text-sm">{{ booking.guest_email }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-primary-600">Telefono</dt>
+                                    <dd class="font-medium text-primary-900">{{ booking.guest_phone }}</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                    
+                    <hr class="border-primary-100">
+                    
+                    <!-- Pricing -->
+                    <div>
+                        <h3 class="text-sm font-semibold text-primary-500 uppercase tracking-wider mb-3">Riepilogo costi</h3>
+                        <dl class="space-y-2">
+                            <div class="flex justify-between">
+                                <dt class="text-primary-600">{{ booking.nights }} notti x €{{ booking.price_per_night_avg|floatformat:2 }}/notte</dt>
+                                <dd class="font-medium text-primary-900">€{{ booking.subtotal|floatformat:2 }}</dd>
+                            </div>
+                            {% if booking.cleaning_fee > 0 %}
+                            <div class="flex justify-between">
+                                <dt class="text-primary-600">Pulizie finali</dt>
+                                <dd class="font-medium text-primary-900">€{{ booking.cleaning_fee|floatformat:2 }}</dd>
+                            </div>
+                            {% endif %}
+                            <hr class="border-primary-100 my-2">
+                            <div class="flex justify-between text-lg">
+                                <dt class="font-semibold text-primary-900">Totale</dt>
+                                <dd class="font-bold text-primary-900">€{{ booking.total_amount|floatformat:2 }}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    
+                    <!-- Payment Status -->
+                    <div class="bg-primary-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-sm text-primary-500">Stato pagamento</p>
+                                <p class="font-semibold text-primary-900">
+                                    {% if booking.payment_status == 'DEPOSIT_PAID' %}
+                                        Acconto pagato (€{{ booking.deposit_amount|floatformat:2 }})
+                                    {% elif booking.payment_status == 'FULLY_PAID' %}
+                                        Pagato interamente
+                                    {% else %}
+                                        In attesa
+                                    {% endif %}
+                                </p>
+                            </div>
+                            {% if booking.balance_due > 0 %}
+                            <div class="text-right">
+                                <p class="text-sm text-primary-500">Saldo al check-in</p>
+                                <p class="font-bold text-tertiary-500 text-lg">€{{ booking.balance_due|floatformat:2 }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Footer Actions -->
+                <div class="bg-primary-50 px-6 py-4 border-t border-primary-100">
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="{% url 'core:home' %}" class="btn-outline text-center">
+                            Torna alla Home
+                        </a>
+                        <button onclick="window.print()" class="btn-primary text-center">
+                            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                            </svg>
+                            Stampa
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Info Box -->
+            <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h3 class="font-semibold text-blue-900 mb-2">Informazioni utili</h3>
+                <ul class="text-sm text-blue-700 space-y-2">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 flex-shrink-0 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Riceverai un'email di conferma con tutti i dettagli
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 flex-shrink-0 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Check-in dalle ore 15:00, check-out entro le 10:00
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 flex-shrink-0 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        Per qualsiasi domanda contattaci al telefono o via email
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

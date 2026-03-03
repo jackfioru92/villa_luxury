@@ -13,8 +13,9 @@ DATABASES = {
     }
 }
 
-# Email to console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email - usa le impostazioni da .env (Aruba SMTP), o fallback a console
+# Per testare email reali, commenta la riga sotto
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Debug toolbar (optional)
 # INSTALLED_APPS += ['debug_toolbar']

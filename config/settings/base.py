@@ -68,7 +68,7 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Villa Luxury] '
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Altesia Suite] '
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'  # Social login non richiede verifica
@@ -190,11 +190,13 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 # Email Configuration
 EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = env('EMAIL_HOST', default='localhost')
-EMAIL_PORT = env('EMAIL_PORT', default=587)
-EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=True)
+EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
+EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=True)
 EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='Villa Luxury <noreply@villaluxury.com>')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='Altesia Suite <info@altesiasuite.com>')
+CONTACT_EMAIL = env('CONTACT_EMAIL', default='info@altesiasuite.com')
 
 # Stripe Configuration
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY', default='')
@@ -206,5 +208,5 @@ BOOKING_DEPOSIT_PERCENTAGE = env('BOOKING_DEPOSIT_PERCENTAGE', default=30)  # 30
 BOOKING_MIN_ADVANCE_DAYS = env('BOOKING_MIN_ADVANCE_DAYS', default=1)  # Giorni minimi di anticipo
 
 # Site Configuration
-SITE_NAME = 'Villa Luxury'
-SITE_DESCRIPTION = 'La vostra esperienza di lusso in Italia'
+SITE_NAME = 'Altesia Suite'
+SITE_DESCRIPTION = 'La vostra esperienza di lusso in Umbria'

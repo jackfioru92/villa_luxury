@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, ListView, DetailView, View
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 from django.db.models import Sum, Count, Q
 from django.db.models.functions import TruncMonth
 from django.utils import timezone
@@ -10,6 +11,7 @@ from datetime import date, timedelta
 from decimal import Decimal
 
 from apps.booking.models import Booking, BlockedDate
+from apps.booking.services import send_booking_confirmation_to_guest
 from apps.villa.models import BookableUnit
 from apps.payments.models import Payment
 
@@ -198,11 +200,11 @@ class CalendarEventsAPIView(View):
                 }
             })
 
-        # Add blocked dates
+        # Add blocked dates (all non-booking blocks)
         blocked_filters = {
             'date__gte': start,
             'date__lte': end,
-            'reason__in': [BlockedDate.Reason.MAINTENANCE, BlockedDate.Reason.OWNER]
+            'booking__isnull': True  # Only manual blocks, not booking-related
         }
         if unit_id:
             blocked_filters['unit_id'] = unit_id
@@ -211,7 +213,7 @@ class CalendarEventsAPIView(View):
         for blocked in blocked_dates:
             events.append({
                 'id': f'blocked-{blocked.id}',
-                'title': f'Bloccato: {blocked.get_reason_display()}',
+                'title': f'Bloccato: {blocked.reason}',
                 'start': blocked.date.isoformat(),
                 'allDay': True,
                 'color': '#6b7280',
@@ -234,11 +236,39 @@ class BlockDatesView(TemplateView):
         context['units'] = BookableUnit.objects.filter(is_active=True)
         context['reasons'] = BlockedDate.Reason.choices
         
-        # Current blocks (non-booking)
-        context['blocked_dates'] = BlockedDate.objects.filter(
-            reason__in=[BlockedDate.Reason.MAINTENANCE, BlockedDate.Reason.OWNER, BlockedDate.Reason.OTHER],
+        # Get all manual blocks (non-booking) and group consecutive dates
+        blocked_dates = BlockedDate.objects.filter(
+            booking__isnull=True,
             date__gte=date.today()
-        ).order_by('date')[:50]
+        ).order_by('unit', 'date').select_related('unit')
+        
+        # Group consecutive dates by unit and reason
+        grouped_blocks = []
+        current_block = None
+        
+        for blocked in blocked_dates:
+            if (current_block is None or 
+                current_block['unit'] != blocked.unit or
+                current_block['reason'] != blocked.reason or
+                (blocked.date - current_block['end_date']).days > 1):
+                # Start new block
+                if current_block:
+                    grouped_blocks.append(current_block)
+                current_block = {
+                    'id': blocked.id,
+                    'unit': blocked.unit,
+                    'start_date': blocked.date,
+                    'end_date': blocked.date,
+                    'reason': blocked.reason,
+                }
+            else:
+                # Extend current block
+                current_block['end_date'] = blocked.date
+        
+        if current_block:
+            grouped_blocks.append(current_block)
+        
+        context['blocked_dates'] = grouped_blocks
         
         return context
 
@@ -251,7 +281,8 @@ class BlockDatesView(TemplateView):
         note = request.POST.get('note', '')
 
         if not all([unit_id, start_date, end_date, reason]):
-            return JsonResponse({'error': 'Missing required fields'}, status=400)
+            messages.error(request, 'Compila tutti i campi obbligatori.')
+            return redirect('dashboard:block_dates')
 
         from datetime import datetime
         start = datetime.strptime(start_date, '%Y-%m-%d').date()
@@ -270,7 +301,8 @@ class BlockDatesView(TemplateView):
                 created += 1
             current += timedelta(days=1)
 
-        return JsonResponse({'created': created})
+        messages.success(request, f'{created} date bloccate con successo.')
+        return redirect('dashboard:block_dates')
 
 
 @method_decorator(staff_member_required, name='dispatch')
@@ -327,3 +359,89 @@ class ReportsView(TemplateView):
             context['occupancy_rate'] = 0
         
         return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class BookingActionView(View):
+    """Handle booking actions: confirm, reject/cancel, update notes."""
+
+    def post(self, request, pk):
+        booking = get_object_or_404(Booking, pk=pk)
+        action = request.POST.get('action')
+
+        if action == 'confirm' and booking.status == Booking.Status.PENDING:
+            booking.confirm()
+            send_booking_confirmation_to_guest(booking)
+            messages.success(request, f'Prenotazione #{booking.booking_number} confermata con successo. Email inviata all\'ospite.')
+
+        elif action == 'reject' and booking.status == Booking.Status.PENDING:
+            reason = request.POST.get('reason', 'Rifiutata dall\'amministratore')
+            booking.cancel(reason=reason or 'Rifiutata dall\'amministratore')
+            messages.warning(request, f'Prenotazione #{booking.booking_number} rifiutata.')
+
+        elif action == 'cancel' and booking.status == Booking.Status.CONFIRMED:
+            booking.cancel(reason='Cancellata dall\'amministratore')
+            messages.warning(request, f'Prenotazione #{booking.booking_number} cancellata.')
+
+        elif action == 'update_notes':
+            booking.admin_notes = request.POST.get('admin_notes', '')
+            booking.save(update_fields=['admin_notes'])
+            messages.success(request, 'Note aggiornate.')
+
+        else:
+            messages.error(request, 'Azione non valida.')
+
+        return redirect('dashboard:booking_detail', pk=booking.pk)
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class DeleteBlockView(View):
+    """Delete blocked dates for a specific block range."""
+
+    def post(self, request, pk):
+        # Get the block to find its unit, reason, and date
+        block = get_object_or_404(BlockedDate, pk=pk)
+        unit = block.unit
+        reason = block.reason
+        start_date = block.date
+        
+        # Find all consecutive dates with same unit and reason
+        dates_to_delete = [block]
+        
+        # Look forward
+        current_date = start_date + timedelta(days=1)
+        while True:
+            next_block = BlockedDate.objects.filter(
+                unit=unit,
+                reason=reason,
+                date=current_date,
+                booking__isnull=True
+            ).first()
+            if next_block:
+                dates_to_delete.append(next_block)
+                current_date += timedelta(days=1)
+            else:
+                break
+        
+        # Look backward
+        current_date = start_date - timedelta(days=1)
+        while True:
+            prev_block = BlockedDate.objects.filter(
+                unit=unit,
+                reason=reason,
+                date=current_date,
+                booking__isnull=True
+            ).first()
+            if prev_block:
+                dates_to_delete.append(prev_block)
+                current_date -= timedelta(days=1)
+            else:
+                break
+        
+        # Delete all
+        count = len(dates_to_delete)
+        for b in dates_to_delete:
+            b.delete()
+        
+        messages.success(request, f'{count} date sbloccate con successo.')
+        return redirect('dashboard:block_dates')

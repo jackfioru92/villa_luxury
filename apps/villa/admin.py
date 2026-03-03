@@ -100,6 +100,14 @@ class AmenityAdmin(admin.ModelAdmin):
     list_editable = ('is_highlighted',)
 
 
+@admin.register(SeasonPrice)
+class SeasonPriceAdmin(admin.ModelAdmin):
+    list_display = ('unit', 'name', 'price_per_night', 'start_date', 'end_date', 'min_nights')
+    list_filter = ('unit',)
+    search_fields = ('name', 'unit__name')
+    ordering = ('unit', 'start_date')
+
+
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
     list_display = ('alt_text', 'villa', 'unit', 'is_hero', 'sort_order')

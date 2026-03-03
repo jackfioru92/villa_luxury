@@ -418,14 +418,31 @@ class BookingCreateAPIView(View):
         # Store booking in session
         request.session['pending_booking_id'] = str(booking.id)
 
-        # Build payment URL
-        payment_url = reverse('payments:checkout', kwargs={'booking_id': booking.id})
+        # === MODALITÀ TEST: Bypassa Stripe e conferma direttamente ===
+        # TODO: Rimuovere in produzione e riabilitare Stripe
+        try:
+            BookingService.confirm_booking(booking)
+            # Redirect diretto alla conferma
+            confirmation_url = reverse('booking:confirmation', kwargs={'booking_number': booking.booking_number})
+            return JsonResponse({
+                'success': True,
+                'booking_number': booking.booking_number,
+                'booking_id': str(booking.id),
+                'payment_url': confirmation_url,  # In test, va diretto alla conferma
+                'total_amount': str(booking.total_amount),
+                'deposit_amount': str(booking.deposit_amount),
+            })
+        except ValueError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+        # === FINE MODALITÀ TEST ===
 
-        return JsonResponse({
-            'success': True,
-            'booking_number': booking.booking_number,
-            'booking_id': str(booking.id),
-            'payment_url': payment_url,
-            'total_amount': str(booking.total_amount),
-            'deposit_amount': str(booking.deposit_amount),
-        })
+        # Build payment URL (commentato per test)
+        # payment_url = reverse('payments:checkout', kwargs={'booking_id': booking.id})
+        # return JsonResponse({
+        #     'success': True,
+        #     'booking_number': booking.booking_number,
+        #     'booking_id': str(booking.id),
+        #     'payment_url': payment_url,
+        #     'total_amount': str(booking.total_amount),
+        #     'deposit_amount': str(booking.deposit_amount),
+        # })

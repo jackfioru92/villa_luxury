@@ -66,9 +66,9 @@ class ContactView(TemplateView):
 
         try:
             site_settings_obj = SiteSettings.get_settings()
-            recipient = site_settings_obj.email or settings.DEFAULT_FROM_EMAIL
+            recipient = site_settings_obj.email or getattr(settings, 'CONTACT_EMAIL', settings.DEFAULT_FROM_EMAIL)
         except Exception:
-            recipient = settings.DEFAULT_FROM_EMAIL
+            recipient = getattr(settings, 'CONTACT_EMAIL', settings.DEFAULT_FROM_EMAIL)
 
         try:
             send_mail(
