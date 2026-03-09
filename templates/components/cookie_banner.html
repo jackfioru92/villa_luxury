@@ -1,6 +1,5 @@
 <!-- Cookie Consent Banner -->
-<div x-data="cookieConsent()" x-init="init()" x-cloak
-     @open-cookie-settings.window="showSettings = true; showBanner = true">
+<div x-data="cookieConsent()" x-init="init()" x-cloak>
     
     <!-- Banner principale -->
     <div x-show="showBanner" 
@@ -175,8 +174,13 @@ function cookieConsent() {
                 } catch (e) {
                     this.showBanner = true;
                 }
-            }
-            
+            }            
+            // Esponi funzione globale per riaprire le impostazioni
+            const self = this;
+            window.openCookieSettings = function() {
+                self.showSettings = true;
+                self.showBanner = true;
+            };            
         },
         
         acceptAll() {

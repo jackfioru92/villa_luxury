@@ -180,7 +180,7 @@
                         Puoi modificare le tue preferenze in qualsiasi momento cliccando sul pulsante qui sotto:
                     </p>
                     <div class="mt-4">
-                        <button onclick="window.dispatchEvent(new CustomEvent('open-cookie-settings'))" 
+                        <button onclick="if(window.openCookieSettings) window.openCookieSettings();" 
                                 class="px-6 py-3 bg-tertiary-500 text-white rounded-sm hover:bg-tertiary-600 transition-colors font-medium">
                             Gestisci preferenze cookie
                         </button>
