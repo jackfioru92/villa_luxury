@@ -175,6 +175,12 @@ function cookieConsent() {
                     this.showBanner = true;
                 }
             }
+            
+            // Ascolta evento per riaprire le impostazioni cookie
+            document.addEventListener('open-cookie-settings', () => {
+                this.showSettings = true;
+                this.showBanner = true;
+            });
         },
         
         acceptAll() {
