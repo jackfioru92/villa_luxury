@@ -8,6 +8,7 @@ urlpatterns = [
     path('contatti/', views.ContactView.as_view(), name='contact'),
     path('privacy/', views.PrivacyView.as_view(), name='privacy'),
     path('termini/', views.TermsView.as_view(), name='terms'),
+    path('cookie-policy/', views.CookiePolicyView.as_view(), name='cookie_policy'),
     path('pagina/<slug:slug>/', views.PageDetailView.as_view(), name='page_detail'),
     path('manutenzione/', views.MaintenanceView.as_view(), name='maintenance'),
 ]

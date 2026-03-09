@@ -106,6 +106,7 @@
                 <p>&copy; {% now "Y" %} {{ SITE_NAME|default:"Villa Luxury" }}. Tutti i diritti riservati.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
                     <a href="{% url 'core:privacy' %}" class="hover:text-tertiary-400 transition-colors">Privacy Policy</a>
+                    <a href="{% url 'core:cookie_policy' %}" class="hover:text-tertiary-400 transition-colors">Cookie Policy</a>
                     <a href="{% url 'core:terms' %}" class="hover:text-tertiary-400 transition-colors">Termini e Condizioni</a>
                     {% if user.is_staff %}
                     <a href="{% url 'dashboard:overview' %}" class="hover:text-tertiary-400 transition-colors">

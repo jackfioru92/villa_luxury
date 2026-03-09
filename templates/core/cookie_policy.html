@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+
+{% block title %}Cookie Policy - {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}Informativa sui cookie di {{ SITE_NAME }}. Scopri quali cookie utilizziamo e come gestire le tue preferenze.{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            
+            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900 mb-4">Cookie Policy</h1>
+            <p class="text-primary-500 mb-8">Ultimo aggiornamento: 9 marzo 2026</p>
+            
+            <div class="bg-white rounded-xl shadow-lg p-8 lg:p-12 space-y-8 text-primary-700 leading-relaxed">
+                
+                <!-- Introduzione -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">1. Cosa sono i Cookie</h2>
+                    <p>
+                        I cookie sono piccoli file di testo che vengono memorizzati sul tuo dispositivo (computer, tablet o smartphone) 
+                        quando visiti un sito web. Vengono utilizzati per far funzionare il sito in modo efficiente e per fornire 
+                        informazioni ai proprietari del sito.
+                    </p>
+                    <p class="mt-3">
+                        Questo sito (<strong>{{ SITE_NAME }}</strong> - altesiasuite.com) utilizza diversi tipi di cookie, 
+                        descritti in dettaglio di seguito. Puoi scegliere quali categorie di cookie accettare tramite il nostro 
+                        pannello delle preferenze.
+                    </p>
+                </section>
+                
+                <!-- Titolare -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">2. Titolare del Trattamento</h2>
+                    <p>
+                        Il titolare del trattamento dei dati è <strong>{{ SITE_NAME }}</strong>.
+                    </p>
+                    <ul class="mt-3 space-y-1">
+                        {% if site_settings.email %}
+                        <li><strong>Email:</strong> {{ site_settings.email }}</li>
+                        {% endif %}
+                        {% if site_settings.address %}
+                        <li><strong>Indirizzo:</strong> {{ site_settings.address }}</li>
+                        {% endif %}
+                        {% if site_settings.phone %}
+                        <li><strong>Telefono:</strong> {{ site_settings.phone }}</li>
+                        {% endif %}
+                    </ul>
+                </section>
+                
+                <!-- Cookie Essenziali -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">3. Cookie Essenziali (Tecnici)</h2>
+                    <p>
+                        Questi cookie sono strettamente necessari per il funzionamento del sito e <strong>non possono essere disattivati</strong>. 
+                        Vengono impostati in risposta ad azioni da te effettuate, come la configurazione delle preferenze sulla privacy, 
+                        l'accesso al tuo account o la compilazione di moduli.
+                    </p>
+                    
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-primary-100">
+                                    <th class="text-left p-3 font-semibold text-primary-900">Cookie</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Finalità</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Durata</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-primary-100">
+                                <tr>
+                                    <td class="p-3 font-mono text-sm">sessionid</td>
+                                    <td class="p-3">Mantiene la sessione utente attiva durante la navigazione</td>
+                                    <td class="p-3">2 settimane</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-sm">csrftoken</td>
+                                    <td class="p-3">Protezione contro attacchi Cross-Site Request Forgery (CSRF)</td>
+                                    <td class="p-3">1 anno</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-sm">cookie_consent</td>
+                                    <td class="p-3">Memorizza le tue preferenze sui cookie</td>
+                                    <td class="p-3">1 anno</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Cookie Analytics -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">4. Cookie Analitici</h2>
+                    <p>
+                        Questi cookie ci permettono di contare le visite e le fonti di traffico, in modo da poter misurare e migliorare 
+                        le prestazioni del nostro sito. I dati raccolti sono aggregati e anonimi. Se non consenti questi cookie, non 
+                        sapremo quando hai visitato il nostro sito.
+                    </p>
+                    <p class="mt-3">
+                        Utilizziamo <strong>Google Analytics</strong> con la funzione di anonimizzazione dell'indirizzo IP attiva 
+                        (<code>anonymize_ip: true</code>), in conformità con le linee guida del Garante per la protezione dei dati personali.
+                    </p>
+                    
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-primary-100">
+                                    <th class="text-left p-3 font-semibold text-primary-900">Cookie</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Finalità</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Durata</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Fornitore</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-primary-100">
+                                <tr>
+                                    <td class="p-3 font-mono text-sm">_ga</td>
+                                    <td class="p-3">Distingue gli utenti unici assegnando un numero generato casualmente</td>
+                                    <td class="p-3">2 anni</td>
+                                    <td class="p-3">Google</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-sm">_ga_*</td>
+                                    <td class="p-3">Mantiene lo stato della sessione</td>
+                                    <td class="p-3">2 anni</td>
+                                    <td class="p-3">Google</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Cookie Marketing -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">5. Cookie di Marketing</h2>
+                    <p>
+                        Questi cookie possono essere impostati tramite il nostro sito dai nostri partner pubblicitari. Vengono utilizzati 
+                        per creare un profilo dei tuoi interessi e mostrarti annunci pertinenti su altri siti. Non memorizzano direttamente 
+                        informazioni personali, ma sono basati sull'identificazione univoca del tuo browser e del tuo dispositivo.
+                    </p>
+                    <p class="mt-3">
+                        Attualmente questo sito <strong>non utilizza cookie di marketing</strong>. Se in futuro verranno introdotti, 
+                        questa sezione sarà aggiornata e verrà richiesto il tuo consenso.
+                    </p>
+                </section>
+                
+                <!-- Servizi di terze parti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">6. Servizi di Terze Parti</h2>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">Google Fonts</h3>
+                    <p>
+                        Utilizziamo Google Fonts per caricare i caratteri tipografici del sito. Quando visiti una pagina, 
+                        il tuo browser scarica i font dai server di Google. Google potrebbe raccogliere il tuo indirizzo IP durante 
+                        il caricamento. Per maggiori informazioni: 
+                        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-tertiary-500 underline">Privacy Policy di Google</a>.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">Stripe (Pagamenti)</h3>
+                    <p>
+                        Per i pagamenti online utilizziamo <strong>Stripe</strong>, un servizio di pagamento sicuro. 
+                        I dati della tua carta di credito vengono gestiti direttamente da Stripe e <strong>non transitano 
+                        né vengono memorizzati sui nostri server</strong>. Stripe può utilizzare cookie propri durante il processo 
+                        di pagamento. Per maggiori informazioni: 
+                        <a href="https://stripe.com/it/privacy" target="_blank" rel="noopener" class="text-tertiary-500 underline">Privacy Policy di Stripe</a>.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">Google OAuth</h3>
+                    <p>
+                        Offriamo la possibilità di registrarsi e accedere al sito tramite il tuo account Google. 
+                        In questo caso, Google condivide con noi il tuo nome, email e immagine del profilo, come specificato 
+                        nella schermata di autorizzazione. Per maggiori informazioni: 
+                        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-tertiary-500 underline">Privacy Policy di Google</a>.
+                    </p>
+                </section>
+                
+                <!-- Come gestire -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">7. Come Gestire i Cookie</h2>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-4 mb-2">Tramite il nostro sito</h3>
+                    <p>
+                        Puoi modificare le tue preferenze in qualsiasi momento cliccando sul pulsante qui sotto:
+                    </p>
+                    <div class="mt-4">
+                        <button onclick="document.dispatchEvent(new CustomEvent('open-cookie-settings'))" 
+                                class="px-6 py-3 bg-tertiary-500 text-white rounded-sm hover:bg-tertiary-600 transition-colors font-medium">
+                            Gestisci preferenze cookie
+                        </button>
+                    </div>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">Tramite il browser</h3>
+                    <p>
+                        Puoi anche gestire i cookie direttamente dalle impostazioni del tuo browser. Ecco le guide 
+                        per i principali browser:
+                    </p>
+                    <ul class="mt-3 space-y-2">
+                        <li>
+                            <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener" class="text-tertiary-500 underline">Google Chrome</a>
+                        </li>
+                        <li>
+                            <a href="https://support.mozilla.org/it/kb/protezione-antitracciamento-avanzata-firefox-desktop" target="_blank" rel="noopener" class="text-tertiary-500 underline">Mozilla Firefox</a>
+                        </li>
+                        <li>
+                            <a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener" class="text-tertiary-500 underline">Safari</a>
+                        </li>
+                        <li>
+                            <a href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener" class="text-tertiary-500 underline">Microsoft Edge</a>
+                        </li>
+                    </ul>
+                    <p class="mt-3 text-sm text-primary-500">
+                        <strong>Nota:</strong> la disattivazione dei cookie tecnici potrebbe rendere il sito non utilizzabile.
+                    </p>
+                </section>
+                
+                <!-- Aggiornamenti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">8. Aggiornamenti</h2>
+                    <p>
+                        Questa Cookie Policy potrebbe essere aggiornata periodicamente. Ti invitiamo a consultare questa pagina 
+                        regolarmente per essere informato su eventuali modifiche. La data dell'ultimo aggiornamento è indicata 
+                        all'inizio di questo documento.
+                    </p>
+                </section>
+                
+                <!-- Contatti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">9. Contatti</h2>
+                    <p>
+                        Per qualsiasi domanda relativa all'uso dei cookie su questo sito, puoi contattarci:
+                    </p>
+                    <ul class="mt-3 space-y-1">
+                        {% if site_settings.email %}
+                        <li><strong>Email:</strong> <a href="mailto:{{ site_settings.email }}" class="text-tertiary-500 underline">{{ site_settings.email }}</a></li>
+                        {% endif %}
+                        <li><strong>Pagina contatti:</strong> <a href="{% url 'core:contact' %}" class="text-tertiary-500 underline">Contattaci</a></li>
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %}Termini e Condizioni - {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}Termini e condizioni di utilizzo del sito {{ SITE_NAME }} e di prenotazione dei servizi di ospitalità.{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            
+            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900 mb-4">Termini e Condizioni</h1>
+            <p class="text-primary-500 mb-8">Ultimo aggiornamento: 9 marzo 2026</p>
+            
+            <div class="bg-white rounded-xl shadow-lg p-8 lg:p-12 space-y-8 text-primary-700 leading-relaxed">
+                
+                <!-- Premessa -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">1. Premessa</h2>
+                    <p>
+                        I presenti Termini e Condizioni (di seguito "Termini") regolano l'utilizzo del sito web 
+                        <strong>altesiasuite.com</strong> (di seguito "il Sito") e le condizioni di prenotazione dei servizi di 
+                        ospitalità offerti da <strong>{{ SITE_NAME }}</strong> (di seguito "la Struttura").
+                    </p>
+                    <p class="mt-3">
+                        Utilizzando il Sito e/o effettuando una prenotazione, l'utente accetta integralmente i presenti Termini. 
+                        Se non accetti questi Termini, ti invitiamo a non utilizzare il Sito.
+                    </p>
+                </section>
+                
+                <!-- Definizioni -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">2. Definizioni</h2>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li><strong>"Ospite":</strong> la persona che effettua una prenotazione</li>
+                        <li><strong>"Prenotazione":</strong> la richiesta di soggiorno confermata dal pagamento dell'acconto</li>
+                        <li><strong>"Acconto":</strong> il 30% dell'importo totale del soggiorno, dovuto al momento della prenotazione</li>
+                        <li><strong>"Saldo":</strong> il restante 70% dell'importo totale, da corrispondere al check-in</li>
+                        <li><strong>"Unità":</strong> l'alloggio prenotato (suite, appartamento, camera)</li>
+                    </ul>
+                </section>
+                
+                <!-- Prenotazioni -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">3. Prenotazioni</h2>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-4 mb-2">3.1 Come prenotare</h3>
+                    <p>
+                        Le prenotazioni possono essere effettuate tramite il Sito seguendo la procedura guidata. 
+                        La prenotazione è confermata al ricevimento del pagamento dell'acconto.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">3.2 Requisiti</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>L'Ospite deve avere almeno 18 anni di età</li>
+                        <li>Sono richiesti dati di contatto validi (email e telefono)</li>
+                        <li>Il numero di ospiti non può superare la capienza massima dell'unità</li>
+                        <li>È richiesto un soggiorno minimo (indicato nella scheda dell'unità)</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">3.3 Conferma</h3>
+                    <p>
+                        Dopo la prenotazione riceverai un'email di conferma con il riepilogo del soggiorno e il numero 
+                        di prenotazione. Ti invitiamo a conservare questa email.
+                    </p>
+                </section>
+                
+                <!-- Prezzi e pagamenti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">4. Prezzi e Pagamenti</h2>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-4 mb-2">4.1 Prezzi</h3>
+                    <p>
+                        I prezzi indicati sul Sito sono per notte e possono variare in base alla stagione e al periodo. 
+                        Il prezzo totale include il costo del soggiorno e le eventuali pulizie finali. 
+                        L'importo esatto è calcolato e mostrato prima della conferma della prenotazione.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">4.2 Acconto</h3>
+                    <p>
+                        Al momento della prenotazione è richiesto il pagamento di un acconto pari al <strong>30%</strong> 
+                        del totale del soggiorno. Il pagamento avviene tramite <strong>Stripe</strong>, un sistema di pagamento 
+                        sicuro e certificato PCI DSS Level 1.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">4.3 Saldo</h3>
+                    <p>
+                        Il saldo (70% rimanente) dovrà essere corrisposto al momento del check-in, con le modalità 
+                        che saranno comunicate dalla Struttura.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">4.4 Fatturazione</h3>
+                    <p>
+                        Per richiedere fattura, è necessario comunicare i dati fiscali al momento della prenotazione 
+                        o al più tardi al check-in.
+                    </p>
+                </section>
+                
+                <!-- Cancellazione -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">5. Cancellazione e Rimborsi</h2>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-4 mb-2">5.1 Cancellazione da parte dell'Ospite</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li><strong>Oltre 30 giorni prima del check-in:</strong> rimborso completo dell'acconto</li>
+                        <li><strong>Da 15 a 30 giorni prima del check-in:</strong> rimborso del 50% dell'acconto</li>
+                        <li><strong>Meno di 15 giorni prima del check-in:</strong> nessun rimborso dell'acconto</li>
+                        <li><strong>No-show (mancata presentazione):</strong> nessun rimborso</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">5.2 Cancellazione da parte della Struttura</h3>
+                    <p>
+                        La Struttura si riserva il diritto di cancellare una prenotazione in caso di forza maggiore, 
+                        problemi tecnici all'immobile o altre circostanze eccezionali. In tal caso, l'Ospite riceverà 
+                        il rimborso integrale dell'acconto e, dove possibile, una proposta di date alternative.
+                    </p>
+                </section>
+                
+                <!-- Check-in / Check-out -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">6. Check-in e Check-out</h2>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li><strong>Check-in:</strong> dalle ore 15:00 alle ore 20:00</li>
+                        <li><strong>Check-out:</strong> entro le ore 10:00</li>
+                    </ul>
+                    <p class="mt-3">
+                        Orari diversi possono essere concordati previo contatto con la Struttura, compatibilmente con 
+                        la disponibilità. Il check-in tardivo (dopo le 20:00) deve essere comunicato in anticipo.
+                    </p>
+                </section>
+                
+                <!-- Regole della struttura -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">7. Regole della Struttura</h2>
+                    <p>L'Ospite si impegna a:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mt-3">
+                        <li>Rispettare la quiete, in particolare dalle 22:00 alle 08:00</li>
+                        <li>Non superare il numero massimo di ospiti indicato nella prenotazione</li>
+                        <li>Non organizzare feste o eventi senza autorizzazione scritta</li>
+                        <li>Rispettare gli spazi comuni e le pertinenze</li>
+                        <li>Segnalare tempestivamente eventuali guasti o danni</li>
+                        <li>Lasciare l'alloggio in condizioni ragionevolmente ordinate al check-out</li>
+                    </ul>
+                </section>
+                
+                <!-- Danni -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">8. Danni e Responsabilità</h2>
+                    <p>
+                        L'Ospite è responsabile per eventuali danni causati all'unità, agli arredi o alle pertinenze 
+                        durante il soggiorno. In caso di danni, la Struttura si riserva il diritto di richiedere il risarcimento 
+                        dei costi di riparazione o sostituzione.
+                    </p>
+                    <p class="mt-3">
+                        La Struttura non è responsabile per oggetti di valore lasciati incustoditi o per perdite/danni 
+                        non imputabili alla Struttura stessa.
+                    </p>
+                </section>
+                
+                <!-- Utilizzo del sito -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">9. Utilizzo del Sito</h2>
+                    <p>L'utente si impegna a:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mt-3">
+                        <li>Fornire dati veritieri e accurati</li>
+                        <li>Non tentare di accedere ad aree non autorizzate del Sito</li>
+                        <li>Non utilizzare il Sito per scopi illeciti</li>
+                        <li>Non inviare contenuti offensivi, diffamatori o illeciti tramite i moduli di contatto</li>
+                    </ul>
+                </section>
+                
+                <!-- Proprietà intellettuale -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">10. Proprietà Intellettuale</h2>
+                    <p>
+                        Tutti i contenuti del Sito (testi, immagini, loghi, grafica, design) sono di proprietà di 
+                        {{ SITE_NAME }} o dei rispettivi titolari dei diritti e sono protetti dalle leggi sul diritto d'autore. 
+                        È vietata la riproduzione, distribuzione o modifica senza autorizzazione scritta.
+                    </p>
+                </section>
+                
+                <!-- Legge applicabile -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">11. Legge Applicabile e Foro Competente</h2>
+                    <p>
+                        I presenti Termini sono regolati dalla legge italiana. Per qualsiasi controversia derivante 
+                        dall'utilizzo del Sito o dai servizi offerti, sarà competente il Foro del luogo di residenza 
+                        del consumatore, come previsto dal Codice del Consumo (D.Lgs. 206/2005).
+                    </p>
+                </section>
+                
+                <!-- Modifiche -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">12. Modifiche ai Termini</h2>
+                    <p>
+                        La Struttura si riserva il diritto di modificare i presenti Termini in qualsiasi momento. 
+                        Le modifiche saranno pubblicate su questa pagina e saranno efficaci dalla data di pubblicazione. 
+                        L'uso continuato del Sito dopo la pubblicazione delle modifiche costituisce accettazione dei nuovi Termini.
+                    </p>
+                </section>
+                
+                <!-- Contatti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">13. Contatti</h2>
+                    <p>Per qualsiasi domanda su questi Termini, puoi contattarci:</p>
+                    <ul class="mt-3 space-y-1">
+                        {% if site_settings.email %}
+                        <li><strong>Email:</strong> <a href="mailto:{{ site_settings.email }}" class="text-tertiary-500 underline">{{ site_settings.email }}</a></li>
+                        {% endif %}
+                        {% if site_settings.phone %}
+                        <li><strong>Telefono:</strong> {{ site_settings.phone }}</li>
+                        {% endif %}
+                        <li><strong>Pagina contatti:</strong> <a href="{% url 'core:contact' %}" class="text-tertiary-500 underline">Contattaci</a></li>
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

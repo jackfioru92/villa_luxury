@@ -95,6 +95,11 @@ class TermsView(TemplateView):
     template_name = 'core/terms.html'
 
 
+class CookiePolicyView(TemplateView):
+    """Cookie policy page."""
+    template_name = 'core/cookie_policy.html'
+
+
 class MaintenanceView(TemplateView):
     """Maintenance page view."""
     template_name = 'maintenance.html'

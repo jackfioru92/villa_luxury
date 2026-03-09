@@ -207,6 +207,9 @@ STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET', default='')
 BOOKING_DEPOSIT_PERCENTAGE = env('BOOKING_DEPOSIT_PERCENTAGE', default=30)  # 30% acconto
 BOOKING_MIN_ADVANCE_DAYS = env('BOOKING_MIN_ADVANCE_DAYS', default=1)  # Giorni minimi di anticipo
 
+# Google Analytics
+GA_MEASUREMENT_ID = env('GA_MEASUREMENT_ID', default='')
+
 # Site Configuration
 SITE_NAME = 'Altesia Suite'
 SITE_DESCRIPTION = 'La vostra esperienza di lusso in Umbria'

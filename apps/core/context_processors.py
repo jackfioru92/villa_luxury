@@ -18,4 +18,5 @@ def site_settings(request):
         'SITE_NAME': getattr(settings, 'SITE_NAME', 'Villa Luxury'),
         'STRIPE_PUBLIC_KEY': getattr(settings, 'STRIPE_PUBLIC_KEY', ''),
         'google_oauth_configured': google_configured,
+        'GA_MEASUREMENT_ID': getattr(settings, 'GA_MEASUREMENT_ID', ''),
     }

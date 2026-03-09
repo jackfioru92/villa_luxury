@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy - {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}Informativa sulla privacy di {{ SITE_NAME }}. Come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali.{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-primary-50 pt-24 pb-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            
+            <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900 mb-4">Privacy Policy</h1>
+            <p class="text-primary-500 mb-8">Ultimo aggiornamento: 9 marzo 2026</p>
+            
+            <div class="bg-white rounded-xl shadow-lg p-8 lg:p-12 space-y-8 text-primary-700 leading-relaxed">
+                
+                <!-- Introduzione -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">1. Introduzione</h2>
+                    <p>
+                        La presente informativa sulla privacy descrive come <strong>{{ SITE_NAME }}</strong> (di seguito "noi", "nostro" 
+                        o "il Sito") raccoglie, utilizza, conserva e protegge i tuoi dati personali quando utilizzi il nostro sito web 
+                        (altesiasuite.com).
+                    </p>
+                    <p class="mt-3">
+                        Il trattamento dei tuoi dati personali avviene nel rispetto del Regolamento (UE) 2016/679 (GDPR) e del 
+                        D.Lgs. 196/2003 (Codice Privacy), come modificato dal D.Lgs. 101/2018.
+                    </p>
+                </section>
+                
+                <!-- Titolare -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">2. Titolare del Trattamento</h2>
+                    <p>Il titolare del trattamento dei dati personali è:</p>
+                    <div class="bg-primary-50 rounded-lg p-4 mt-3">
+                        <p><strong>{{ SITE_NAME }}</strong></p>
+                        {% if site_settings.address %}<p>{{ site_settings.address }}</p>{% endif %}
+                        {% if site_settings.email %}<p>Email: <a href="mailto:{{ site_settings.email }}" class="text-tertiary-500 underline">{{ site_settings.email }}</a></p>{% endif %}
+                        {% if site_settings.phone %}<p>Telefono: {{ site_settings.phone }}</p>{% endif %}
+                    </div>
+                </section>
+                
+                <!-- Dati raccolti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">3. Dati Personali Raccolti</h2>
+                    <p>Raccogliamo le seguenti categorie di dati personali:</p>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">3.1 Dati forniti volontariamente</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li><strong>Registrazione account:</strong> nome, cognome, indirizzo email, numero di telefono, password (criptata)</li>
+                        <li><strong>Prenotazione:</strong> nome, cognome, email, telefono, paese, date di soggiorno, numero ospiti, note e richieste speciali</li>
+                        <li><strong>Modulo di contatto:</strong> nome, email, messaggio</li>
+                        <li><strong>Login sociale (Google):</strong> nome, cognome, email, immagine profilo (dati condivisi da Google con il tuo consenso)</li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">3.2 Dati raccolti automaticamente</h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li><strong>Dati di navigazione:</strong> indirizzo IP (anonimizzato), tipo di browser, sistema operativo, pagine visitate, data e ora di accesso</li>
+                        <li><strong>Cookie:</strong> informazioni descritte nella nostra <a href="{% url 'core:cookie_policy' %}" class="text-tertiary-500 underline">Cookie Policy</a></li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-semibold text-primary-900 mt-6 mb-2">3.3 Dati di pagamento</h3>
+                    <p>
+                        I pagamenti sono gestiti da <strong>Stripe</strong>. I dati della carta di credito/debito 
+                        <strong>non vengono memorizzati né transitano sui nostri server</strong>. 
+                        Noi conserviamo solo: importo della transazione, stato del pagamento e ID transazione Stripe.
+                    </p>
+                </section>
+                
+                <!-- Finalità -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">4. Finalità del Trattamento</h2>
+                    <p>I tuoi dati personali sono trattati per le seguenti finalità:</p>
+                    
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-primary-100">
+                                    <th class="text-left p-3 font-semibold text-primary-900">Finalità</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Base giuridica</th>
+                                    <th class="text-left p-3 font-semibold text-primary-900">Dati trattati</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-primary-100">
+                                <tr>
+                                    <td class="p-3">Gestione prenotazioni</td>
+                                    <td class="p-3">Esecuzione contratto</td>
+                                    <td class="p-3">Nome, email, telefono, date soggiorno</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3">Creazione e gestione account</td>
+                                    <td class="p-3">Esecuzione contratto</td>
+                                    <td class="p-3">Nome, email, telefono, password</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3">Elaborazione pagamenti</td>
+                                    <td class="p-3">Esecuzione contratto</td>
+                                    <td class="p-3">Dati transazione (tramite Stripe)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3">Comunicazioni relative alla prenotazione</td>
+                                    <td class="p-3">Esecuzione contratto</td>
+                                    <td class="p-3">Nome, email</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3">Risposta a richieste di contatto</td>
+                                    <td class="p-3">Legittimo interesse</td>
+                                    <td class="p-3">Nome, email, messaggio</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3">Analisi statistiche (Google Analytics)</td>
+                                    <td class="p-3">Consenso</td>
+                                    <td class="p-3">Dati di navigazione anonimizzati</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3">Sicurezza del sito</td>
+                                    <td class="p-3">Legittimo interesse</td>
+                                    <td class="p-3">IP, log di accesso</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Conservazione -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">5. Conservazione dei Dati</h2>
+                    <p>I tuoi dati personali sono conservati per il tempo strettamente necessario:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mt-3">
+                        <li><strong>Dati account:</strong> fino alla cancellazione dell'account da parte dell'utente</li>
+                        <li><strong>Dati prenotazione:</strong> 5 anni dalla data di check-out (obblighi fiscali)</li>
+                        <li><strong>Dati di contatto:</strong> 12 mesi dalla richiesta</li>
+                        <li><strong>Dati di navigazione:</strong> 26 mesi (Google Analytics)</li>
+                        <li><strong>Log di sicurezza:</strong> 12 mesi</li>
+                    </ul>
+                </section>
+                
+                <!-- Condivisione -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">6. Condivisione dei Dati</h2>
+                    <p>I tuoi dati personali possono essere condivisi con:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mt-3">
+                        <li><strong>Stripe:</strong> per l'elaborazione dei pagamenti (dati transazionali)</li>
+                        <li><strong>Google:</strong> per analytics (dati anonimizzati, previo tuo consenso) e autenticazione OAuth</li>
+                        <li><strong>Aruba S.p.A.:</strong> hosting del sito e servizio email</li>
+                        <li><strong>Autorità competenti:</strong> se richiesto dalla legge</li>
+                    </ul>
+                    <p class="mt-3">
+                        <strong>Non vendiamo</strong> i tuoi dati personali a terzi e non li utilizziamo per profilazione commerciale.
+                    </p>
+                </section>
+                
+                <!-- Trasferimento fuori UE -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">7. Trasferimento dei Dati</h2>
+                    <p>
+                        Alcuni servizi di terze parti (Google, Stripe) potrebbero trasferire dati verso paesi extra-UE (Stati Uniti). 
+                        Tali trasferimenti avvengono in conformità al GDPR, sulla base del Data Privacy Framework UE-USA 
+                        o di Clausole Contrattuali Standard approvate dalla Commissione Europea.
+                    </p>
+                </section>
+                
+                <!-- Diritti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">8. I Tuoi Diritti</h2>
+                    <p>In base al GDPR, hai il diritto di:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mt-3">
+                        <li><strong>Accesso:</strong> ottenere conferma dell'esistenza di dati che ti riguardano e la loro copia</li>
+                        <li><strong>Rettifica:</strong> correggere dati inesatti o incompleti</li>
+                        <li><strong>Cancellazione:</strong> richiedere la cancellazione dei tuoi dati ("diritto all'oblio")</li>
+                        <li><strong>Limitazione:</strong> limitare il trattamento dei tuoi dati</li>
+                        <li><strong>Portabilità:</strong> ricevere i tuoi dati in formato strutturato</li>
+                        <li><strong>Opposizione:</strong> opporti al trattamento per legittimo interesse</li>
+                        <li><strong>Revoca del consenso:</strong> revocare il consenso in qualsiasi momento</li>
+                    </ul>
+                    <p class="mt-4">
+                        Per esercitare i tuoi diritti, contattaci all'indirizzo 
+                        {% if site_settings.email %}
+                        <a href="mailto:{{ site_settings.email }}" class="text-tertiary-500 underline">{{ site_settings.email }}</a>.
+                        {% else %}
+                        indicato nella sezione contatti.
+                        {% endif %}
+                    </p>
+                    <p class="mt-3">
+                        Hai inoltre il diritto di proporre reclamo al <strong>Garante per la protezione dei dati personali</strong> 
+                        (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener" class="text-tertiary-500 underline">www.garanteprivacy.it</a>).
+                    </p>
+                </section>
+                
+                <!-- Sicurezza -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">9. Sicurezza</h2>
+                    <p>Adottiamo misure tecniche e organizzative appropriate per proteggere i tuoi dati personali:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 mt-3">
+                        <li>Connessione crittografata (HTTPS/SSL)</li>
+                        <li>Password memorizzate con hashing sicuro</li>
+                        <li>Protezione CSRF su tutti i moduli</li>
+                        <li>Pagamenti gestiti da Stripe (PCI DSS Level 1)</li>
+                        <li>Accesso ai dati limitato al personale autorizzato</li>
+                    </ul>
+                </section>
+                
+                <!-- Cookie -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">10. Cookie</h2>
+                    <p>
+                        Per informazioni dettagliate sui cookie utilizzati dal nostro sito, consulta la nostra 
+                        <a href="{% url 'core:cookie_policy' %}" class="text-tertiary-500 underline font-semibold">Cookie Policy</a>.
+                    </p>
+                </section>
+                
+                <!-- Modifiche -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">11. Modifiche alla Privacy Policy</h2>
+                    <p>
+                        Ci riserviamo il diritto di aggiornare questa informativa in qualsiasi momento. Le modifiche saranno 
+                        pubblicate su questa pagina con l'indicazione della data di ultimo aggiornamento. Ti invitiamo a consultare 
+                        periodicamente questa pagina.
+                    </p>
+                </section>
+                
+                <!-- Contatti -->
+                <section>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-4">12. Contatti</h2>
+                    <p>Per qualsiasi domanda sulla nostra Privacy Policy, puoi contattarci:</p>
+                    <ul class="mt-3 space-y-1">
+                        {% if site_settings.email %}
+                        <li><strong>Email:</strong> <a href="mailto:{{ site_settings.email }}" class="text-tertiary-500 underline">{{ site_settings.email }}</a></li>
+                        {% endif %}
+                        {% if site_settings.phone %}
+                        <li><strong>Telefono:</strong> {{ site_settings.phone }}</li>
+                        {% endif %}
+                        <li><strong>Pagina contatti:</strong> <a href="{% url 'core:contact' %}" class="text-tertiary-500 underline">Contattaci</a></li>
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
