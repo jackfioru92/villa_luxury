@@ -29,6 +29,109 @@
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     
+    <!-- GA Measurement ID -->
+    <meta name="ga-id" content="{{ GA_MEASUREMENT_ID|default:'' }}">
+    
+    <!-- Cookie Consent Store (deve essere registrato PRIMA di Alpine.js) -->
+    <script>
+    document.addEventListener('alpine:init', function() {
+        Alpine.store('cookie', {
+            showBanner: false,
+            showSettings: false,
+            preferences: {
+                essential: true,
+                analytics: false,
+                marketing: false
+            },
+            init: function() {
+                var consent = this._getCookie('cookie_consent');
+                if (!consent) {
+                    var self = this;
+                    setTimeout(function() { self.showBanner = true; }, 500);
+                } else {
+                    try {
+                        this.preferences = JSON.parse(consent);
+                        this.preferences.essential = true;
+                        this._applyPreferences();
+                    } catch (e) {
+                        this.showBanner = true;
+                    }
+                }
+            },
+            openSettings: function() {
+                this.showSettings = true;
+                this.showBanner = true;
+            },
+            acceptAll: function() {
+                this.preferences = { essential: true, analytics: true, marketing: true };
+                this._save();
+            },
+            rejectAll: function() {
+                this.preferences = { essential: true, analytics: false, marketing: false };
+                this._save();
+            },
+            savePreferences: function() {
+                this.preferences.essential = true;
+                this._save();
+            },
+            _save: function() {
+                var expires = new Date();
+                expires.setFullYear(expires.getFullYear() + 1);
+                document.cookie = 'cookie_consent=' + JSON.stringify(this.preferences) + ';expires=' + expires.toUTCString() + ';path=/;SameSite=Lax';
+                this._applyPreferences();
+                this.showBanner = false;
+                this.showSettings = false;
+            },
+            _applyPreferences: function() {
+                if (this.preferences.analytics) {
+                    this._loadGA();
+                } else {
+                    this._removeGA();
+                }
+            },
+            _loadGA: function() {
+                var metaEl = document.querySelector('meta[name="ga-id"]');
+                var GA_ID = metaEl ? metaEl.content : '';
+                if (!GA_ID || document.getElementById('ga-script')) return;
+                var script = document.createElement('script');
+                script.id = 'ga-script';
+                script.async = true;
+                script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+                document.head.appendChild(script);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', GA_ID, { 'anonymize_ip': true });
+            },
+            _removeGA: function() {
+                var script = document.getElementById('ga-script');
+                if (script) script.remove();
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var c = cookies[i].trim();
+                    if (c.indexOf('_ga') === 0) {
+                        var name = c.split('=')[0];
+                        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + window.location.hostname;
+                        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.' + window.location.hostname;
+                    }
+                }
+            },
+            _getCookie: function(name) {
+                var value = '; ' + document.cookie;
+                var parts = value.split('; ' + name + '=');
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+        });
+    });
+    function openCookieSettings() {
+        if (window.Alpine && Alpine.store('cookie')) {
+            Alpine.store('cookie').openSettings();
+        }
+    }
+    </script>
+    
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
