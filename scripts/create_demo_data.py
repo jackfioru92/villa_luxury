@@ -20,7 +20,7 @@ settings_obj.site_description = 'La vostra esperienza di lusso in Umbria'
 settings_obj.email = 'info@altesia.it'
 settings_obj.phone = '+39 075 1234567'
 settings_obj.whatsapp = '+39 333 1234567'
-settings_obj.address = 'Località Altesia\n06059 Todi (PG)\nUmbria, Italia'
+settings_obj.address = 'Strada di Civitella Benazzone 20\n06134 Perugia (PG)\nUmbria, Italia'
 settings_obj.save()
 print(f'SiteSettings aggiornati: {settings_obj.site_name}')
 
@@ -37,13 +37,13 @@ villa, created = Villa.objects.get_or_create(
             'offre un\'esperienza indimenticabile per famiglie, coppie e gruppi di amici.'
         ),
         description_short='Villa di lusso con piscina privata nel cuore dell\'Umbria.',
-        address='Località Altesia',
-        city='Todi',
+        address='Strada di Civitella Benazzone 20',
+        city='Perugia',
         province='Perugia',
-        postal_code='06059',
+        postal_code='06134',
         country='Italia',
-        latitude=42.7822,
-        longitude=12.4065,
+        latitude=43.1480,
+        longitude=12.3830,
         total_guests=16,
         total_bedrooms=7,
         total_bathrooms=6,
