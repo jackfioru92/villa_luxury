@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SiteSettings, Page, FAQ, Testimonial
+from .models import SiteSettings, Page, FAQ, Testimonial, NewsletterSubscription
 
 
 @admin.register(SiteSettings)
@@ -53,3 +53,12 @@ class TestimonialAdmin(admin.ModelAdmin):
     list_filter = ('is_featured', 'is_active', 'rating')
     list_editable = ('is_featured', 'is_active')
     search_fields = ('guest_name', 'content')
+
+
+@admin.register(NewsletterSubscription)
+class NewsletterSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('email', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('email',)
+    readonly_fields = ('created_at', 'updated_at')
+    list_editable = ('is_active',)

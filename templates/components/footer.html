@@ -85,16 +85,28 @@
             <div>
                 <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
                 <p class="text-primary-300 mb-4">Iscriviti per ricevere offerte esclusive e novità.</p>
-                <form class="space-y-3">
-                    <input type="email" placeholder="La tua email" 
-                           class="w-full px-4 py-3 bg-primary-800 border border-primary-700 rounded-sm 
-                                  text-white placeholder-villa-400 focus:outline-none focus:border-tertiary-500">
-                    <button type="submit" 
-                            class="w-full px-4 py-3 bg-tertiary-500 text-white font-medium rounded-sm 
-                                   hover:bg-tertiary-600 transition-colors">
-                        Iscriviti
-                    </button>
-                </form>
+                <div id="newsletter-form-container">
+                    <form hx-post="{% url 'core:newsletter_subscribe' %}" 
+                          hx-target="#newsletter-form-container" 
+                          hx-swap="innerHTML"
+                          class="space-y-3">
+                        {% csrf_token %}
+                        <input type="email" name="email" required placeholder="La tua email" 
+                               class="w-full px-4 py-3 bg-primary-800 border border-primary-700 rounded-sm 
+                                      text-white placeholder-villa-400 focus:outline-none focus:border-tertiary-500">
+                        <button type="submit" 
+                                class="w-full px-4 py-3 bg-tertiary-500 text-white font-medium rounded-sm 
+                                       hover:bg-tertiary-600 transition-colors flex items-center justify-center">
+                            <span class="htmx-indicator mr-2">
+                                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                            </span>
+                            Iscriviti
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

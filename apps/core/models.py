@@ -119,3 +119,17 @@ class Testimonial(UUIDModel, TimeStampedModel):
 
     def __str__(self):
         return f"{self.guest_name} - {self.rating}★"
+
+
+class NewsletterSubscription(TimeStampedModel):
+    """Newsletter subscription."""
+    email = models.EmailField(_('Email'), unique=True)
+    is_active = models.BooleanField(_('Attiva'), default=True)
+
+    class Meta:
+        verbose_name = _('Iscrizione newsletter')
+        verbose_name_plural = _('Iscrizioni newsletter')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.email

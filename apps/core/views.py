@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, DetailView
+from django.views import View
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
+from django.http import HttpResponse
 from apps.villa.models import Villa, BookableUnit
-from apps.core.models import Page, FAQ, Testimonial, SiteSettings
+from apps.core.models import Page, FAQ, Testimonial, SiteSettings, NewsletterSubscription
 
 
 class HomeView(TemplateView):
@@ -103,3 +105,69 @@ class CookiePolicyView(TemplateView):
 class MaintenanceView(TemplateView):
     """Maintenance page view."""
     template_name = 'maintenance.html'
+
+
+class NewsletterSubscribeView(View):
+    """Handle newsletter subscription via HTMX."""
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email', '').strip().lower()
+
+        if not email:
+            return HttpResponse(
+                '<p class="text-red-400 text-sm mt-2">Per favore inserisci un indirizzo email.</p>',
+                status=200,
+            )
+
+        # Check if already subscribed
+        sub, created = NewsletterSubscription.objects.get_or_create(
+            email=email,
+            defaults={'is_active': True},
+        )
+
+        if not created:
+            if sub.is_active:
+                return HttpResponse(
+                    '<p class="text-tertiary-400 text-sm mt-2">'
+                    '✓ Questa email è già iscritta alla newsletter!</p>',
+                    status=200,
+                )
+            else:
+                # Re-activate
+                sub.is_active = True
+                sub.save()
+
+        # Send confirmation email
+        site_name = getattr(settings, 'SITE_NAME', 'Altesia Suite')
+        try:
+            send_mail(
+                subject=f'Benvenuto nella newsletter di {site_name}!',
+                message=(
+                    f"Ciao!\n\n"
+                    f"Grazie per esserti iscritto alla newsletter di {site_name}.\n\n"
+                    f"Riceverai aggiornamenti su offerte esclusive, eventi speciali "
+                    f"e tutte le novità dalla nostra struttura.\n\n"
+                    f"Se non hai richiesto questa iscrizione, puoi semplicemente "
+                    f"ignorare questa email.\n\n"
+                    f"A presto,\n"
+                    f"Il team di {site_name}\n"
+                    f"https://www.altesiasuite.com\n"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=True,
+            )
+        except Exception:
+            pass
+
+        return HttpResponse(
+            '<div class="text-center py-3">'
+            '<svg class="w-8 h-8 text-tertiary-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">'
+            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" '
+            'd="M5 13l4 4L19 7"/>'
+            '</svg>'
+            '<p class="text-tertiary-400 font-medium">Iscrizione completata!</p>'
+            '<p class="text-primary-300 text-sm mt-1">Ti abbiamo inviato una email di conferma.</p>'
+            '</div>',
+            status=200,
+        )
