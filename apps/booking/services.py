@@ -95,7 +95,7 @@ def send_booking_confirmation_to_guest(booking: Booking):
             f"Per qualsiasi domanda o richiesta speciale,\n"
             f"non esitare a contattarci:\n"
             f"Email: info@altesiasuite.com\n"
-            f"Telefono: +39 XXX XXX XXXX\n\n"
+            f"Telefono: +39 347 6532405\n\n"
             f"Ti aspettiamo!\n"
             f"Il team di Altesia Suite\n"
         )

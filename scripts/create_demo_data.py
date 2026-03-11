@@ -18,8 +18,8 @@ settings_obj = SiteSettings.get_settings()
 settings_obj.site_name = 'Altesia'
 settings_obj.site_description = 'La vostra esperienza di lusso in Umbria'
 settings_obj.email = 'info@altesia.it'
-settings_obj.phone = '+39 075 1234567'
-settings_obj.whatsapp = '+39 333 1234567'
+settings_obj.phone = '+39 347 6532405'
+settings_obj.whatsapp = '+39 347 6532405'
 settings_obj.address = 'Strada di Civitella Benazzone 20\n06134 Perugia (PG)\nUmbria, Italia'
 settings_obj.save()
 print(f'SiteSettings aggiornati: {settings_obj.site_name}')
