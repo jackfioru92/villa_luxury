@@ -4,11 +4,17 @@
 {% block title %}Altesia - Villa di Lusso in Umbria{% endblock %}
 
 {% block content %}
-<!-- Hero Section - Full screen with main photo -->
+<!-- Hero Section - Full screen with background video -->
 <section class="relative h-screen min-h-[500px] md:min-h-[700px] flex items-center justify-center overflow-hidden">
-    <!-- Background Image -->
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/media/villa/Home%20sito.JPG');"></div>
-    
+    <!-- Background Video (aerial drone) with photo fallback -->
+    <video
+        class="absolute inset-0 w-full h-full object-cover"
+        autoplay muted loop playsinline preload="auto"
+        poster="/media/villa/hero_poster.jpg">
+        <source src="/media/villa/hero_720.mp4" type="video/mp4" media="(max-width: 768px)">
+        <source src="/media/villa/hero_1080.mp4" type="video/mp4">
+    </video>
+
     <!-- Dark Overlay -->
     <div class="absolute inset-0 bg-black/30"></div>
     
@@ -63,6 +69,49 @@
         </div>
     </div>
 </section>
+
+<!-- Sistemazioni Section - 3 opzioni -->
+{% if units %}
+<section id="sistemazioni" class="py-24 lg:py-32 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-tertiary-600 font-semibold tracking-widest uppercase text-sm">Le Sistemazioni</span>
+            <h2 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900 mt-3 mb-6">
+                Scegli la tua esperienza
+            </h2>
+            <p class="text-primary-600 text-lg leading-relaxed">
+                Due suite dal carattere unico o l'intera struttura in esclusiva: ad Altesia trovi la soluzione perfetta per il tuo soggiorno.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            {% for unit in units %}
+            <a href="{% url 'villa:unit_detail' unit.villa.slug unit.slug %}"
+               class="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow flex flex-col">
+                <div class="aspect-[4/3] overflow-hidden bg-primary-100">
+                    {% if unit.main_image %}
+                    <img src="{{ unit.main_image.url }}" alt="{{ unit.name }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    {% endif %}
+                </div>
+                <div class="p-8 flex flex-col flex-1">
+                    <h3 class="text-2xl font-serif font-semibold text-primary-900 mb-2">{{ unit.name }}</h3>
+                    {% if unit.description_short %}
+                    <p class="text-primary-600 leading-relaxed mb-6 flex-1">{{ unit.description_short }}</p>
+                    {% endif %}
+                    <div class="flex items-center justify-between pt-4 border-t border-primary-100">
+                        <span class="text-primary-500 text-sm">{{ unit.max_guests }} ospiti</span>
+                        <span class="text-tertiary-600 font-semibold uppercase text-sm tracking-wider">
+                            Scopri →
+                        </span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 
 <!-- Esperienze Section -->
 <section id="esperienze" class="py-24 lg:py-32 bg-primary-50">
@@ -136,17 +185,29 @@
             </h2>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
             <div class="aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
-                <img src="/media/gallery/IMG_1678.jpg" alt="Altesia - Vista 1" 
+                <img src="/media/gallery/esterno-01.jpg" alt="Altesia - Piscina e struttura"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
             </div>
             <div class="aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
-                <img src="/media/gallery/IMG_1680.jpg" alt="Altesia - Vista 2" 
+                <img src="/media/gallery/silva-01.jpg" alt="Altesia - Suite Silva"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
             </div>
             <div class="aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
-                <img src="/media/gallery/IMG_1682.jpg" alt="Altesia - Vista 3" 
+                <img src="/media/gallery/esterno-08.jpg" alt="Altesia - Giardino"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            </div>
+            <div class="aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
+                <img src="/media/gallery/aura-06.jpg" alt="Altesia - Suite Aura"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            </div>
+            <div class="aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
+                <img src="/media/gallery/living-02.jpg" alt="Altesia - Zona living & relax"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            </div>
+            <div class="aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
+                <img src="/media/gallery/aura-08.jpg" alt="Altesia - Suite Aura, dettaglio"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
             </div>
         </div>

@@ -22,7 +22,12 @@
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
                     La Villa
                 </a>
-                <a href="#esperienze" 
+                <a href="/#sistemazioni"
+                   class="font-bold transition-colors tracking-wide text-lg uppercase"
+                   :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
+                    Sistemazioni
+                </a>
+                <a href="/#esperienze"
                    class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
                     Esperienze
@@ -114,7 +119,8 @@
          class="lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl">
         <div class="container mx-auto px-4 py-6 space-y-4">
             <a href="{% url 'villa:list' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">La Villa</a>
-            <a href="#esperienze" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Esperienze</a>
+            <a href="/#sistemazioni" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Sistemazioni</a>
+            <a href="/#esperienze" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Esperienze</a>
             <a href="#gallery" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Gallery</a>
             
             <hr class="border-primary-100">
