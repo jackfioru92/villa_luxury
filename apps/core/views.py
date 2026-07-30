@@ -42,6 +42,7 @@ class ContactView(TemplateView):
         phone = request.POST.get('phone', '').strip()
         subject = request.POST.get('subject', '').strip()
         message_text = request.POST.get('message', '').strip()
+        experiences = request.POST.getlist('experiences')
 
         if not all([name, email, subject, message_text]):
             messages.error(request, 'Per favore compila tutti i campi obbligatori.')
@@ -56,13 +57,16 @@ class ContactView(TemplateView):
         }
         subject_label = subject_map.get(subject, subject)
 
+        experiences_text = ', '.join(experiences) if experiences else 'Nessuna'
+
         body = (
             f"Nuovo messaggio dal sito {settings.SITE_NAME}\n"
             f"{'=' * 40}\n\n"
             f"Nome: {name}\n"
             f"Email: {email}\n"
             f"Telefono: {phone or 'Non specificato'}\n"
-            f"Argomento: {subject_label}\n\n"
+            f"Argomento: {subject_label}\n"
+            f"Esperienze di interesse: {experiences_text}\n\n"
             f"Messaggio:\n{message_text}\n"
         )
 
@@ -138,7 +142,7 @@ class NewsletterSubscribeView(View):
                 sub.save()
 
         # Send confirmation email
-        site_name = getattr(settings, 'SITE_NAME', 'Altesia Suite')
+        site_name = getattr(settings, 'SITE_NAME', 'Altèsia Suite')
         try:
             send_mail(
                 subject=f'Benvenuto nella newsletter di {site_name}!',

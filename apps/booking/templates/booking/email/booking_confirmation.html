@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prenotazione confermata</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f0f9f6; font-family:Arial,Helvetica,sans-serif; color:#254037;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f9f6; padding:24px 0;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+
+        <!-- Header -->
+        <tr>
+          <td align="center" style="background-color:#2E4A46; padding:36px 24px;">
+            <div style="font-family:Georgia,'Times New Roman',serif; font-size:34px; letter-spacing:6px; color:#E7D4A2; font-weight:bold;">ALT&Egrave;SIA</div>
+            <div style="font-size:11px; letter-spacing:3px; color:#c1e5d6; text-transform:uppercase; margin-top:6px;">Luxury Retreat in Umbria</div>
+          </td>
+        </tr>
+
+        <!-- Title -->
+        <tr>
+          <td align="center" style="padding:36px 32px 8px 32px;">
+            <div style="display:inline-block; width:56px; height:56px; line-height:56px; background-color:#eafaf1; border-radius:50%; color:#2f9e5f; font-size:30px;">&#10003;</div>
+            <h1 style="font-family:Georgia,serif; font-size:26px; color:#192924; margin:18px 0 6px 0;">Prenotazione confermata</h1>
+            <p style="font-size:15px; color:#525252; margin:0;">Numero prenotazione <strong style="color:#192924;">#{{ booking.booking_number }}</strong></p>
+          </td>
+        </tr>
+
+        <!-- Greeting -->
+        <tr>
+          <td style="padding:20px 32px 0 32px; font-size:15px; line-height:1.6; color:#404040;">
+            Gentile {{ booking.guest_first_name }},<br>
+            grazie per aver scelto Alt&egrave;sia Suites. La tua prenotazione &egrave; <strong>confermata</strong>: non vediamo l'ora di accoglierti.
+          </td>
+        </tr>
+
+        <!-- Details box -->
+        <tr>
+          <td style="padding:24px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f9f6; border-radius:8px;">
+              <tr><td style="padding:18px 20px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#254037;">
+                  <tr>
+                    <td style="padding:8px 0; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Sistemazione</td>
+                    <td align="right" style="padding:8px 0; font-weight:bold; color:#192924;">{{ booking.unit.name }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Check-in</td>
+                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{{ booking.check_in|date:"d/m/Y" }} &middot; dalle 15:00</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Check-out</td>
+                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{{ booking.check_out|date:"d/m/Y" }} &middot; entro le 10:00</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Notti / Ospiti</td>
+                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{{ booking.nights }} notti &middot; {{ booking.num_guests }} ospiti</td>
+                  </tr>
+                </table>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Payment box -->
+        <tr>
+          <td style="padding:16px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e0f2ec; border-radius:8px;">
+              <tr><td style="padding:18px 20px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#254037;">
+                  <tr>
+                    <td style="padding:6px 0;">Totale soggiorno</td>
+                    <td align="right" style="padding:6px 0; color:#192924;">&euro;{{ booking.total_amount|floatformat:0 }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px 0;">Acconto pagato</td>
+                    <td align="right" style="padding:6px 0; color:#2f9e5f; font-weight:bold;">&euro;{{ booking.deposit_amount|floatformat:0 }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px 0 0 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">Saldo da pagare in loco</td>
+                    <td align="right" style="padding:10px 0 0 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">&euro;{{ booking.balance_due|floatformat:0 }}</td>
+                  </tr>
+                </table>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+
+        {% if booking.guest_notes %}
+        <tr>
+          <td style="padding:16px 32px 0 32px; font-size:13px; color:#525252;">
+            <strong style="color:#192924;">Le tue note:</strong> {{ booking.guest_notes }}
+          </td>
+        </tr>
+        {% endif %}
+
+        <!-- Info -->
+        <tr>
+          <td style="padding:28px 32px 0 32px; font-size:14px; line-height:1.7; color:#404040;">
+            <strong style="color:#192924;">Come raggiungerci</strong><br>
+            Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria<br>
+            <span style="color:#5bb691;">GPS 43.1480, 12.3830</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 32px 0 32px; font-size:14px; line-height:1.7; color:#404040;">
+            Per qualsiasi richiesta siamo a tua disposizione:<br>
+            Email: <a href="mailto:info@altesiasuite.com" style="color:#b8a46b; text-decoration:none;">info@altesiasuite.com</a><br>
+            Telefono: <a href="tel:+393476532405" style="color:#b8a46b; text-decoration:none;">+39 347 6532405</a>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td align="center" style="padding:32px; margin-top:16px;">
+            <p style="font-family:Georgia,serif; font-style:italic; color:#254037; font-size:15px; margin:0 0 24px 0;">Ti aspettiamo ad Alt&egrave;sia.</p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="background-color:#2E4A46; padding:20px 32px; font-size:12px; color:#92d1b7;">
+            Alt&egrave;sia Suites &middot; Perugia, Umbria<br>
+            <a href="https://altesiasuite.com" style="color:#E7D4A2; text-decoration:none;">altesiasuite.com</a>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

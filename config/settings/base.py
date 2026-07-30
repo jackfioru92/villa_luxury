@@ -68,7 +68,7 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Altesia Suite] '
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Altèsia Suites] '
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'  # Social login non richiede verifica
@@ -211,5 +211,5 @@ BOOKING_MIN_ADVANCE_DAYS = env('BOOKING_MIN_ADVANCE_DAYS', default=1)  # Giorni 
 GA_MEASUREMENT_ID = env('GA_MEASUREMENT_ID', default='')
 
 # Site Configuration
-SITE_NAME = 'Altesia Suite'
+SITE_NAME = 'Altèsia Suites'
 SITE_DESCRIPTION = 'La vostra esperienza di lusso in Umbria'

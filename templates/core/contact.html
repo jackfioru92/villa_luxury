@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Contatti - {{ SITE_NAME|default:"Altesia" }}{% endblock %}
+{% block title %}Contatti - {{ SITE_NAME|default:"Altèsia" }}{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -196,6 +196,43 @@
                             <option value="special">Richieste speciali</option>
                             <option value="other">Altro</option>
                         </select>
+                    </div>
+
+                    <div>
+                        <span class="block text-sm font-medium text-primary-700 mb-2">Esperienze di interesse</span>
+                        <p class="text-xs text-primary-500 mb-3">Seleziona le esperienze che vorresti prenotare (facoltativo).</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
+                                <input type="checkbox" name="experiences" value="Chef Privato"
+                                       class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
+                                <span class="text-sm text-primary-700">Chef Privato</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
+                                <input type="checkbox" name="experiences" value="Colazione Privata"
+                                       class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
+                                <span class="text-sm text-primary-700">Colazione Privata</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
+                                <input type="checkbox" name="experiences" value="Aperitivi & Cene Esclusive"
+                                       class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
+                                <span class="text-sm text-primary-700">Aperitivi &amp; Cene Esclusive</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
+                                <input type="checkbox" name="experiences" value="Massaggi & Benessere"
+                                       class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
+                                <span class="text-sm text-primary-700">Massaggi &amp; Benessere</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
+                                <input type="checkbox" name="experiences" value="Passeggiate a Cavallo"
+                                       class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
+                                <span class="text-sm text-primary-700">Passeggiate a Cavallo</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
+                                <input type="checkbox" name="experiences" value="Golf & Tennis"
+                                       class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
+                                <span class="text-sm text-primary-700">Golf &amp; Tennis</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div>

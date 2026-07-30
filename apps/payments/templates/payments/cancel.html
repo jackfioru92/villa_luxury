@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pagamento annullato - {{ SITE_NAME|default:"Altèsia Suites" }}{% endblock %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center bg-primary-50 py-24 px-4">
+    <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-8 lg:p-12 text-center">
+
+        <div class="w-16 h-16 mx-auto mb-6 bg-tertiary-100 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-tertiary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z"/>
+            </svg>
+        </div>
+
+        <span class="text-tertiary-600 font-semibold tracking-widest uppercase text-sm">Pagamento annullato</span>
+        <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900 mt-3 mb-4">
+            Nessun addebito effettuato
+        </h1>
+        <p class="text-primary-600 text-lg leading-relaxed mb-8">
+            Il pagamento è stato annullato e non è stato addebitato nulla.
+            {% if booking %}La tua prenotazione <strong>#{{ booking.booking_number }}</strong> resta <strong>in attesa</strong>: puoi completare il pagamento quando vuoi.{% else %}Puoi riprovare quando vuoi.{% endif %}
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {% if booking %}
+            <a href="{% url 'payments:checkout' booking_id=booking.id %}"
+               class="w-full sm:w-auto px-8 py-3 bg-tertiary-500 text-primary-900 font-semibold text-sm rounded-sm hover:bg-tertiary-600 transition-all shadow-md uppercase tracking-wider">
+                Riprova il pagamento
+            </a>
+            {% endif %}
+            <a href="{% url 'core:contact' %}"
+               class="w-full sm:w-auto px-8 py-3 bg-transparent text-primary-800 font-semibold text-sm rounded-sm border-2 border-primary-200 hover:bg-primary-50 transition-all uppercase tracking-wider">
+                Contattaci
+            </a>
+        </div>
+
+        <p class="text-primary-400 text-sm mt-8">
+            Problemi con il pagamento? Scrivici a
+            <a href="mailto:info@altesiasuite.com" class="text-tertiary-600 hover:text-tertiary-700">info@altesiasuite.com</a>
+        </p>
+
+    </div>
+</section>
+{% endblock %}

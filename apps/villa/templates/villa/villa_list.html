@@ -7,11 +7,11 @@
 <!-- Hero Section -->
 <section class="relative h-[70vh] min-h-[500px] flex items-center justify-center">
     <div class="absolute inset-0 bg-primary-900">
-        {% if villa and villa.main_image %}
-        <img src="{{ villa.main_image.url }}" alt="{{ villa.name }}" 
+        {% if villa and villa.hero_image %}
+        <img src="{{ villa.hero_image.url }}" alt="{{ villa.name }}"
              class="w-full h-full object-cover opacity-70">
         {% else %}
-        <div class="w-full h-full bg-gradient-to-br from-villa-800 to-villa-900"></div>
+        <div class="w-full h-full bg-gradient-to-br from-primary-800 to-primary-900"></div>
         {% endif %}
     </div>
     <div class="relative z-10 text-center text-white px-4">

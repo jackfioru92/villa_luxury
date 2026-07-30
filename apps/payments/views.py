@@ -64,29 +64,18 @@ class CheckoutSuccessView(View):
 
     def get(self, request):
         session_id = request.GET.get('session_id')
+        booking = None
 
-        if not session_id:
-            messages.error(request, 'Sessione di pagamento non valida.')
-            return redirect('core:home')
+        if session_id:
+            try:
+                session = StripeService.retrieve_session(session_id)
+                booking_number = session.metadata.get('booking_number')
+                if booking_number:
+                    booking = Booking.objects.filter(booking_number=booking_number).first()
+            except Exception as e:
+                logger.error(f"Error retrieving checkout session: {str(e)}")
 
-        try:
-            # Retrieve the session
-            session = StripeService.retrieve_session(session_id)
-            booking_number = session.metadata.get('booking_number')
-
-            if booking_number:
-                # Redirect to confirmation page
-                messages.success(
-                    request,
-                    'Pagamento completato con successo! La tua prenotazione è confermata.'
-                )
-                return redirect('booking:confirmation', booking_number=booking_number)
-
-        except Exception as e:
-            logger.error(f"Error retrieving checkout session: {str(e)}")
-
-        messages.info(request, 'Pagamento in elaborazione. Riceverai una email di conferma.')
-        return redirect('core:home')
+        return render(request, 'payments/success.html', {'booking': booking})
 
 
 class CheckoutCancelView(View):
@@ -94,17 +83,11 @@ class CheckoutCancelView(View):
 
     def get(self, request):
         booking_number = request.GET.get('booking')
-        
-        messages.warning(
-            request,
-            'Pagamento annullato. Puoi riprovare quando vuoi, '
-            'la prenotazione rimane in attesa.'
+        booking = (
+            Booking.objects.filter(booking_number=booking_number).first()
+            if booking_number else None
         )
-
-        if booking_number:
-            return redirect('booking:confirmation', booking_number=booking_number)
-        
-        return redirect('booking:wizard')
+        return render(request, 'payments/cancel.html', {'booking': booking})
 
 
 @method_decorator(csrf_exempt, name='dispatch')

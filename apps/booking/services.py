@@ -6,6 +6,7 @@ from decimal import Decimal
 from typing import Optional, List, Dict, Tuple
 from django.conf import settings
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.db.models import Q
 from apps.villa.models import BookableUnit, SeasonPrice
 from apps.booking.models import BlockedDate, Booking, BookingPriceDetail
@@ -59,7 +60,7 @@ def send_booking_confirmation_to_guest(booking: Booking):
     Invia email di conferma all'ospite quando la prenotazione viene confermata.
     """
     try:
-        subject = f'Prenotazione Confermata #{booking.booking_number} - Altesia Suite'
+        subject = f'Prenotazione Confermata #{booking.booking_number} - Altèsia Suite'
         
         message = (
             f"Gentile {booking.guest_first_name},\n\n"
@@ -97,14 +98,22 @@ def send_booking_confirmation_to_guest(booking: Booking):
             f"Email: info@altesiasuite.com\n"
             f"Telefono: +39 347 6532405\n\n"
             f"Ti aspettiamo!\n"
-            f"Il team di Altesia Suite\n"
+            f"Il team di Altèsia Suite\n"
         )
         
+        try:
+            html_message = render_to_string(
+                'booking/email/booking_confirmation.html', {'booking': booking}
+            )
+        except Exception:
+            html_message = None
+
         send_mail(
             subject=subject,
             message=message,
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[booking.guest_email],
+            html_message=html_message,
             fail_silently=True,
         )
     except Exception:
