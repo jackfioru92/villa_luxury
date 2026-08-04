@@ -92,7 +92,7 @@ def send_booking_confirmation_to_guest(booking: Booking):
             f"INFORMAZIONI UTILI\n"
             f"{'=' * 50}\n\n"
             f"Indirizzo: Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria\n"
-            f"Coordinate GPS: 43.1480, 12.3830\n\n"
+            f"Mappa: https://www.google.com/maps/search/?api=1&query=43.20914077758789,12.454292297363281\n\n"
             f"Per qualsiasi domanda o richiesta speciale,\n"
             f"non esitare a contattarci:\n"
             f"Email: info@altesiasuite.com\n"

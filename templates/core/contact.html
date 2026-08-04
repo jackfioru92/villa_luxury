@@ -95,7 +95,12 @@
                         </div>
                         <div class="ml-4">
                             <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">Indirizzo</h3>
-                            <p class="text-primary-600 mt-1">{{ site_settings.address|linebreaksbr }}</p>
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=43.20914077758789,12.454292297363281"
+                               target="_blank" rel="noopener"
+                               class="text-primary-600 hover:text-tertiary-600 transition-colors mt-1 block">
+                                {{ site_settings.address|linebreaksbr }}
+                                <span class="block text-tertiary-600 text-sm font-medium mt-1">Apri in Google Maps →</span>
+                            </a>
                         </div>
                     </div>
                     {% endif %}
@@ -274,19 +279,23 @@
     </div>
 </section>
 
-<!-- Map Section (placeholder) -->
-<section class="h-72 md:h-96 bg-primary-200 relative">
-    <div class="absolute inset-0 flex items-center justify-center">
-        <div class="text-center">
-            <svg class="w-12 h-12 text-primary-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-            <p class="text-primary-500 font-medium">Umbria, Italia</p>
-            <p class="text-primary-400 text-sm mt-1">La mappa sarà disponibile a breve</p>
-        </div>
-    </div>
+<!-- Map Section -->
+<section class="relative h-72 md:h-96">
+    <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=12.4343%2C43.2031%2C12.4743%2C43.2151&layer=mapnik&marker=43.20914%2C12.45429"
+        class="w-full h-full border-0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Posizione Altèsia Suites">
+    </iframe>
+    <a href="https://www.google.com/maps/search/?api=1&amp;query=43.20914077758789,12.454292297363281"
+       target="_blank" rel="noopener"
+       class="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 px-6 py-3 bg-tertiary-500 text-primary-900 font-semibold text-sm rounded-sm hover:bg-tertiary-600 transition-all shadow-lg uppercase tracking-wider">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        Apri in Google Maps
+    </a>
 </section>
 {% endblock %}
