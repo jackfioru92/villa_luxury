@@ -9,6 +9,9 @@ django-htmx>=1.17.0
 django-crispy-forms>=2.1
 crispy-tailwind>=0.5.0
 
+# Authentication (account + Google social login)
+django-allauth[socialaccount]>=65.14.1,<66
+
 # Image handling
 Pillow>=10.0.0
 
