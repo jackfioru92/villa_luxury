@@ -81,6 +81,22 @@ Setup per deployment automatico al push su GitHub:
 2. Configura GitHub webhook
 3. Il server reagisce automaticamente ai push
 
+## 💶 Aggiornamento Prezziario
+
+I prezzi stagionali sono nel database e si rigenerano con il management command
+`update_pricing` (tabelle in `apps/villa/management/commands/update_pricing.py`,
+dettagli in [PREZZIARIO.md](PREZZIARIO.md)):
+
+```bash
+cd /opt/altesiasuite/app && source /opt/altesiasuite/venv/bin/activate
+python manage.py update_pricing --show      # prezzi attuali
+python manage.py update_pricing --dry-run   # anteprima senza modifiche
+python manage.py update_pricing             # applica
+```
+
+Il comando sostituisce tutti i periodi esistenti delle unità attive e aggiorna
+il `base_price` alla bassa stagione. Non tocca le prenotazioni già create.
+
 ## 🔧 Modalità Manutenzione
 
 Per attivare/disattivare la pagina di manutenzione:
