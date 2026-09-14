@@ -18,7 +18,8 @@ in Nov-19 Dic / Natale-Capodanno / 7 Gen-Mar.
 Uso:
   python manage.py update_pricing --show             # prezzi attuali, nessuna modifica
   python manage.py update_pricing --dry-run          # mostra il piano, nessuna modifica
-  python manage.py update_pricing                    # applica (anno corrente + successivo)
+  python manage.py update_pricing                    # applica (anno corrente -> DEFAULT_UNTIL_YEAR)
+  python manage.py update_pricing --until 2032       # estende l'orizzonte
   python manage.py update_pricing --years 2026 2027  # anni espliciti
   python manage.py update_pricing --point low        # estremo basso degli intervalli
 """
@@ -72,6 +73,9 @@ SUITE_TIER_BY_PERIOD = {
 XMAS_START = (12, 20)
 XMAS_END = (1, 6)
 
+# Ultimo anno generato di default (dall'anno corrente incluso)
+DEFAULT_UNTIL_YEAR = 2030
+
 
 def build_periods(year):
     """Periodi (chiave, start, end) per un anno solare, non sovrapposti."""
@@ -119,7 +123,11 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '--years', nargs='+', type=int,
-            help='Anni da generare (default: anno corrente e successivo)',
+            help='Anni da generare (default: dall\'anno corrente a --until)',
+        )
+        parser.add_argument(
+            '--until', type=int, default=DEFAULT_UNTIL_YEAR,
+            help=f'Ultimo anno da generare (default: {DEFAULT_UNTIL_YEAR})',
         )
         parser.add_argument(
             '--point', choices=['low', 'mid', 'high'], default='mid',
@@ -148,7 +156,9 @@ class Command(BaseCommand):
             return
 
         today = date.today()
-        years = options['years'] or [today.year, today.year + 1]
+        years = options['years'] or list(range(today.year, options['until'] + 1))
+        if not years:
+            raise CommandError(f'--until {options["until"]} è precedente all\'anno corrente.')
         point = options['point']
         dry_run = options['dry_run']
 

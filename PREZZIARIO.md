@@ -6,7 +6,9 @@ passare a `--point low` o `--point high` senza toccare il codice.
 
 I prezzi vivono nel database (`villa.SeasonPrice`, modificabili anche
 dall'admin Django). Il comando `update_pricing` li rigenera da zero a partire
-dalle tabelle in `apps/villa/management/commands/update_pricing.py`.
+dalle tabelle in `apps/villa/management/commands/update_pricing.py`, per tutti
+gli anni dall'anno corrente al **2030** (`DEFAULT_UNTIL_YEAR`, estendibile con
+`--until`).
 
 ## Struttura intera (8 ospiti) — unità di tipo "Intera Villa"
 
@@ -52,5 +54,9 @@ sarà consolidato.
 cd /opt/altesiasuite/app && source /opt/altesiasuite/venv/bin/activate
 python manage.py update_pricing --show      # situazione attuale
 python manage.py update_pricing --dry-run   # anteprima
-python manage.py update_pricing             # applica (anno corrente + successivo)
+python manage.py update_pricing             # applica (anno corrente -> 2030)
+python manage.py update_pricing --until 2032  # orizzonte più lungo
 ```
+
+Per cambiare i prezzi: modificare gli intervalli nelle tabelle del comando,
+commit + deploy, poi rilanciare `update_pricing` sul server (rigenera tutto).

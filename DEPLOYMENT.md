@@ -91,11 +91,12 @@ dettagli in [PREZZIARIO.md](PREZZIARIO.md)):
 cd /opt/altesiasuite/app && source /opt/altesiasuite/venv/bin/activate
 python manage.py update_pricing --show      # prezzi attuali
 python manage.py update_pricing --dry-run   # anteprima senza modifiche
-python manage.py update_pricing             # applica
+python manage.py update_pricing             # applica (anno corrente -> 2030)
 ```
 
 Il comando sostituisce tutti i periodi esistenti delle unità attive e aggiorna
 il `base_price` alla bassa stagione. Non tocca le prenotazioni già create.
+Per cambiare le tariffe: modificare le tabelle nel comando, deploy, rilanciare.
 
 ## 🔧 Modalità Manutenzione
 
