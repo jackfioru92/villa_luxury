@@ -141,7 +141,13 @@ class Command(BaseCommand):
             help='Non aggiornare base_price delle unità',
         )
 
+    def say(self, message='', style=None):
+        """Scrive solo se richiesto: con verbosity=0 (es. dai test) resta muto."""
+        if self.verbosity:
+            self.stdout.write(style(message) if style else message)
+
     def handle(self, *args, **options):
+        self.verbosity = options.get('verbosity', 1)
         units = list(BookableUnit.objects.filter(is_active=True).order_by('sort_order', 'name'))
         if not units:
             raise CommandError('Nessuna unità attiva trovata.')
@@ -170,10 +176,11 @@ class Command(BaseCommand):
         if not periods:
             raise CommandError('Nessun periodo futuro negli anni indicati.')
 
-        self.stdout.write(self.style.MIGRATE_HEADING(
+        self.say(
             f'Prezziario struttura intera, anni {sorted(set(years))}'
-            f'{"  [DRY RUN]" if dry_run else ""}'
-        ))
+            f'{"  [DRY RUN]" if dry_run else ""}',
+            self.style.MIGRATE_HEADING,
+        )
 
         with transaction.atomic():
             for unit in units:
@@ -185,29 +192,30 @@ class Command(BaseCommand):
             if dry_run:
                 transaction.set_rollback(True)
 
-        self.stdout.write('')
+        self.say('')
         if dry_run:
-            self.stdout.write(self.style.WARNING('Dry run: nessuna modifica scritta.'))
+            self.say('Dry run: nessuna modifica scritta.', self.style.WARNING)
         else:
             bookable = sum(1 for u in units if u.is_bookable)
-            self.stdout.write(self.style.SUCCESS(
-                f'Fatto: {bookable} unità prenotabili, {len(periods)} periodi ciascuna.'
-            ))
+            self.say(
+                f'Fatto: {bookable} unità prenotabili, {len(periods)} periodi ciascuna.',
+                self.style.SUCCESS,
+            )
 
     def apply_tariffs(self, unit, periods, dry_run, keep_base_price):
         from apps.villa.models import SeasonPrice
 
-        self.stdout.write(f'\n{unit.name}  [{unit.get_unit_type_display()}, {unit.max_guests} ospiti]')
+        self.say(f'\n{unit.name}  [{unit.get_unit_type_display()}, {unit.max_guests} ospiti]')
 
         existing = unit.season_prices.all()
         count = existing.count()
         if count:
-            self.stdout.write(f'  - rimuovo {count} prezzi stagionali esistenti')
+            self.say(f'  - rimuovo {count} prezzi stagionali esistenti')
             if not dry_run:
                 existing.delete()
 
         for label, start, end, price in periods:
-            self.stdout.write(f'  + {label:<24} {start} -> {end}  {price:>5} €/notte')
+            self.say(f'  + {label:<24} {start} -> {end}  {price:>5} €/notte')
             if not dry_run:
                 SeasonPrice.objects.create(
                     unit=unit, name=label,
@@ -217,36 +225,36 @@ class Command(BaseCommand):
 
         if not keep_base_price:
             lowest = min(price for _, _, _, price in periods)
-            self.stdout.write(f'  = base_price (prezzo "da"): {unit.base_price} -> {lowest} €')
+            self.say(f'  = base_price (prezzo "da"): {unit.base_price} -> {lowest} €')
             if not dry_run:
                 unit.base_price = lowest
                 unit.save(update_fields=['base_price', 'updated_at'])
 
     def clear_tariffs(self, unit, dry_run):
         count = unit.season_prices.count()
-        self.stdout.write(
+        self.say(
             f'\n{unit.name}  [non prenotabile singolarmente]'
         )
         if count:
-            self.stdout.write(f'  - rimuovo {count} prezzi stagionali non più applicabili')
+            self.say(f'  - rimuovo {count} prezzi stagionali non più applicabili')
             if not dry_run:
                 unit.season_prices.all().delete()
         else:
-            self.stdout.write('  (nessun prezzo da rimuovere)')
+            self.say('  (nessun prezzo da rimuovere)')
 
     def show_current(self, units):
         for unit in units:
             flag = '' if unit.is_bookable else '  [NON prenotabile singolarmente]'
-            self.stdout.write(
+            self.say(
                 f'\n{unit.name}{flag}  [{unit.get_unit_type_display()}, {unit.max_guests} ospiti, '
                 f'base {unit.base_price} €, pulizie {unit.cleaning_fee} €, min {unit.min_nights} notti]'
             )
             seasons = unit.season_prices.all()
             if not seasons:
-                self.stdout.write('  (nessun prezzo stagionale)')
+                self.say('  (nessun prezzo stagionale)')
             for season in seasons:
                 extra = f', min {season.min_nights} notti' if season.min_nights else ''
-                self.stdout.write(
+                self.say(
                     f'  {season.name:<24} {season.start_date} -> {season.end_date}'
                     f'  {season.price_per_night:>8} €{extra}'
                 )
