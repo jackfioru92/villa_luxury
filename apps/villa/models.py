@@ -127,7 +127,16 @@ class BookableUnit(UUIDModel, TimeStampedModel):
     )
 
     # Status
-    is_active = models.BooleanField(_('Attivo'), default=True)
+    is_active = models.BooleanField(
+        _('Visibile sul sito'),
+        default=True,
+        help_text=_('Se disattivata l\'unità sparisce da tutto il sito')
+    )
+    is_bookable = models.BooleanField(
+        _('Prenotabile singolarmente'),
+        default=True,
+        help_text=_('Se disattivata resta visibile (foto e descrizione) ma non è prenotabile da sola')
+    )
     sort_order = models.PositiveIntegerField(_('Ordine'), default=0)
 
     class Meta:

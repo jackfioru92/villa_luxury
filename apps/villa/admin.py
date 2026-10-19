@@ -66,8 +66,8 @@ class VillaAdmin(admin.ModelAdmin):
 
 @admin.register(BookableUnit)
 class BookableUnitAdmin(admin.ModelAdmin):
-    list_display = ('name', 'villa', 'unit_type', 'base_price', 'max_guests', 'min_nights', 'is_active')
-    list_filter = ('villa', 'unit_type', 'is_active')
+    list_display = ('name', 'villa', 'unit_type', 'base_price', 'max_guests', 'min_nights', 'is_active', 'is_bookable')
+    list_filter = ('villa', 'unit_type', 'is_active', 'is_bookable')
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [SeasonPriceInline, UnitAmenityInline, GalleryImageInline]
@@ -97,7 +97,7 @@ class BookableUnitAdmin(admin.ModelAdmin):
             ),
         }),
         ('Stato', {
-            'fields': ('is_active', 'sort_order')
+            'fields': ('is_active', 'is_bookable', 'sort_order')
         }),
     )
 

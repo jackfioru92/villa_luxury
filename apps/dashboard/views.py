@@ -71,7 +71,7 @@ class DashboardOverviewView(TemplateView):
         context['recent_bookings'] = all_bookings.order_by('-created_at')[:10]
         
         # Units
-        context['units'] = BookableUnit.objects.filter(is_active=True)
+        context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
         
         return context
 
@@ -123,7 +123,7 @@ class BookingListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['units'] = BookableUnit.objects.filter(is_active=True)
+        context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
         context['statuses'] = Booking.Status.choices
         context['payment_statuses'] = Booking.PaymentStatus.choices
         
@@ -158,7 +158,7 @@ class CalendarView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['units'] = BookableUnit.objects.filter(is_active=True)
+        context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
         return context
 
 
@@ -233,7 +233,7 @@ class BlockDatesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['units'] = BookableUnit.objects.filter(is_active=True)
+        context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
         context['reasons'] = BlockedDate.Reason.choices
         
         # Get all manual blocks (non-booking) and group consecutive dates
@@ -352,7 +352,7 @@ class ReportsView(TemplateView):
             date__lte=date.today()
         ).count()
         
-        units_count = BookableUnit.objects.filter(is_active=True).count()
+        units_count = BookableUnit.objects.filter(is_active=True, is_bookable=True).count()
         if units_count > 0:
             context['occupancy_rate'] = (booked_days / (total_days * units_count)) * 100
         else:

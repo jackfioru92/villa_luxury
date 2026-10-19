@@ -59,6 +59,11 @@ class UnitDetailView(DetailView):
         context['other_units'] = self.object.villa.units.filter(
             is_active=True
         ).exclude(pk=self.object.pk)
+        if not self.object.is_bookable:
+            # la suite si vende solo dentro l'intera struttura: serve il link giusto
+            context['whole_villa'] = self.object.villa.units.filter(
+                is_active=True, is_bookable=True
+            ).order_by('sort_order').first()
         return context
 
 

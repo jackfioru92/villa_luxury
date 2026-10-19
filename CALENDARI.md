@@ -13,6 +13,16 @@ ospiti restano da impostare a mano nell'Extranet di Booking (vedi
 [PREZZIARIO.md](PREZZIARIO.md)); la propagazione non è istantanea, in genere
 va dalla mezz'ora a qualche ora.
 
+## Si vende solo la struttura intera
+
+Dal 19 ottobre 2026 le singole suite non sono prenotabili separatamente
+(`is_bookable=False` in admin). Restano visibili sul sito con foto e
+descrizione, ma la pagina della suite rimanda alla prenotazione dell'intera
+struttura, e il wizard di prenotazione mostra solo `All Structure`.
+
+Di conseguenza su Booking.com va pubblicato **solo il feed dell'intera
+struttura**.
+
 ## Unità che condividono lo spazio
 
 `All Structure` è fisicamente composta da `Suite Aura` e `Suite Silva`. Il

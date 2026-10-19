@@ -19,13 +19,13 @@ class BookingWizardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['units'] = BookableUnit.objects.filter(is_active=True)
+        context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
         
         # Pre-select unit if provided
         unit_slug = self.request.GET.get('unit')
         if unit_slug:
             context['selected_unit'] = BookableUnit.objects.filter(
-                slug=unit_slug, is_active=True
+                slug=unit_slug, is_active=True, is_bookable=True
             ).first()
         
         return context
@@ -82,7 +82,7 @@ class HTMXAvailabilityCalendarView(View):
         if not unit_id:
             return HttpResponse('Unit required', status=400)
 
-        unit = get_object_or_404(BookableUnit, pk=unit_id, is_active=True)
+        unit = get_object_or_404(BookableUnit, pk=unit_id, is_active=True, is_bookable=True)
         calendar_data = AvailabilityService.get_availability_calendar(unit, year, month)
 
         # Build calendar days grid (including padding from prev/next month)
@@ -184,7 +184,7 @@ class HTMXPriceCalculationView(View):
             return HttpResponse('', status=200)
 
         try:
-            unit = get_object_or_404(BookableUnit, pk=unit_id, is_active=True)
+            unit = get_object_or_404(BookableUnit, pk=unit_id, is_active=True, is_bookable=True)
             check_in = datetime.strptime(check_in_str, '%Y-%m-%d').date()
             check_out = datetime.strptime(check_out_str, '%Y-%m-%d').date()
 
@@ -224,11 +224,11 @@ class HTMXBookingStepView(View):
 
         if step == 1:
             # Unit selection
-            context['units'] = BookableUnit.objects.filter(is_active=True)
+            context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
             unit_id = request.GET.get('unit')
             if unit_id:
                 context['selected_unit'] = BookableUnit.objects.filter(
-                    pk=unit_id, is_active=True
+                    pk=unit_id, is_active=True, is_bookable=True
                 ).first()
 
         elif step == 2:
@@ -332,7 +332,7 @@ class HTMXUnitSelectView(View):
     """HTMX endpoint for unit selection cards."""
 
     def get(self, request):
-        units = BookableUnit.objects.filter(is_active=True).order_by('sort_order')
+        units = BookableUnit.objects.filter(is_active=True, is_bookable=True).order_by('sort_order')
         return render(request, 'booking/partials/unit_cards.html', {
             'units': units
         })
@@ -370,7 +370,7 @@ class BookingCreateAPIView(View):
             )
 
         try:
-            unit = get_object_or_404(BookableUnit, pk=data['unit'], is_active=True)
+            unit = get_object_or_404(BookableUnit, pk=data['unit'], is_active=True, is_bookable=True)
             check_in = datetime.strptime(data['check_in'], '%Y-%m-%d').date()
             check_out = datetime.strptime(data['check_out'], '%Y-%m-%d').date()
         except (ValueError, TypeError):

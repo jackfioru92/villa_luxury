@@ -88,27 +88,53 @@
             <!-- Sidebar - Booking Card -->
             <div class="lg:col-span-1">
                 <div class="bg-primary-50 rounded-xl p-6 sticky top-24">
+                    {% if unit.is_bookable %}
                     <div class="text-center mb-6">
                         <span class="text-sm text-primary-500">A partire da</span>
                         <div class="price-tag">
                             <span class="text-3xl font-serif font-bold text-primary-900">€{{ unit.base_price|floatformat:0 }}</span>
                             <span class="text-primary-500">/notte</span>
                         </div>
+                        <span class="text-xs text-primary-500">colazione inclusa</span>
                     </div>
-                    
+
                     {% if unit.min_nights > 1 %}
                     <p class="text-sm text-primary-500 text-center mb-4">
                         Soggiorno minimo: {{ unit.min_nights }} notti
                     </p>
                     {% endif %}
-                    
+
                     <a href="{% url 'booking:wizard' %}?unit={{ unit.id }}" class="btn-primary w-full text-center mb-4">
                         Verifica Disponibilità
                     </a>
-                    
+
                     <p class="text-xs text-primary-500 text-center">
                         Prenota ora, paga l'acconto online
                     </p>
+                    {% else %}
+                    <div class="text-center mb-6">
+                        <span class="text-sm text-primary-500">Questa suite fa parte di</span>
+                        <div class="text-2xl font-serif font-bold text-primary-900 mt-1">Altèsia</div>
+                        <p class="text-sm text-primary-600 mt-3">
+                            La struttura si prenota per intero: tutte le suite, gli spazi comuni
+                            e il parco sono a disposizione dei vostri ospiti.
+                        </p>
+                    </div>
+
+                    {% if whole_villa %}
+                    <a href="{% url 'booking:wizard' %}?unit={{ whole_villa.id }}" class="btn-primary w-full text-center mb-4">
+                        Verifica Disponibilità
+                    </a>
+                    {% else %}
+                    <a href="{% url 'booking:wizard' %}" class="btn-primary w-full text-center mb-4">
+                        Verifica Disponibilità
+                    </a>
+                    {% endif %}
+
+                    <p class="text-xs text-primary-500 text-center">
+                        Prenotazione dell'intera struttura, colazione inclusa
+                    </p>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -1,146 +1,141 @@
 """
-Aggiorna il prezziario stagionale (SeasonPrice) di tutte le unità attive.
+Aggiorna il prezziario stagionale (SeasonPrice) delle unità prenotabili.
 
-Le tariffe sono definite nelle tabelle in cima a questo file come intervalli
-(min, max) €/notte, così come proposte al cliente. Il punto dell'intervallo
-da applicare si sceglie con --point (low | mid | high), default: mid.
+Le tariffe sono quelle definite dalla proprietà: struttura intera,
+pernottamento con colazione inclusa. Si modificano nelle tabelle qui sotto e
+si riapplicano rilanciando il comando.
 
-L'unità di tipo FULL (intera struttura, 8 ospiti) usa la tabella
-FULL_STRUCTURE_PRICES; tutte le altre unità (suite/appartamenti) usano
-SUITE_PRICES, con i mesi raggruppati in bassa / media / alta stagione
-secondo SUITE_TIER_BY_PERIOD.
+Le singole suite non sono prenotabili separatamente (`is_bookable=False`):
+restano visibili sul sito ma non hanno un prezzo proprio, e il comando
+rimuove eventuali prezzi stagionali rimasti.
 
-I periodi generati NON si sovrappongono mai: la ricerca del prezzo usa
-`.first()` ordinato per start_date, quindi un periodo "Natale" contenuto in
-"Novembre-Marzo" non verrebbe mai applicato. Per questo l'inverno è spezzato
-in Nov-19 Dic / Natale-Capodanno / 7 Gen-Mar.
+Periodi speciali: Natale/Capodanno, settimana di Pasqua (data mobile,
+calcolata ogni anno) e settimana di Ferragosto vengono "ritagliati" dalle
+fasce di base, così i periodi non si sovrappongono mai. Serve perché la
+ricerca del prezzo prende il primo periodo per data di inizio: un periodo
+contenuto in un altro non verrebbe mai applicato.
 
 Uso:
-  python manage.py update_pricing --show             # prezzi attuali, nessuna modifica
-  python manage.py update_pricing --dry-run          # mostra il piano, nessuna modifica
-  python manage.py update_pricing                    # applica (anno corrente -> DEFAULT_UNTIL_YEAR)
-  python manage.py update_pricing --until 2032       # estende l'orizzonte
-  python manage.py update_pricing --years 2026 2027  # anni espliciti
-  python manage.py update_pricing --point low        # estremo basso degli intervalli
+  python manage.py update_pricing --show       # prezzi attuali, nessuna modifica
+  python manage.py update_pricing --dry-run    # mostra il piano
+  python manage.py update_pricing              # applica (anno corrente -> 2030)
+  python manage.py update_pricing --until 2032 # orizzonte più lungo
 """
-from datetime import date
+from datetime import date, timedelta
 
+from dateutil.easter import easter
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
-from apps.villa.models import BookableUnit, SeasonPrice
-
+from apps.villa.models import BookableUnit
 
 # --------------------------------------------------------------------------
-# TARIFFE (min, max) €/notte — modificare qui per cambiare il prezziario
+# TARIFFE €/notte - struttura intera, colazione inclusa
 # --------------------------------------------------------------------------
 
-# Struttura intera (8 ospiti)
-FULL_STRUCTURE_PRICES = {
-    'gen_mar': ('Novembre - Marzo', (590, 690)),
-    'apr_mag': ('Aprile - Maggio', (750, 890)),
-    'giu':     ('Giugno', (890, 990)),
-    'lug':     ('Luglio', (990, 1150)),
-    'ago':     ('Agosto', (1150, 1350)),
-    'set':     ('Settembre', (950, 1100)),
-    'ott':     ('Ottobre', (790, 950)),
-    'nov_dic': ('Novembre - Marzo', (590, 690)),
-    'natale':  ('Natale e Capodanno', (1200, 1450)),
-}
+LOW = 1000          # novembre-marzo e ottobre
+MID = 1200          # aprile, maggio, giugno, settembre
+HIGH = 1500         # luglio e agosto
+XMAS = 1600         # 8 dicembre - 6 gennaio
+EASTER = 1500       # settimana di Pasqua
+FERRAGOSTO = 1700   # 9 - 15 agosto
 
-# Singola suite — tetto iniziale prudente, non oltre 500 €/notte
-SUITE_PRICES = {
-    'bassa':  ('Bassa stagione', (260, 290)),
-    'media':  ('Media stagione', (320, 390)),
-    'alta':   ('Alta stagione', (420, 490)),
-    'natale': ('Natale e Capodanno', (420, 490)),
-}
+# Fasce di base, (etichetta, (mese, giorno) inizio, (mese, giorno) fine, prezzo).
+# L'inverno è spezzato attorno al periodo natalizio, che scavalca l'anno.
+BASE_PERIODS = [
+    ('Novembre - Marzo', (1, 7), (3, 31), LOW),
+    ('Aprile - Maggio', (4, 1), (5, 31), MID),
+    ('Giugno', (6, 1), (6, 30), MID),
+    ('Luglio', (7, 1), (7, 31), HIGH),
+    ('Agosto', (8, 1), (8, 31), HIGH),
+    ('Settembre', (9, 1), (9, 30), MID),
+    ('Ottobre', (10, 1), (10, 31), LOW),
+    ('Novembre - Marzo', (11, 1), (12, 7), LOW),
+]
 
-# Mappa mese -> fascia per le suite
-SUITE_TIER_BY_PERIOD = {
-    'gen_mar': 'bassa',
-    'nov_dic': 'bassa',
-    'apr_mag': 'media',
-    'giu':     'media',
-    'ott':     'media',
-    'lug':     'alta',
-    'ago':     'alta',
-    'set':     'alta',
-    'natale':  'natale',
-}
-
-# Periodo Natale/Capodanno: 20 dicembre -> 6 gennaio (Epifania inclusa)
-XMAS_START = (12, 20)
+# Periodo natalizio: 8 dicembre -> 6 gennaio dell'anno successivo
+XMAS_START = (12, 8)
 XMAS_END = (1, 6)
+
+# Settimana di Ferragosto: notti dal 9 al 15 agosto (check-out il 16)
+FERRAGOSTO_START = (8, 9)
+FERRAGOSTO_END = (8, 15)
+
+# Settimana di Pasqua: le 7 notti che terminano con il lunedì dell'Angelo,
+# cioè da 5 giorni prima della domenica di Pasqua al giorno dopo.
+EASTER_NIGHTS_BEFORE = 5
+EASTER_NIGHTS_AFTER = 1
 
 # Ultimo anno generato di default (dall'anno corrente incluso)
 DEFAULT_UNTIL_YEAR = 2030
 
 
-def build_periods(year):
-    """Periodi (chiave, start, end) per un anno solare, non sovrapposti."""
+def easter_week(year):
+    """(inizio, fine) della settimana di Pasqua: data mobile, va calcolata."""
+    sunday = easter(year)
+    return (
+        sunday - timedelta(days=EASTER_NIGHTS_BEFORE),
+        sunday + timedelta(days=EASTER_NIGHTS_AFTER),
+    )
+
+
+def special_periods(year):
+    """Periodi che hanno la precedenza sulle fasce di base."""
+    easter_start, easter_end = easter_week(year)
     return [
-        ('gen_mar', date(year, 1, XMAS_END[1] + 1), date(year, 3, 31)),
-        ('apr_mag', date(year, 4, 1), date(year, 5, 31)),
-        ('giu',     date(year, 6, 1), date(year, 6, 30)),
-        ('lug',     date(year, 7, 1), date(year, 7, 31)),
-        ('ago',     date(year, 8, 1), date(year, 8, 31)),
-        ('set',     date(year, 9, 1), date(year, 9, 30)),
-        ('ott',     date(year, 10, 1), date(year, 10, 31)),
-        ('nov_dic', date(year, 11, 1), date(year, XMAS_START[0], XMAS_START[1] - 1)),
-        ('natale',  date(year, *XMAS_START), date(year + 1, *XMAS_END)),
+        ('Settimana di Pasqua', easter_start, easter_end, EASTER),
+        ('Settimana di Ferragosto', date(year, *FERRAGOSTO_START),
+         date(year, *FERRAGOSTO_END), FERRAGOSTO),
+        ('Natale e Capodanno', date(year, *XMAS_START),
+         date(year + 1, *XMAS_END), XMAS),
     ]
 
 
-def pick_price(price_range, point):
-    lo, hi = price_range
-    if point == 'low':
-        return lo
-    if point == 'high':
-        return hi
-    return (lo + hi) // 2
+def subtract(span, cuts):
+    """Frammenti di `span` non coperti da nessuno dei `cuts`."""
+    fragments = [span]
+    for cut_start, cut_end in cuts:
+        remaining = []
+        for start, end in fragments:
+            if cut_end < start or cut_start > end:
+                remaining.append((start, end))
+                continue
+            if start < cut_start:
+                remaining.append((start, cut_start - timedelta(days=1)))
+            if end > cut_end:
+                remaining.append((cut_end + timedelta(days=1), end))
+        fragments = remaining
+    return fragments
 
 
-def tariff_for_unit(unit, period_key, point):
-    """Ritorna (nome_stagione, prezzo) per unità e periodo."""
-    if unit.unit_type == BookableUnit.UnitType.FULL_VILLA:
-        label, price_range = FULL_STRUCTURE_PRICES[period_key]
-    else:
-        label, price_range = SUITE_PRICES[SUITE_TIER_BY_PERIOD[period_key]]
-    return label, pick_price(price_range, point)
+def build_periods(year):
+    """Periodi tariffari dell'anno, ordinati e senza sovrapposizioni."""
+    specials = special_periods(year)
+    cuts = [(start, end) for _, start, end, _ in specials]
 
+    periods = [(label, start, end, price) for label, start, end, price in specials]
+    for label, (m1, d1), (m2, d2), price in BASE_PERIODS:
+        span = (date(year, m1, d1), date(year, m2, d2))
+        for start, end in subtract(span, cuts):
+            periods.append((label, start, end, price))
 
-def low_season_price(unit, point):
-    """Prezzo "da" mostrato sul sito (= bassa stagione)."""
-    if unit.unit_type == BookableUnit.UnitType.FULL_VILLA:
-        return pick_price(FULL_STRUCTURE_PRICES['nov_dic'][1], point)
-    return pick_price(SUITE_PRICES['bassa'][1], point)
+    return sorted(periods, key=lambda p: p[1])
 
 
 class Command(BaseCommand):
-    help = 'Aggiorna il prezziario stagionale di tutte le unità attive'
+    help = 'Aggiorna il prezziario stagionale delle unità prenotabili'
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--years', nargs='+', type=int,
-            help='Anni da generare (default: dall\'anno corrente a --until)',
+            help="Anni da generare (default: dall'anno corrente a --until)",
         )
         parser.add_argument(
             '--until', type=int, default=DEFAULT_UNTIL_YEAR,
             help=f'Ultimo anno da generare (default: {DEFAULT_UNTIL_YEAR})',
         )
-        parser.add_argument(
-            '--point', choices=['low', 'mid', 'high'], default='mid',
-            help='Punto dell\'intervallo di prezzo da applicare (default: mid)',
-        )
-        parser.add_argument(
-            '--dry-run', action='store_true',
-            help='Mostra il piano senza scrivere nulla',
-        )
-        parser.add_argument(
-            '--show', action='store_true',
-            help='Mostra i prezzi stagionali attuali ed esce',
-        )
+        parser.add_argument('--dry-run', action='store_true', help='Mostra il piano senza scrivere')
+        parser.add_argument('--show', action='store_true', help='Mostra i prezzi attuali ed esce')
         parser.add_argument(
             '--keep-base-price', action='store_true',
             help='Non aggiornare base_price delle unità',
@@ -158,53 +153,34 @@ class Command(BaseCommand):
         today = date.today()
         years = options['years'] or list(range(today.year, options['until'] + 1))
         if not years:
-            raise CommandError(f'--until {options["until"]} è precedente all\'anno corrente.')
-        point = options['point']
-        dry_run = options['dry_run']
+            raise CommandError(f"--until {options['until']} è precedente all'anno corrente.")
 
-        # Piano: solo periodi non ancora conclusi
+        dry_run = options['dry_run']
+        # Si costruisce anche l'anno precedente: il periodo natalizio nasce a
+        # dicembre e arriva al 6 gennaio, quindi senza di esso le notti di
+        # inizio gennaio resterebbero scoperte e verrebbero vendute a tariffa
+        # base invece che a tariffa festiva.
+        first_year = min(years)
         periods = [
-            p for y in sorted(set(years)) for p in build_periods(y)
-            if p[2] >= today
+            period
+            for year in range(first_year - 1, max(years) + 1)
+            for period in build_periods(year)
+            if period[2] >= today and period[2].year >= first_year
         ]
         if not periods:
             raise CommandError('Nessun periodo futuro negli anni indicati.')
 
         self.stdout.write(self.style.MIGRATE_HEADING(
-            f'Prezziario: anni {sorted(set(years))}, punto intervallo = {point}'
+            f'Prezziario struttura intera, anni {sorted(set(years))}'
             f'{"  [DRY RUN]" if dry_run else ""}'
         ))
 
         with transaction.atomic():
             for unit in units:
-                kind = 'STRUTTURA INTERA' if unit.unit_type == BookableUnit.UnitType.FULL_VILLA else 'SUITE'
-                self.stdout.write(f'\n{unit.name}  [{unit.get_unit_type_display()} -> tariffa {kind}, {unit.max_guests} ospiti]')
-
-                existing = unit.season_prices.all()
-                n_existing = existing.count()
-                if n_existing:
-                    self.stdout.write(f'  - rimuovo {n_existing} prezzi stagionali esistenti')
-                    for s in existing:
-                        self.stdout.write(f'      x {s.name}: {s.start_date} -> {s.end_date} = {s.price_per_night} €')
-                    if not dry_run:
-                        existing.delete()
-
-                for key, start, end in periods:
-                    label, price = tariff_for_unit(unit, key, point)
-                    self.stdout.write(f'  + {label:<22} {start} -> {end}  {price:>5} €/notte')
-                    if not dry_run:
-                        SeasonPrice.objects.create(
-                            unit=unit, name=label,
-                            start_date=start, end_date=end,
-                            price_per_night=price,
-                        )
-
-                if not options['keep_base_price']:
-                    new_base = low_season_price(unit, point)
-                    self.stdout.write(f'  = base_price (prezzo "da"): {unit.base_price} -> {new_base} €')
-                    if not dry_run:
-                        unit.base_price = new_base
-                        unit.save(update_fields=['base_price', 'updated_at'])
+                if unit.is_bookable:
+                    self.apply_tariffs(unit, periods, dry_run, options['keep_base_price'])
+                else:
+                    self.clear_tariffs(unit, dry_run)
 
             if dry_run:
                 transaction.set_rollback(True)
@@ -213,19 +189,64 @@ class Command(BaseCommand):
         if dry_run:
             self.stdout.write(self.style.WARNING('Dry run: nessuna modifica scritta.'))
         else:
+            bookable = sum(1 for u in units if u.is_bookable)
             self.stdout.write(self.style.SUCCESS(
-                f'Fatto: {len(units)} unità, {len(periods)} periodi ciascuna.'
+                f'Fatto: {bookable} unità prenotabili, {len(periods)} periodi ciascuna.'
             ))
+
+    def apply_tariffs(self, unit, periods, dry_run, keep_base_price):
+        from apps.villa.models import SeasonPrice
+
+        self.stdout.write(f'\n{unit.name}  [{unit.get_unit_type_display()}, {unit.max_guests} ospiti]')
+
+        existing = unit.season_prices.all()
+        count = existing.count()
+        if count:
+            self.stdout.write(f'  - rimuovo {count} prezzi stagionali esistenti')
+            if not dry_run:
+                existing.delete()
+
+        for label, start, end, price in periods:
+            self.stdout.write(f'  + {label:<24} {start} -> {end}  {price:>5} €/notte')
+            if not dry_run:
+                SeasonPrice.objects.create(
+                    unit=unit, name=label,
+                    start_date=start, end_date=end,
+                    price_per_night=price,
+                )
+
+        if not keep_base_price:
+            lowest = min(price for _, _, _, price in periods)
+            self.stdout.write(f'  = base_price (prezzo "da"): {unit.base_price} -> {lowest} €')
+            if not dry_run:
+                unit.base_price = lowest
+                unit.save(update_fields=['base_price', 'updated_at'])
+
+    def clear_tariffs(self, unit, dry_run):
+        count = unit.season_prices.count()
+        self.stdout.write(
+            f'\n{unit.name}  [non prenotabile singolarmente]'
+        )
+        if count:
+            self.stdout.write(f'  - rimuovo {count} prezzi stagionali non più applicabili')
+            if not dry_run:
+                unit.season_prices.all().delete()
+        else:
+            self.stdout.write('  (nessun prezzo da rimuovere)')
 
     def show_current(self, units):
         for unit in units:
+            flag = '' if unit.is_bookable else '  [NON prenotabile singolarmente]'
             self.stdout.write(
-                f'\n{unit.name}  [{unit.get_unit_type_display()}, {unit.max_guests} ospiti, '
+                f'\n{unit.name}{flag}  [{unit.get_unit_type_display()}, {unit.max_guests} ospiti, '
                 f'base {unit.base_price} €, pulizie {unit.cleaning_fee} €, min {unit.min_nights} notti]'
             )
             seasons = unit.season_prices.all()
             if not seasons:
                 self.stdout.write('  (nessun prezzo stagionale)')
-            for s in seasons:
-                extra = f', min {s.min_nights} notti' if s.min_nights else ''
-                self.stdout.write(f'  {s.name:<22} {s.start_date} -> {s.end_date}  {s.price_per_night:>8} €{extra}')
+            for season in seasons:
+                extra = f', min {season.min_nights} notti' if season.min_nights else ''
+                self.stdout.write(
+                    f'  {season.name:<24} {season.start_date} -> {season.end_date}'
+                    f'  {season.price_per_night:>8} €{extra}'
+                )
