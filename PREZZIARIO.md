@@ -1,7 +1,8 @@
 # Prezziario Altèsia
 
 Tariffe a notte della **struttura intera**, pernottamento con **colazione
-inclusa**. Definite dalla proprietà il 19 ottobre 2026.
+inclusa**. Definite dalla proprietà il 19 ottobre 2026; documento originale
+archiviato in [docs/listini/](docs/listini/2026-10-19-prezzi-al-giorno.pdf).
 
 Le singole suite non si prenotano separatamente: restano visibili sul sito con
 foto e descrizione, ma la struttura si vende solo per intero.

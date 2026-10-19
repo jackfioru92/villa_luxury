@@ -123,7 +123,7 @@ class BookableUnit(UUIDModel, TimeStampedModel):
         max_length=64,
         unique=True,
         default=generate_ical_token,
-        help_text=_('Parte segreta dell\'URL del feed .ics pubblico')
+        help_text=_('Parte segreta dell\'URL del feed .ics. NON modificare dopo averlo pubblicato su un portale: il link smetterebbe di funzionare')
     )
 
     # Status

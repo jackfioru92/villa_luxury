@@ -12,10 +12,16 @@ def calendar_feed(request, unit_slug, token):
     """
     Espone le notti occupate di un'unità in formato iCal.
 
-    L'URL è pubblico ma non indovinabile (token). Non contiene dati personali:
-    solo intervalli di date con SUMMARY "Occupato".
+    L'unità si cerca SOLO dal token, che è unico: lo slug nell'URL è
+    puramente descrittivo. Una volta che il link è stato pubblicato su un
+    portale non deve più cambiare, e rinominare lo slug dall'admin
+    romperebbe silenziosamente la sincronizzazione — il portale riceverebbe
+    un 404 e continuerebbe a vendere date già occupate.
+
+    L'URL è pubblico ma non indovinabile. Non contiene dati personali: solo
+    intervalli di date con SUMMARY "Occupato".
     """
-    unit = get_object_or_404(BookableUnit, slug=unit_slug, ical_token=token)
+    unit = get_object_or_404(BookableUnit, ical_token=token)
 
     response = HttpResponse(
         build_unit_calendar(unit),

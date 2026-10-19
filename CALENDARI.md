@@ -65,9 +65,21 @@ Nell'Extranet: **Tariffe e disponibilità → Sincronizza calendari → Importa 
 calendario della disponibilità**, incollare l'URL e confermare.
 
 Il feed copre da 7 giorni fa a 2 anni avanti, non contiene dati personali
-(solo intervalli con `SUMMARY:Occupato`) e non è indicizzabile. Se il token
-dovesse trapelare, basta cambiarlo dall'admin: il vecchio URL smette di
-funzionare e va reinserito nel portale.
+(solo intervalli con `SUMMARY:Occupato`) e non è indicizzabile.
+
+### Il link pubblicato non deve mai cambiare
+
+Se un portale riceve un 404 sul feed smette di aggiornare la disponibilità
+**senza segnalarlo**, e continua a vendere date già occupate. Per questo:
+
+- l'unità si cerca **solo dal token**: lo slug nell'URL è descrittivo, quindi
+  rinominare l'unità dall'admin non rompe il link;
+- il token non è modificabile dall'admin ed è l'identità del link pubblicato;
+- cancellare l'unità romperebbe il link: `cleanup_units` rifiuta di toccare
+  unità con prenotazioni, ma la cancellazione manuale resta possibile.
+
+Se il token dovesse davvero trapelare si può rigenerare dal database, ma va
+poi reinserito in tutti i portali dove era stato pubblicato.
 
 ## 2. Import — leggere il calendario di Booking.com
 

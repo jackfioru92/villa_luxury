@@ -108,6 +108,14 @@ class CalendarSyncTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'text/calendar; charset=utf-8')
 
+    def test_feed_keeps_working_after_the_slug_is_renamed(self):
+        # il link pubblicato sui portali non deve mai rompersi
+        published = self.full.get_ical_path()
+        self.full.slug = 'nome-cambiato'
+        self.full.save()
+
+        self.assertEqual(self.client.get(published).status_code, 200)
+
     def test_feed_url_requires_the_token(self):
         self.assertEqual(self.client.get(self.full.get_ical_path()).status_code, 200)
         self.assertEqual(

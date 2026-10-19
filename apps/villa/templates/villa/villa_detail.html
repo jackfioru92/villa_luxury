@@ -73,7 +73,7 @@
                         {% if unit.is_bookable %}
                         <div class="price-tag">
                             <span class="amount">€{{ unit.base_price|floatformat:0 }}</span>
-                            <span class="period">/notte</span>
+                            <span class="period">/notte, colazione inclusa</span>
                         </div>
                         <a href="{% url 'booking:wizard' %}?unit={{ unit.id }}" class="btn-primary text-sm">
                             Prenota
