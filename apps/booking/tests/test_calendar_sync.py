@@ -192,6 +192,32 @@ class CalendarSyncTests(TestCase):
         )
         self.assertEqual(events[0][0], 'very-long-uid-split-overtwo-lines')
 
+    def test_long_lines_are_folded_within_75_octets(self):
+        self.full.name = 'Altesia ' * 30
+        self.full.save()
+
+        body = calendar_sync.build_unit_calendar(self.full)
+
+        for line in body.split('\r\n'):
+            self.assertLessEqual(len(line.encode('utf-8')), 75, line)
+        self.assertIn(f'X-WR-CALNAME:{self.full.name}', '\n'.join(calendar_sync._unfold(body)))
+
+    def test_folding_keeps_multibyte_characters_intact(self):
+        self.full.name = 'Altèsia àèìòù ' * 10
+        self.full.save()
+
+        body = calendar_sync.build_unit_calendar(self.full)
+
+        self.assertIn(f'X-WR-CALNAME:{self.full.name}', '\n'.join(calendar_sync._unfold(body)))
+
+    def test_escapes_ical_special_characters(self):
+        self.full.name = 'Altesia; intera, villa'
+        self.full.save()
+
+        body = calendar_sync.build_unit_calendar(self.full)
+
+        self.assertIn(r'X-WR-CALNAME:Altesia\; intera\, villa', body)
+
     def test_rejects_a_response_that_is_not_a_calendar(self):
         feed = self.make_feed()
         with mock.patch.object(calendar_sync, 'fetch_feed',

@@ -39,9 +39,9 @@ def _ics_escape(value):
     return (
         str(value)
         .replace('\\', '\\\\')
-        .replace(';', '\;')
-        .replace(',', '\\,')
-        .replace('\n', '\\n')
+        .replace(';', r'\;')
+        .replace(',', r'\,')
+        .replace('\n', r'\n')
     )
 
 
@@ -50,17 +50,15 @@ def _fold(line):
     raw = line.encode('utf-8')
     if len(raw) <= 75:
         return line
-    chunks, start = [], 0
+    chunks, start, limit = [], 0, 75
     while start < len(raw):
-        end = min(start + 75, len(raw))
+        end = min(start + limit, len(raw))
         # non spezzare a metà di un carattere multibyte
         while end > start and end < len(raw) and (raw[end] & 0xC0) == 0x80:
             end -= 1
         chunks.append(raw[start:end].decode('utf-8'))
         start = end
-        if start < len(raw):
-            raw = b' ' + raw[start:]
-            start = 0
+        limit = 74  # dalla seconda riga in poi uno degli ottetti è lo spazio iniziale
     return '\r\n '.join(chunks)
 
 

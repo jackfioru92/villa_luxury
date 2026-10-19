@@ -121,6 +121,7 @@ class BookableUnit(UUIDModel, TimeStampedModel):
     ical_token = models.CharField(
         _('Token feed iCal'),
         max_length=64,
+        unique=True,
         default=generate_ical_token,
         help_text=_('Parte segreta dell\'URL del feed .ics pubblico')
     )

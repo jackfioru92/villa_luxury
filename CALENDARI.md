@@ -24,6 +24,10 @@ campo **Unità in conflitto** (admin → Unità prenotabili) le collega, così:
 | Suite Silva | Suite Silva + All Structure (Aura resta libera) |
 | All Structure | tutte e tre |
 
+Il collegamento riguarda solo le unità **attive**: le unità disattivate (resti
+dei dati demo, come Appartamento Girasole e Suite Olivo) restano fuori. Se ne
+riattivi una, vai a ricollegarla dall'admin.
+
 Vale sia per le prenotazioni dal sito sia per quelle importate dai portali, e
 si riflette nei feed esportati: il calendario di `All Structure` contiene anche
 le notti vendute sulle singole suite.
@@ -37,11 +41,15 @@ cd /opt/altesiasuite/app && source /opt/altesiasuite/venv/bin/activate
 python manage.py sync_calendars --show
 ```
 
-L'URL ha questa forma (termina in `.ics`, requisito di Booking.com):
+L'URL ha questa forma (termina in `.ics`, requisito di Booking.com; lo slug
+dell'intera struttura in produzione è `intera-villa`):
 
 ```
-https://altesiasuite.com/calendario/all-structure/<token>.ics
+https://altesiasuite.com/calendario/intera-villa/<token>.ics
 ```
+
+Ogni unità ha un token diverso: non si ricava l'URL di una partendo da
+un'altra.
 
 Nell'Extranet: **Tariffe e disponibilità → Sincronizza calendari → Importa il
 calendario della disponibilità**, incollare l'URL e confermare.
