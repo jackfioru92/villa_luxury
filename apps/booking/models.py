@@ -203,6 +203,7 @@ class BlockedDate(UUIDModel):
     
     class Reason(models.TextChoices):
         BOOKING = 'BOOKING', _('Prenotazione')
+        EXTERNAL = 'EXTERNAL', _('Canale esterno')
         MAINTENANCE = 'MAINTENANCE', _('Manutenzione')
         OWNER = 'OWNER', _('Uso proprietario')
         OTHER = 'OTHER', _('Altro')
@@ -228,6 +229,15 @@ class BlockedDate(UUIDModel):
         related_name='blocked_dates',
         verbose_name=_('Prenotazione')
     )
+    feed = models.ForeignKey(
+        'booking.CalendarFeed',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='blocked_dates',
+        verbose_name=_('Feed di origine')
+    )
+    external_uid = models.CharField(_('UID evento esterno'), max_length=255, blank=True)
     note = models.CharField(_('Nota'), max_length=200, blank=True)
 
     class Meta:
@@ -259,3 +269,40 @@ class BookingPriceDetail(UUIDModel):
 
     def __str__(self):
         return f"{self.booking.booking_number} - {self.date}"
+
+
+class CalendarFeed(UUIDModel, TimeStampedModel):
+    """Feed iCal esterno (Booking.com, Airbnb, ...) importato per un'unità."""
+
+    unit = models.ForeignKey(
+        BookableUnit,
+        on_delete=models.CASCADE,
+        related_name='calendar_feeds',
+        verbose_name=_('Unità')
+    )
+    name = models.CharField(
+        _('Canale'),
+        max_length=100,
+        help_text=_('Es: Booking.com, Airbnb')
+    )
+    url = models.URLField(_('URL feed .ics'), max_length=500)
+    is_active = models.BooleanField(_('Attivo'), default=True)
+
+    last_sync_at = models.DateTimeField(_('Ultimo sync'), null=True, blank=True)
+    last_success_at = models.DateTimeField(_('Ultimo sync riuscito'), null=True, blank=True)
+    last_error = models.TextField(_('Ultimo errore'), blank=True)
+    last_blocked_count = models.PositiveIntegerField(_('Notti bloccate'), default=0)
+
+    class Meta:
+        verbose_name = _('Feed calendario')
+        verbose_name_plural = _('Feed calendario')
+        ordering = ['unit', 'name']
+        unique_together = ['unit', 'url']
+
+    def __str__(self):
+        return f"{self.unit.name} - {self.name}"
+
+    @property
+    def is_healthy(self):
+        """True se l'ultimo tentativo di sincronizzazione è andato a buon fine."""
+        return bool(self.last_sync_at) and not self.last_error

@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 
 # Allauth requires these URL names without namespace
 from apps.accounts.views import CustomConfirmEmailView, EmailVerificationSentView
+from apps.booking.calendar_views import calendar_feed
 
 urlpatterns = [
     # Django admin
@@ -22,6 +23,9 @@ urlpatterns = [
     # Booking system
     path('prenota/', include('apps.booking.urls', namespace='booking')),
     
+    # Feed iCal disponibilità (Booking.com, Airbnb, ...) - l'URL deve finire con .ics
+    path('calendario/<slug:unit_slug>/<str:token>.ics', calendar_feed, name='calendar_feed'),
+
     # Payments
     path('payment/', include('apps.payments.urls', namespace='payments')),
     

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
-from .models import Booking, BlockedDate, BookingPriceDetail
+from .models import Booking, BlockedDate, BookingPriceDetail, CalendarFeed
 
 
 class BookingPriceDetailInline(admin.TabularInline):
@@ -120,3 +120,50 @@ class BlockedDateAdmin(admin.ModelAdmin):
             return format_html('<a href="{}">{}</a>', url, obj.booking.booking_number)
         return '-'
     booking_link.short_description = 'Prenotazione'
+
+
+@admin.register(CalendarFeed)
+class CalendarFeedAdmin(admin.ModelAdmin):
+    """Feed iCal importati dai portali esterni (Booking.com, Airbnb, ...)."""
+
+    list_display = ('unit', 'name', 'is_active', 'sync_state', 'last_blocked_count', 'last_sync_at')
+    list_filter = ('is_active', 'unit', 'name')
+    readonly_fields = (
+        'last_sync_at', 'last_success_at', 'last_error', 'last_blocked_count',
+        'created_at', 'updated_at', 'export_url',
+    )
+    fieldsets = (
+        ('Feed importato dal portale', {
+            'fields': ('unit', 'name', 'url', 'is_active'),
+            'description': (
+                'Incolla qui il link .ics fornito dal portale '
+                '(Booking.com: Tariffe e disponibilità &rarr; Sincronizza calendari).'
+            ),
+        }),
+        ('Link da dare al portale', {
+            'fields': ('export_url',),
+            'description': 'Questo è il nostro calendario, da incollare nel portale.',
+        }),
+        ('Stato sincronizzazione', {
+            'fields': (
+                'last_sync_at', 'last_success_at', 'last_blocked_count',
+                'last_error', 'created_at', 'updated_at',
+            ),
+        }),
+    )
+
+    @admin.display(description='Stato')
+    def sync_state(self, obj):
+        if not obj.last_sync_at:
+            return format_html('<span style="color:#999">mai sincronizzato</span>')
+        if obj.last_error:
+            return format_html('<span style="color:#b91c1c">errore</span>')
+        return format_html('<span style="color:#15803d">ok</span>')
+
+    @admin.display(description='URL del nostro calendario')
+    def export_url(self, obj):
+        if not obj.pk:
+            return '-'
+        return format_html(
+            '<code>https://altesiasuite.com{}</code>', obj.unit.get_ical_path()
+        )

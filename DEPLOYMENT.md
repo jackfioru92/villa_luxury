@@ -98,6 +98,24 @@ Il comando sostituisce tutti i periodi esistenti delle unità attive e aggiorna
 il `base_price` alla bassa stagione. Non tocca le prenotazioni già create.
 Per cambiare le tariffe: modificare le tabelle nel comando, deploy, rilanciare.
 
+## 📅 Sincronizzazione Calendari (Booking.com)
+
+Import dei portali esterni, da cron ogni 15 minuti:
+
+```bash
+chmod +x /opt/altesiasuite/app/scripts/sync_calendars.sh
+crontab -e   # */15 * * * * /opt/altesiasuite/app/scripts/sync_calendars.sh
+```
+
+URL dei feed da pubblicare sui portali e stato delle connessioni:
+
+```bash
+cd /opt/altesiasuite/app && source /opt/altesiasuite/venv/bin/activate
+python manage.py sync_calendars --show
+```
+
+Procedura completa in [CALENDARI.md](CALENDARI.md).
+
 ## 🔧 Modalità Manutenzione
 
 Per attivare/disattivare la pagina di manutenzione:

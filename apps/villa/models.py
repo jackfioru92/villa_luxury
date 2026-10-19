@@ -1,7 +1,14 @@
+import secrets
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from apps.core.models import UUIDModel, TimeStampedModel
+
+
+def generate_ical_token():
+    """Token segreto usato nell'URL pubblico del feed iCal."""
+    return secrets.token_urlsafe(24)
 
 
 class Villa(UUIDModel, TimeStampedModel):
@@ -100,6 +107,24 @@ class BookableUnit(UUIDModel, TimeStampedModel):
     # Media
     main_image = models.ImageField(_('Immagine principale'), upload_to='villa/units/', null=True, blank=True)
     
+    # Unità che occupano lo stesso spazio fisico (es. intera struttura <-> singole suite).
+    # Se una viene prenotata, anche queste risultano occupate.
+    conflicts_with = models.ManyToManyField(
+        'self',
+        blank=True,
+        symmetrical=True,
+        verbose_name=_('Unità in conflitto'),
+        help_text=_('Unità che condividono lo stesso spazio e non possono essere prenotate in contemporanea')
+    )
+
+    # Sincronizzazione calendari esterni (Booking.com, Airbnb, ...)
+    ical_token = models.CharField(
+        _('Token feed iCal'),
+        max_length=64,
+        default=generate_ical_token,
+        help_text=_('Parte segreta dell\'URL del feed .ics pubblico')
+    )
+
     # Status
     is_active = models.BooleanField(_('Attivo'), default=True)
     sort_order = models.PositiveIntegerField(_('Ordine'), default=0)
@@ -117,6 +142,16 @@ class BookableUnit(UUIDModel, TimeStampedModel):
         return reverse('villa:unit_detail', kwargs={
             'villa_slug': self.villa.slug,
             'unit_slug': self.slug
+        })
+
+    def blocking_units(self):
+        """Questa unità più tutte quelle che ne occupano lo spazio fisico."""
+        return [self] + list(self.conflicts_with.all())
+
+    def get_ical_path(self):
+        return reverse('calendar_feed', kwargs={
+            'unit_slug': self.slug,
+            'token': self.ical_token,
         })
 
     def get_price_for_date(self, date):

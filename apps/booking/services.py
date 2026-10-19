@@ -127,7 +127,7 @@ class AvailabilityService:
     def is_date_available(unit: BookableUnit, check_date: date) -> bool:
         """Check if a specific date is available for a unit."""
         return not BlockedDate.objects.filter(
-            unit=unit,
+            unit__in=unit.blocking_units(),
             date=check_date
         ).exists()
 
@@ -135,7 +135,7 @@ class AvailabilityService:
     def is_range_available(unit: BookableUnit, check_in: date, check_out: date) -> bool:
         """Check if a date range is fully available."""
         blocked_count = BlockedDate.objects.filter(
-            unit=unit,
+            unit__in=unit.blocking_units(),
             date__gte=check_in,
             date__lt=check_out
         ).count()
@@ -145,10 +145,10 @@ class AvailabilityService:
     def get_blocked_dates(unit: BookableUnit, start_date: date, end_date: date) -> List[date]:
         """Get list of blocked dates in a range."""
         return list(BlockedDate.objects.filter(
-            unit=unit,
+            unit__in=unit.blocking_units(),
             date__gte=start_date,
             date__lte=end_date
-        ).values_list('date', flat=True))
+        ).values_list('date', flat=True).distinct())
 
     @staticmethod
     def get_availability_calendar(unit: BookableUnit, year: int, month: int) -> Dict[str, dict]:
@@ -162,7 +162,7 @@ class AvailabilityService:
         last_day = date(year, month, monthrange(year, month)[1])
         
         blocked = set(BlockedDate.objects.filter(
-            unit=unit,
+            unit__in=unit.blocking_units(),
             date__gte=first_day,
             date__lte=last_day
         ).values_list('date', flat=True))

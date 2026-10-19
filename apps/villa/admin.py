@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import (
     Villa, BookableUnit, SeasonPrice, Amenity,
     VillaAmenity, UnitAmenity, GalleryImage
@@ -70,6 +71,8 @@ class BookableUnitAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [SeasonPriceInline, UnitAmenityInline, GalleryImageInline]
+    filter_horizontal = ('conflicts_with',)
+    readonly_fields = ('ical_feed_url',)
     fieldsets = (
         (None, {
             'fields': ('villa', 'name', 'slug', 'unit_type', 'description', 'description_short')
@@ -86,10 +89,23 @@ class BookableUnitAdmin(admin.ModelAdmin):
         ('Media', {
             'fields': ('main_image',)
         }),
+        ('Sincronizzazione calendari', {
+            'fields': ('conflicts_with', 'ical_feed_url'),
+            'description': (
+                'Le unità in conflitto condividono lo stesso spazio fisico: prenotandone una '
+                'le altre risultano occupate, sul sito e nei feed verso i portali.'
+            ),
+        }),
         ('Stato', {
             'fields': ('is_active', 'sort_order')
         }),
     )
+
+    @admin.display(description='Feed iCal (da dare ai portali)')
+    def ical_feed_url(self, obj):
+        if not obj.pk:
+            return '-'
+        return format_html('<code>https://altesiasuite.com{}</code>', obj.get_ical_path())
 
 
 @admin.register(Amenity)
