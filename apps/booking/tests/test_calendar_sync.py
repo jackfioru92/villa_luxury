@@ -102,6 +102,12 @@ class CalendarSyncTests(TestCase):
         self.assertNotIn('Mario', feed_body)
         self.assertNotIn('mario@example.com', feed_body)
 
+    def test_feed_answers_head_requests(self):
+        # i portali fanno un HEAD di verifica prima di accettare l'URL
+        response = self.client.head(self.full.get_ical_path())
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/calendar; charset=utf-8')
+
     def test_feed_url_requires_the_token(self):
         self.assertEqual(self.client.get(self.full.get_ical_path()).status_code, 200)
         self.assertEqual(

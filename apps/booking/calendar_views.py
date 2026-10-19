@@ -1,13 +1,13 @@
 """Feed iCal pubblico delle disponibilità, uno per unità prenotabile."""
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_safe
 
 from apps.booking.calendar_sync import build_unit_calendar
 from apps.villa.models import BookableUnit
 
 
-@require_GET
+@require_safe
 def calendar_feed(request, unit_slug, token):
     """
     Espone le notti occupate di un'unità in formato iCal.
