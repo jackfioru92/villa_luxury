@@ -46,7 +46,7 @@ class BookingAdmin(admin.ModelAdmin):
             )
         }),
         ('Note', {
-            'fields': ('guest_notes', 'admin_notes', 'cancellation_reason'),
+            'fields': ('experiences', 'guest_notes', 'admin_notes', 'cancellation_reason'),
             'classes': ('collapse',)
         }),
         ('Timestamps', {

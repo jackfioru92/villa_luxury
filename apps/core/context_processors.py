@@ -13,8 +13,11 @@ def site_settings(request):
     # Google OAuth è configurato solo se client_id è impostato
     google_configured = bool(getattr(settings, 'GOOGLE_CLIENT_ID', ''))
 
+    from apps.core.constants import EXPERIENCES
+
     return {
         'site_settings': settings_obj,
+        'EXPERIENCES': EXPERIENCES,
         'SITE_NAME': getattr(settings, 'SITE_NAME', 'Villa Luxury'),
         'STRIPE_PUBLIC_KEY': getattr(settings, 'STRIPE_PUBLIC_KEY', ''),
         'google_oauth_configured': google_configured,

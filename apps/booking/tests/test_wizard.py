@@ -1,0 +1,133 @@
+"""
+Test del wizard di prenotazione.
+
+Con una sola sistemazione prenotabile il passo di scelta non ha senso e va
+saltato; il prezzo si vede solo nel riepilogo finale; le esperienze scelte
+devono arrivare fino alla prenotazione salvata.
+"""
+import json
+from datetime import date, timedelta
+
+from django.test import TestCase
+from django.urls import reverse
+
+from apps.booking.models import Booking
+from apps.villa.models import BookableUnit, Villa
+
+
+class WizardStepsTests(TestCase):
+
+    def setUp(self):
+        self.villa = Villa.objects.create(
+            name='Altesia', slug='altesia', description='x',
+            address='x', city='Perugia', province='PG', postal_code='06134',
+        )
+        self.full = BookableUnit.objects.create(
+            villa=self.villa, name='All Structure', slug='intera-villa',
+            unit_type='FULL', description='x', max_guests=8,
+            base_price=1000, min_nights=2, sort_order=1,
+        )
+        self.suite = BookableUnit.objects.create(
+            villa=self.villa, name='Suite Aura', slug='suite-aura',
+            unit_type='ROOM', description='x', max_guests=4,
+            base_price=275, min_nights=2, sort_order=2, is_bookable=False,
+        )
+
+    def wizard(self):
+        return self.client.get(reverse('booking:wizard'))
+
+    def test_single_unit_is_preselected_and_choice_step_removed(self):
+        response = self.wizard()
+
+        self.assertFalse(response.context['multiple_units'])
+        self.assertEqual(response.context['selected_unit'], self.full)
+        body = response.content.decode()
+        self.assertNotIn('Seleziona la Sistemazione', body)
+        self.assertIn("firstStep: 2", body)
+        self.assertIn("currentStep: 2", body)
+
+    def test_choice_step_comes_back_with_more_bookable_units(self):
+        self.suite.is_bookable = True
+        self.suite.save()
+
+        response = self.wizard()
+
+        self.assertTrue(response.context['multiple_units'])
+        self.assertIn('Seleziona la Sistemazione', response.content.decode())
+
+    def test_non_bookable_units_never_reach_the_wizard(self):
+        body = self.wizard().content.decode()
+        self.assertNotIn('Suite Aura', body)
+
+    def test_price_block_lives_in_the_final_step_only(self):
+        body = self.wizard().content.decode()
+
+        self.assertEqual(body.count('id="price-summary"'), 1)
+        # il riquadro sta dopo l'intestazione del riepilogo, non nello step date
+        self.assertLess(body.index('Riepilogo e Pagamento'), body.index('id="price-summary"'))
+        self.assertNotIn('Seleziona le date per vedere il prezzo', body)
+
+    def test_experience_checkboxes_follow_the_notes_field(self):
+        body = self.wizard().content.decode()
+
+        self.assertLess(body.index('name="notes"'), body.index('selectedExperiences'))
+        for experience in ('Chef Privato', 'Massaggi &amp; Benessere', 'Golf &amp; Tennis'):
+            self.assertIn(experience, body)
+
+
+class BookingCreationTests(TestCase):
+
+    def setUp(self):
+        villa = Villa.objects.create(
+            name='Altesia', slug='altesia', description='x',
+            address='x', city='Perugia', province='PG', postal_code='06134',
+        )
+        self.full = BookableUnit.objects.create(
+            villa=villa, name='All Structure', slug='intera-villa',
+            unit_type='FULL', description='x', max_guests=8,
+            base_price=1000, min_nights=2, sort_order=1,
+        )
+        self.full.season_prices.create(
+            name='Test', start_date=date.today(),
+            end_date=date.today() + timedelta(days=365), price_per_night=1000,
+        )
+
+    def payload(self, **overrides):
+        check_in = date.today() + timedelta(days=30)
+        data = {
+            'unit': str(self.full.id),
+            'check_in': check_in.isoformat(),
+            'check_out': (check_in + timedelta(days=3)).isoformat(),
+            'num_guests': 6,
+            'first_name': 'Mario', 'last_name': 'Rossi',
+            'email': 'mario@example.com', 'phone': '+39 333 1234567',
+            'notes': 'Arriviamo tardi',
+            'terms_accepted': True, 'privacy_accepted': True,
+        }
+        data.update(overrides)
+        return data
+
+    def create(self, **overrides):
+        return self.client.post(
+            reverse('booking:api_create'),
+            data=json.dumps(self.payload(**overrides)),
+            content_type='application/json',
+        )
+
+    def test_selected_experiences_are_stored_on_the_booking(self):
+        response = self.create(experiences=['Chef Privato', 'Golf & Tennis'])
+
+        self.assertEqual(response.status_code, 200, response.content)
+        booking = Booking.objects.get()
+        self.assertEqual(booking.experiences, 'Chef Privato, Golf & Tennis')
+        self.assertEqual(booking.experiences_list, ['Chef Privato', 'Golf & Tennis'])
+
+    def test_experiences_are_optional(self):
+        self.assertEqual(self.create().status_code, 200)
+        self.assertEqual(Booking.objects.get().experiences, '')
+        self.assertEqual(Booking.objects.get().experiences_list, [])
+
+    def test_notes_still_saved_alongside_experiences(self):
+        self.create(experiences=['Chef Privato'])
+        booking = Booking.objects.get()
+        self.assertEqual(booking.guest_notes, 'Arriviamo tardi')

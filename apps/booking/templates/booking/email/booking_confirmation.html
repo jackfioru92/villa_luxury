@@ -88,6 +88,11 @@
           </td>
         </tr>
 
+        {% if booking.experiences %}
+        <p style="margin:0 0 12px;color:#4a5a54;">
+            <strong style="color:#192924;">Esperienze richieste:</strong> {{ booking.experiences }}
+        </p>
+        {% endif %}
         {% if booking.guest_notes %}
         <tr>
           <td style="padding:16px 32px 0 32px; font-size:13px; color:#525252;">

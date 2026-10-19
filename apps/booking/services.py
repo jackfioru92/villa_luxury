@@ -38,6 +38,8 @@ def send_new_booking_notification(booking: Booking):
             f"https://altesiasuite.com/dashboard/prenotazioni/{booking.id}/\n"
         )
         
+        if booking.experiences:
+            message += f"\nEsperienze richieste: {booking.experiences}\n"
         if booking.guest_notes:
             message += f"\nNote ospite:\n{booking.guest_notes}\n"
         
@@ -84,6 +86,8 @@ def send_booking_confirmation_to_guest(booking: Booking):
             f"Saldo da pagare in loco: €{booking.balance_due}\n\n"
         )
         
+        if booking.experiences:
+            message += f"Esperienze richieste: {booking.experiences}\n"
         if booking.guest_notes:
             message += f"Le tue note: {booking.guest_notes}\n\n"
         
@@ -333,6 +337,7 @@ class BookingService:
         booking = Booking.objects.create(
             unit=unit,
             user=user,
+            experiences=guest_data.get('experiences', ''),
             guest_first_name=guest_data['first_name'],
             guest_last_name=guest_data['last_name'],
             guest_email=guest_data['email'],

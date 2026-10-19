@@ -19,15 +19,20 @@ class BookingWizardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['units'] = BookableUnit.objects.filter(is_active=True, is_bookable=True)
-        
+        units = BookableUnit.objects.filter(is_active=True, is_bookable=True).order_by('sort_order')
+        context['units'] = units
+
         # Pre-select unit if provided
         unit_slug = self.request.GET.get('unit')
         if unit_slug:
-            context['selected_unit'] = BookableUnit.objects.filter(
-                slug=unit_slug, is_active=True, is_bookable=True
-            ).first()
-        
+            context['selected_unit'] = units.filter(slug=unit_slug).first()
+
+        # Con una sola sistemazione prenotabile non c'è niente da scegliere:
+        # la si preseleziona e il wizard parte direttamente dalle date.
+        if not context.get('selected_unit') and units.count() == 1:
+            context['selected_unit'] = units.first()
+        context['multiple_units'] = units.count() > 1
+
         return context
 
 
@@ -400,6 +405,7 @@ class BookingCreateAPIView(View):
             'phone': data['phone'],
             'country': data.get('country', ''),
             'notes': data.get('notes', ''),
+            'experiences': ', '.join(data.get('experiences') or []),
             'arrival_time': arrival_time,
             'num_guests': num_guests,
         }

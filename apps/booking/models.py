@@ -117,6 +117,13 @@ class Booking(UUIDModel, TimeStampedModel):
         default=PaymentStatus.PENDING
     )
     
+    # Esperienze di interesse selezionate in fase di prenotazione
+    experiences = models.TextField(
+        _('Esperienze richieste'),
+        blank=True,
+        help_text=_('Selezionate dall\'ospite durante la prenotazione, separate da virgola')
+    )
+
     # Notes
     guest_notes = models.TextField(_('Note ospite'), blank=True)
     admin_notes = models.TextField(_('Note admin'), blank=True)
@@ -148,6 +155,10 @@ class Booking(UUIDModel, TimeStampedModel):
         year = timezone.now().year
         random_part = uuid.uuid4().hex[:5].upper()
         return f"VL-{year}-{random_part}"
+
+    @property
+    def experiences_list(self):
+        return [e.strip() for e in self.experiences.split(',') if e.strip()]
 
     @property
     def guest_full_name(self):

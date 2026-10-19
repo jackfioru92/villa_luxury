@@ -29,15 +29,15 @@
                         <!-- Step Circle -->
                         <div class="flex flex-col items-center">
                             <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-sm md:text-base font-semibold transition-all"
-                                 :class="currentStep > index + 1 ? 'bg-green-500 text-white' : 
-                                         currentStep === index + 1 ? 'bg-tertiary-500 text-white' : 
+                                 :class="currentStep > index + firstStep ? 'bg-green-500 text-white' :
+                                         currentStep === index + firstStep ? 'bg-tertiary-500 text-white' :
                                          'bg-primary-200 text-primary-500'">
-                                <template x-if="currentStep > index + 1">
+                                <template x-if="currentStep > index + firstStep">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                     </svg>
                                 </template>
-                                <template x-if="currentStep <= index + 1">
+                                <template x-if="currentStep <= index + firstStep">
                                     <span x-text="index + 1"></span>
                                 </template>
                             </div>
@@ -46,7 +46,7 @@
                         <!-- Connector Line -->
                         <template x-if="index < steps.length - 1">
                             <div class="w-8 sm:w-12 md:w-16 lg:w-24 h-1 mx-1 md:mx-2 transition-all"
-                                 :class="currentStep > index + 1 ? 'bg-green-500' : 'bg-primary-200'"></div>
+                                 :class="currentStep > index + firstStep ? 'bg-green-500' : 'bg-primary-200'"></div>
                         </template>
                     </div>
                 </template>
@@ -55,7 +55,8 @@
             <!-- Step Content -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                 
-                <!-- Step 1: Select Unit -->
+                <!-- Step 1: Select Unit - solo con più sistemazioni prenotabili -->
+                {% if multiple_units %}
                 <div x-show="currentStep === 1" x-transition>
                     <div class="p-8">
                         <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
@@ -95,6 +96,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 
                 <!-- Step 2: Select Dates -->
                 <div x-show="currentStep === 2" x-transition>
@@ -103,7 +105,7 @@
                             Seleziona le Date
                         </h2>
                         
-                        <div class="grid lg:grid-cols-2 gap-8">
+                        <div class="max-w-2xl">
                             <!-- Date Inputs + Calendar -->
                             <div class="space-y-6">
                                 <div>
@@ -161,16 +163,7 @@
                                 </div>
                             </div>
                             
-                            <!-- Price Summary (HTMX) -->
-                            <div id="price-summary"
-                                 hx-get="{% url 'booking:htmx_price' %}"
-                                 hx-trigger="priceUpdate from:body"
-                                 hx-include="[name='unit'], [name='check_in'], [name='check_out'], [name='num_guests']"
-                                 class="bg-primary-50 rounded-lg p-6">
-                                <div class="text-center text-primary-500 py-8">
-                                    Seleziona le date per vedere il prezzo
-                                </div>
-                            </div>
+                            <!-- Il dettaglio del prezzo compare solo nel riepilogo finale -->
                         </div>
                         
                         <!-- Hidden fields for HTMX -->
@@ -251,6 +244,24 @@
                                           x-model="guestNotes"
                                           class="form-input" placeholder="Eventuali richieste..."></textarea>
                             </div>
+
+                            <div>
+                                <span class="form-label block">Esperienze di interesse</span>
+                                <p class="text-xs text-primary-500 mb-3">
+                                    Seleziona le esperienze che vorresti prenotare (facoltativo).
+                                    Ti ricontatteremo per organizzarle.
+                                </p>
+                                <div class="grid sm:grid-cols-2 gap-3">
+                                    {% for experience in EXPERIENCES %}
+                                    <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-lg bg-white cursor-pointer hover:border-tertiary-400 transition-colors">
+                                        <input type="checkbox" value="{{ experience }}"
+                                               x-model="selectedExperiences"
+                                               class="h-5 w-5 rounded border-primary-300 text-tertiary-500 focus:ring-tertiary-500">
+                                        <span class="text-sm text-primary-700">{{ experience }}</span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
                             
                             <div class="space-y-3">
                                 <label class="flex items-start space-x-3 cursor-pointer">
@@ -301,6 +312,12 @@
                                     <dt class="text-primary-600">Ospiti:</dt>
                                     <dd class="font-medium" x-text="numGuests"></dd>
                                 </div>
+                                <template x-if="selectedExperiences.length">
+                                    <div class="flex justify-between">
+                                        <dt class="text-primary-600">Esperienze:</dt>
+                                        <dd class="font-medium text-right" x-text="selectedExperiences.join(', ')"></dd>
+                                    </div>
+                                </template>
                                 <hr class="border-primary-200">
                                 <div class="flex justify-between text-lg">
                                     <dt class="font-semibold text-primary-900">Acconto da pagare:</dt>
@@ -309,6 +326,17 @@
                             </dl>
                         </div>
                         
+                        <!-- Dettaglio prezzo (HTMX) -->
+                        <div id="price-summary"
+                             hx-get="{% url 'booking:htmx_price' %}"
+                             hx-trigger="priceUpdate from:body"
+                             hx-include="[name='unit'], [name='check_in'], [name='check_out'], [name='num_guests']"
+                             class="bg-primary-50 rounded-lg p-6 mb-8">
+                            <div class="text-center text-primary-500 py-8">
+                                Caricamento del dettaglio prezzo...
+                            </div>
+                        </div>
+
                         <!-- Payment Info -->
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                             <p class="text-sm text-blue-700">
@@ -334,15 +362,15 @@
                 
                 <!-- Navigation Buttons -->
                 <div class="px-8 py-6 bg-primary-50 border-t border-primary-100 flex justify-between">
-                    <button @click="prevStep()" 
-                            x-show="currentStep > 1"
+                    <button @click="prevStep()"
+                            x-show="currentStep > firstStep"
                             class="btn-outline">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
                         Indietro
                     </button>
-                    <div x-show="currentStep === 1"></div>
+                    <div x-show="currentStep === firstStep"></div>
                     
                     <button @click="nextStep()" 
                             x-show="currentStep < 4"
@@ -383,8 +411,11 @@
 <script>
 function bookingWizard() {
     return {
-        steps: ['Sistemazione', 'Date', 'Dati', 'Pagamento'],
-        currentStep: 1,
+        // Con una sola sistemazione prenotabile il primo passo non esiste:
+        // gli step partono dalle date e la numerazione mostrata parte da lì.
+        steps: {% if multiple_units %}['Sistemazione', 'Date', 'Dati', 'Pagamento']{% else %}['Date', 'Dati', 'Pagamento']{% endif %},
+        firstStep: {% if multiple_units %}1{% else %}2{% endif %},
+        currentStep: {% if multiple_units %}1{% else %}2{% endif %},
         
         // Unit selection
         selectedUnit: '{% if selected_unit %}{{ selected_unit.id }}{% endif %}',
@@ -411,6 +442,7 @@ function bookingWizard() {
         guestCountry: '',
         guestArrivalTime: '',
         guestNotes: '',
+        selectedExperiences: [],
         termsAccepted: false,
         privacyAccepted: false,
         
@@ -521,11 +553,14 @@ function bookingWizard() {
         nextStep() {
             if (this.canProceed() && this.currentStep < 4) {
                 this.currentStep++;
+                if (this.currentStep === 4) {
+                    this.updatePrice();
+                }
             }
         },
         
         prevStep() {
-            if (this.currentStep > 1) {
+            if (this.currentStep > this.firstStep) {
                 this.currentStep--;
             }
         },
@@ -563,6 +598,7 @@ function bookingWizard() {
                 last_name: formData.get('last_name'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
+                experiences: this.selectedExperiences,
                 country: formData.get('country') || '',
                 arrival_time: formData.get('arrival_time') || '',
                 notes: formData.get('notes') || '',
