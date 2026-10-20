@@ -206,7 +206,15 @@ class HTMXPriceCalculationView(View):
             )
 
             return render(request, 'booking/partials/price_summary.html', {
-                'pricing': pricing,
+                'price_data': {
+                    'nights': pricing['nights'],
+                    'price_per_night': pricing['price_per_night_avg'],
+                    'base_total': pricing['subtotal'],
+                    'cleaning_fee': pricing['cleaning_fee'],
+                    'total': pricing['total_amount'],
+                    'deposit': pricing['deposit_amount'],
+                    'balance': pricing['balance_due'],
+                },
                 'unit': unit,
                 'check_in': check_in,
                 'check_out': check_out,

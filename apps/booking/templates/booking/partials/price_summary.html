@@ -77,9 +77,10 @@
 
 {% if price_data %}
 <script>
-    // Update Alpine.js state with new price data
+    // Aggiorna lo stato Alpine del wizard.
+    // Serve l'id: il primo [x-data] della pagina è la navbar, non il wizard.
     if (typeof Alpine !== 'undefined') {
-        const wizard = document.querySelector('[x-data]');
+        const wizard = document.getElementById('booking-wizard');
         if (wizard && wizard._x_dataStack) {
             wizard._x_dataStack[0].totalAmount = {{ price_data.total|floatformat:"0u" }};
             wizard._x_dataStack[0].depositAmount = {{ price_data.deposit|floatformat:"0u" }};

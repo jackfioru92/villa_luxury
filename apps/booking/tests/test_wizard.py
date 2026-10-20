@@ -159,3 +159,80 @@ class BookingCreationTests(TestCase):
         self.create(experiences=['Chef Privato'])
         booking = Booking.objects.get()
         self.assertEqual(booking.guest_notes, 'Arriviamo tardi')
+
+
+class PriceSummaryTests(TestCase):
+    """
+    Il riquadro prezzo è HTMX: la vista deve passare al partial le chiavi che
+    il partial legge davvero, altrimenti il riepilogo finale mostra "Acconto
+    €0" pur avendo calcolato il prezzo correttamente.
+    """
+
+    def setUp(self):
+        villa = Villa.objects.create(
+            name='Altesia', slug='altesia', description='x',
+            address='x', city='Perugia', province='PG', postal_code='06134',
+        )
+        self.full = BookableUnit.objects.create(
+            villa=villa, name='All Structure', slug='intera-villa',
+            unit_type='FULL', description='x', max_guests=8,
+            base_price=1000, cleaning_fee=0, min_nights=3, sort_order=1,
+        )
+        self.check_in = date.today() + timedelta(days=60)
+        self.check_out = self.check_in + timedelta(days=4)
+        self.full.season_prices.create(
+            name='Test', start_date=self.check_in,
+            end_date=self.check_out, price_per_night=1000,
+        )
+
+    def price_summary(self, **overrides):
+        params = {
+            'unit': str(self.full.id),
+            'check_in': self.check_in.isoformat(),
+            'check_out': self.check_out.isoformat(),
+            'num_guests': 4,
+        }
+        params.update(overrides)
+        return self.client.get(reverse('booking:htmx_price'), params)
+
+    def test_valid_dates_return_the_actual_price(self):
+        body = self.price_summary().content.decode()
+
+        self.assertIn('Riepilogo Prezzo', body)
+        self.assertNotIn('Seleziona le date per vedere il prezzo', body)
+        self.assertIn('4 notti', body)
+        self.assertIn('€4000', body)       # 4 notti x 1000
+        self.assertIn('€1200', body)       # acconto 30%
+
+    def test_alpine_state_is_updated_on_the_wizard_not_the_navbar(self):
+        body = self.price_summary().content.decode()
+
+        self.assertIn("getElementById('booking-wizard')", body)
+        self.assertNotIn("querySelector('[x-data]')", body)
+
+    def test_amounts_written_into_javascript_are_valid_numbers(self):
+        body = self.price_summary().content.decode()
+
+        for name in ('totalAmount', 'depositAmount'):
+            value = re.search(rf'{name} = (.*);', body).group(1)
+            self.assertRegex(value, r'^\d+(\.\d+)?$', f'{name}: {value!r}')
+
+    def test_wizard_page_exposes_the_id_the_partial_targets(self):
+        body = self.client.get(reverse('booking:wizard')).content.decode()
+        self.assertIn('id="booking-wizard"', body)
+
+    def test_blocked_dates_are_reported_instead_of_a_price(self):
+        from apps.booking.models import BlockedDate
+        BlockedDate.objects.create(unit=self.full, date=self.check_in)
+
+        body = self.price_summary().content.decode()
+
+        self.assertIn('non sono disponibili', body)
+        self.assertNotIn('Riepilogo Prezzo', body)
+
+    def test_too_short_a_stay_is_reported(self):
+        body = self.price_summary(
+            check_out=(self.check_in + timedelta(days=1)).isoformat()
+        ).content.decode()
+
+        self.assertIn('minimo', body.lower())
