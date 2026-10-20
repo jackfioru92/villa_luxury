@@ -6,6 +6,7 @@ saltato; il prezzo si vede solo nel riepilogo finale; le esperienze scelte
 devono arrivare fino alla prenotazione salvata.
 """
 import json
+import re
 from datetime import date, timedelta
 
 from django.test import TestCase
@@ -66,6 +67,33 @@ class WizardStepsTests(TestCase):
         # il riquadro sta dopo l'intestazione del riepilogo, non nello step date
         self.assertLess(body.index('Riepilogo e Pagamento'), body.index('id="price-summary"'))
         self.assertNotIn('Seleziona le date per vedere il prezzo', body)
+
+    def test_alpine_state_contains_only_valid_js_numbers(self):
+        """
+        Con LANGUAGE_CODE='it' Django scrive i decimali con la virgola:
+        `basePrice: 1000,00` è un SyntaxError che azzera tutto il wizard,
+        bottone di prenotazione compreso.
+        """
+        body = self.wizard().content.decode()
+        script = body[body.index('function bookingWizard'):]
+        script = script[:script.index('</script>')]
+
+        for name in ('basePrice', 'minNights', 'maxGuests', 'firstStep', 'currentStep'):
+            line = re.search(rf'^\s*{name}:\s*(.*)$', script, re.MULTILINE).group(1)
+            value = line.rstrip(',').strip()
+            self.assertRegex(
+                value, r'^\d+(\.\d+)?$',
+                f'{name} non è un numero JS valido: {value!r}',
+            )
+
+    def test_unit_name_is_escaped_for_javascript(self):
+        self.full.name = "L'Intera Struttura"
+        self.full.save()
+
+        body = self.wizard().content.decode()
+        line = re.search(r'^\s*selectedUnitName:\s*(.*)$', body, re.MULTILINE).group(1)
+
+        self.assertNotIn("'L'Intera", line)
 
     def test_experience_checkboxes_follow_the_notes_field(self):
         body = self.wizard().content.decode()

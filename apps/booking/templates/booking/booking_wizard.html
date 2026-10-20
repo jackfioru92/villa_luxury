@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static l10n %}
 
 {% block title %}Prenota - {{ SITE_NAME }}{% endblock %}
 
@@ -67,7 +67,7 @@
                             {% for unit in units %}
                             <div class="border-2 rounded-lg p-4 cursor-pointer transition-all hover:border-tertiary-400"
                                  :class="selectedUnit === '{{ unit.id }}' ? 'border-tertiary-500 bg-tertiary-50' : 'border-primary-200'"
-                                 @click="selectUnit('{{ unit.id }}', '{{ unit.name }}', {{ unit.base_price }}, {{ unit.min_nights }}, {{ unit.max_guests }})">
+                                 @click="selectUnit('{{ unit.id }}', '{{ unit.name|escapejs }}', {{ unit.base_price|unlocalize }}, {{ unit.min_nights|unlocalize }}, {{ unit.max_guests|unlocalize }})">
                                 <div class="flex items-start space-x-4">
                                     <div class="w-24 h-24 bg-primary-100 rounded-lg overflow-hidden flex-shrink-0">
                                         {% if unit.main_image %}
@@ -419,10 +419,10 @@ function bookingWizard() {
         
         // Unit selection
         selectedUnit: '{% if selected_unit %}{{ selected_unit.id }}{% endif %}',
-        selectedUnitName: '{% if selected_unit %}{{ selected_unit.name }}{% endif %}',
-        basePrice: {% if selected_unit %}{{ selected_unit.base_price }}{% else %}0{% endif %},
-        minNights: {% if selected_unit %}{{ selected_unit.min_nights }}{% else %}2{% endif %},
-        maxGuests: {% if selected_unit %}{{ selected_unit.max_guests }}{% else %}10{% endif %},
+        selectedUnitName: '{% if selected_unit %}{{ selected_unit.name|escapejs }}{% endif %}',
+        basePrice: {% if selected_unit %}{{ selected_unit.base_price|unlocalize }}{% else %}0{% endif %},
+        minNights: {% if selected_unit %}{{ selected_unit.min_nights|unlocalize }}{% else %}2{% endif %},
+        maxGuests: {% if selected_unit %}{{ selected_unit.max_guests|unlocalize }}{% else %}10{% endif %},
         
         // Dates
         checkIn: '',
@@ -435,10 +435,10 @@ function bookingWizard() {
         depositAmount: 0,
         
         // Guest form fields (non pre-compilare per staff/admin)
-        guestFirstName: {% if user.is_authenticated and not user.is_staff %}'{{ user.first_name|default:"" }}'{% else %}''{% endif %},
-        guestLastName: {% if user.is_authenticated and not user.is_staff %}'{{ user.last_name|default:"" }}'{% else %}''{% endif %},
-        guestEmail: {% if user.is_authenticated and not user.is_staff %}'{{ user.email|default:"" }}'{% else %}''{% endif %},
-        guestPhone: {% if user.is_authenticated and not user.is_staff %}'{{ user.phone|default:"" }}'{% else %}''{% endif %},
+        guestFirstName: {% if user.is_authenticated and not user.is_staff %}'{{ user.first_name|default:""|escapejs }}'{% else %}''{% endif %},
+        guestLastName: {% if user.is_authenticated and not user.is_staff %}'{{ user.last_name|default:""|escapejs }}'{% else %}''{% endif %},
+        guestEmail: {% if user.is_authenticated and not user.is_staff %}'{{ user.email|default:""|escapejs }}'{% else %}''{% endif %},
+        guestPhone: {% if user.is_authenticated and not user.is_staff %}'{{ user.phone|default:""|escapejs }}'{% else %}''{% endif %},
         guestCountry: '',
         guestArrivalTime: '',
         guestNotes: '',

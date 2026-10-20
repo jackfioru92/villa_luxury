@@ -81,8 +81,8 @@
     if (typeof Alpine !== 'undefined') {
         const wizard = document.querySelector('[x-data]');
         if (wizard && wizard._x_dataStack) {
-            wizard._x_dataStack[0].totalAmount = {{ price_data.total|floatformat:0 }};
-            wizard._x_dataStack[0].depositAmount = {{ price_data.deposit|floatformat:0 }};
+            wizard._x_dataStack[0].totalAmount = {{ price_data.total|floatformat:"0u" }};
+            wizard._x_dataStack[0].depositAmount = {{ price_data.deposit|floatformat:"0u" }};
         }
     }
 </script>
