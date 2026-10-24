@@ -3,7 +3,9 @@ Django settings for villa_luxury project - Base settings.
 """
 import os
 from pathlib import Path
+
 import environ
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -100,6 +102,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # LocaleMiddleware: va dopo SessionMiddleware e prima di CommonMiddleware
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,6 +126,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.core.context_processors.site_settings',
@@ -160,6 +165,22 @@ LANGUAGE_CODE = 'it'
 TIME_ZONE = 'Europe/Rome'
 USE_I18N = True
 USE_TZ = True
+
+# Lingue disponibili sul sito. L'italiano e' la lingua di default e resta
+# senza prefisso nelle URL (prefix_default_language=False in config/urls.py),
+# l'inglese vive sotto /en/.
+LANGUAGES = [
+    ('it', _('Italiano')),
+    ('en', _('English')),
+]
+
+# Cataloghi di traduzione (locale/<lang>/LC_MESSAGES/django.po)
+LOCALE_PATHS = [BASE_DIR / 'locale']
+
+# Cookie della lingua scelta dall'utente (un anno)
+LANGUAGE_COOKIE_NAME = 'altesia_language'
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
+LANGUAGE_COOKIE_SAMESITE = 'Lax'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'

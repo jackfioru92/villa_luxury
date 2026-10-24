@@ -1,0 +1,49 @@
+{% load i18n %}
+{% comment %}
+Selettore lingua con bandierine.
+
+Lo stile sta in base.html (classi .lang-switch*) e non usa utility Tailwind:
+static/css/output.css è compilato a parte e il deploy è un semplice git pull,
+quindi le classi nuove non ci sarebbero.
+
+Parametri opzionali (via {% include ... with %}):
+  ns      prefisso per gli id interni degli SVG, serve se il componente
+          compare piu' volte nella stessa pagina (default: "ls")
+  variant "light" (default) bandiere su sfondo scuro o trasparente
+          "dark"  bandiere su sfondo chiaro (menu mobile)
+{% endcomment %}
+{% get_current_language as CURRENT_LANGUAGE %}
+
+<form action="{% url 'set_language' %}" method="post" class="lang-switch">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
+    <button type="submit" name="language" value="it"
+            lang="it" title="Italiano"
+            {% if CURRENT_LANGUAGE == 'it' %}aria-current="true"{% endif %}
+            class="lang-switch__btn{% if CURRENT_LANGUAGE == 'it' %} lang-switch__btn--active{% endif %}{% if variant == 'dark' %} lang-switch__btn--dark{% endif %}">
+        <svg class="lang-switch__flag" viewBox="0 0 3 2" width="26" height="17" aria-hidden="true" focusable="false">
+            <rect width="1" height="2" x="0" fill="#009246"/>
+            <rect width="1" height="2" x="1" fill="#ffffff"/>
+            <rect width="1" height="2" x="2" fill="#CE2B37"/>
+        </svg>
+        <span class="sr-only">{% translate "Italiano" %}</span>
+    </button>
+
+    <button type="submit" name="language" value="en"
+            lang="en" title="English"
+            {% if CURRENT_LANGUAGE == 'en' %}aria-current="true"{% endif %}
+            class="lang-switch__btn{% if CURRENT_LANGUAGE == 'en' %} lang-switch__btn--active{% endif %}{% if variant == 'dark' %} lang-switch__btn--dark{% endif %}">
+        <svg class="lang-switch__flag" viewBox="0 0 60 30" width="26" height="17" aria-hidden="true" focusable="false">
+            <clipPath id="{{ ns|default:'ls' }}-uk-clip">
+                <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/>
+            </clipPath>
+            <rect width="60" height="30" fill="#012169"/>
+            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/>
+            <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#{{ ns|default:'ls' }}-uk-clip)" stroke="#C8102E" stroke-width="4"/>
+            <path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"/>
+            <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+        </svg>
+        <span class="sr-only">{% translate "English" %}</span>
+    </button>
+</form>

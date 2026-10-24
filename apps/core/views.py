@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
 from django.http import HttpResponse
+from django.utils.translation import gettext as _
 from apps.villa.models import Villa, BookableUnit
 from apps.core.models import Page, FAQ, Testimonial, SiteSettings, NewsletterSubscription
 
@@ -45,7 +46,7 @@ class ContactView(TemplateView):
         experiences = request.POST.getlist('experiences')
 
         if not all([name, email, subject, message_text]):
-            messages.error(request, 'Per favore compila tutti i campi obbligatori.')
+            messages.error(request, _('Per favore compila tutti i campi obbligatori.'))
             return self.get(request, *args, **kwargs)
 
         subject_map = {
@@ -84,9 +85,9 @@ class ContactView(TemplateView):
                 recipient_list=[recipient],
                 fail_silently=False,
             )
-            messages.success(request, 'Messaggio inviato con successo! Ti risponderemo al più presto.')
+            messages.success(request, _('Messaggio inviato con successo! Ti risponderemo al più presto.'))
         except Exception:
-            messages.error(request, 'Si è verificato un errore nell\'invio del messaggio. Riprova più tardi.')
+            messages.error(request, _('Si è verificato un errore nell\'invio del messaggio. Riprova più tardi.'))
 
         return redirect('core:contact')
 
@@ -119,7 +120,8 @@ class NewsletterSubscribeView(View):
 
         if not email:
             return HttpResponse(
-                '<p class="text-red-400 text-sm mt-2">Per favore inserisci un indirizzo email.</p>',
+                '<p class="text-red-400 text-sm mt-2">%s</p>'
+                % _('Per favore inserisci un indirizzo email.'),
                 status=200,
             )
 
@@ -132,8 +134,8 @@ class NewsletterSubscribeView(View):
         if not created:
             if sub.is_active:
                 return HttpResponse(
-                    '<p class="text-tertiary-400 text-sm mt-2">'
-                    '✓ Questa email è già iscritta alla newsletter!</p>',
+                    '<p class="text-tertiary-400 text-sm mt-2">✓ %s</p>'
+                    % _('Questa email è già iscritta alla newsletter!'),
                     status=200,
                 )
             else:
@@ -145,18 +147,22 @@ class NewsletterSubscribeView(View):
         site_name = getattr(settings, 'SITE_NAME', 'Altèsia Suite')
         try:
             send_mail(
-                subject=f'Benvenuto nella newsletter di {site_name}!',
-                message=(
-                    f"Ciao!\n\n"
-                    f"Grazie per esserti iscritto alla newsletter di {site_name}.\n\n"
-                    f"Riceverai aggiornamenti su offerte esclusive, eventi speciali "
-                    f"e tutte le novità dalla nostra struttura.\n\n"
-                    f"Se non hai richiesto questa iscrizione, puoi semplicemente "
-                    f"ignorare questa email.\n\n"
-                    f"A presto,\n"
-                    f"Il team di {site_name}\n"
-                    f"https://www.altesiasuite.com\n"
-                ),
+                subject=_('Benvenuto nella newsletter di %(site_name)s!') % {'site_name': site_name},
+                message=_(
+                    "Ciao!\n"
+                    "\n"
+                    "Grazie per esserti iscritto alla newsletter di %(site_name)s.\n"
+                    "\n"
+                    "Riceverai aggiornamenti su offerte esclusive, eventi speciali "
+                    "e tutte le novità dalla nostra struttura.\n"
+                    "\n"
+                    "Se non hai richiesto questa iscrizione, puoi semplicemente "
+                    "ignorare questa email.\n"
+                    "\n"
+                    "A presto,\n"
+                    "Il team di %(site_name)s\n"
+                    "https://www.altesiasuite.com\n"
+                ) % {'site_name': site_name},
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[email],
                 fail_silently=True,
@@ -170,8 +176,12 @@ class NewsletterSubscribeView(View):
             '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" '
             'd="M5 13l4 4L19 7"/>'
             '</svg>'
-            '<p class="text-tertiary-400 font-medium">Iscrizione completata!</p>'
-            '<p class="text-primary-300 text-sm mt-1">Ti abbiamo inviato una email di conferma.</p>'
-            '</div>',
+            '<p class="text-tertiary-400 font-medium">%(done)s</p>'
+            '<p class="text-primary-300 text-sm mt-1">%(sent)s</p>'
+            '</div>'
+            % {
+                'done': _('Iscrizione completata!'),
+                'sent': _('Ti abbiamo inviato una email di conferma.'),
+            },
             status=200,
         )

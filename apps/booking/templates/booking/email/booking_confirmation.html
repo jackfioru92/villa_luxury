@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="it">
+{% load i18n %}{% get_current_language as CURRENT_LANGUAGE %}<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prenotazione confermata</title>
+<title>{% translate "Prenotazione confermata" %}</title>
 </head>
 <body style="margin:0; padding:0; background-color:#f0f9f6; font-family:Arial,Helvetica,sans-serif; color:#254037;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f9f6; padding:24px 0;">
@@ -15,7 +15,7 @@
         <tr>
           <td align="center" style="background-color:#2E4A46; padding:36px 24px;">
             <div style="font-family:Georgia,'Times New Roman',serif; font-size:34px; letter-spacing:6px; color:#E7D4A2; font-weight:bold;">ALT&Egrave;SIA</div>
-            <div style="font-size:11px; letter-spacing:3px; color:#c1e5d6; text-transform:uppercase; margin-top:6px;">Luxury Retreat in Umbria</div>
+            <div style="font-size:11px; letter-spacing:3px; color:#c1e5d6; text-transform:uppercase; margin-top:6px;">{% translate "Luxury Retreat in Umbria" %}</div>
           </td>
         </tr>
 
@@ -23,16 +23,16 @@
         <tr>
           <td align="center" style="padding:36px 32px 8px 32px;">
             <div style="display:inline-block; width:56px; height:56px; line-height:56px; background-color:#eafaf1; border-radius:50%; color:#2f9e5f; font-size:30px;">&#10003;</div>
-            <h1 style="font-family:Georgia,serif; font-size:26px; color:#192924; margin:18px 0 6px 0;">Prenotazione confermata</h1>
-            <p style="font-size:15px; color:#525252; margin:0;">Numero prenotazione <strong style="color:#192924;">#{{ booking.booking_number }}</strong></p>
+            <h1 style="font-family:Georgia,serif; font-size:26px; color:#192924; margin:18px 0 6px 0;">{% translate "Prenotazione confermata" %}</h1>
+            <p style="font-size:15px; color:#525252; margin:0;">{% blocktranslate with number=booking.booking_number %}Numero prenotazione <strong style="color:#192924;">#{{ number }}</strong>{% endblocktranslate %}</p>
           </td>
         </tr>
 
         <!-- Greeting -->
         <tr>
           <td style="padding:20px 32px 0 32px; font-size:15px; line-height:1.6; color:#404040;">
-            Gentile {{ booking.guest_first_name }},<br>
-            grazie per aver scelto Alt&egrave;sia Suites. La tua prenotazione &egrave; <strong>confermata</strong>: non vediamo l'ora di accoglierti.
+            {% blocktranslate with first_name=booking.guest_first_name %}Gentile {{ first_name }},<br>
+            grazie per aver scelto Alt&egrave;sia Suites. La tua prenotazione &egrave; <strong>confermata</strong>: non vediamo l'ora di accoglierti.{% endblocktranslate %}
           </td>
         </tr>
 
@@ -43,20 +43,20 @@
               <tr><td style="padding:18px 20px;">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#254037;">
                   <tr>
-                    <td style="padding:8px 0; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Sistemazione</td>
+                    <td style="padding:8px 0; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">{% translate "Sistemazione" %}</td>
                     <td align="right" style="padding:8px 0; font-weight:bold; color:#192924;">{{ booking.unit.name }}</td>
                   </tr>
                   <tr>
-                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Check-in</td>
-                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{{ booking.check_in|date:"d/m/Y" }} &middot; dalle 15:00</td>
+                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">{% translate "Check-in" %}</td>
+                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{% blocktranslate with day=booking.check_in|date:"d/m/Y" %}{{ day }} &middot; dalle 15:00{% endblocktranslate %}</td>
                   </tr>
                   <tr>
-                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Check-out</td>
-                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{{ booking.check_out|date:"d/m/Y" }} &middot; entro le 10:00</td>
+                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">{% translate "Check-out" %}</td>
+                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{% blocktranslate with day=booking.check_out|date:"d/m/Y" %}{{ day }} &middot; entro le 10:00{% endblocktranslate %}</td>
                   </tr>
                   <tr>
-                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">Notti / Ospiti</td>
-                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{{ booking.nights }} notti &middot; {{ booking.num_guests }} ospiti</td>
+                    <td style="padding:8px 0; border-top:1px solid #e0f2ec; color:#5bb691; text-transform:uppercase; letter-spacing:1px; font-size:12px;">{% translate "Notti / Ospiti" %}</td>
+                    <td align="right" style="padding:8px 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{% blocktranslate with nights=booking.nights guests=booking.num_guests %}{{ nights }} notti &middot; {{ guests }} ospiti{% endblocktranslate %}</td>
                   </tr>
                 </table>
               </td></tr>
@@ -71,15 +71,15 @@
               <tr><td style="padding:18px 20px;">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#254037;">
                   <tr>
-                    <td style="padding:6px 0;">Totale soggiorno</td>
+                    <td style="padding:6px 0;">{% translate "Totale soggiorno" %}</td>
                     <td align="right" style="padding:6px 0; color:#192924;">&euro;{{ booking.total_amount|floatformat:0 }}</td>
                   </tr>
                   <tr>
-                    <td style="padding:6px 0;">Acconto pagato</td>
+                    <td style="padding:6px 0;">{% translate "Acconto pagato" %}</td>
                     <td align="right" style="padding:6px 0; color:#2f9e5f; font-weight:bold;">&euro;{{ booking.deposit_amount|floatformat:0 }}</td>
                   </tr>
                   <tr>
-                    <td style="padding:10px 0 0 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">Saldo da pagare in loco</td>
+                    <td style="padding:10px 0 0 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">{% translate "Saldo da pagare in loco" %}</td>
                     <td align="right" style="padding:10px 0 0 0; border-top:1px solid #e0f2ec; font-weight:bold; color:#192924;">&euro;{{ booking.balance_due|floatformat:0 }}</td>
                   </tr>
                 </table>
@@ -90,13 +90,13 @@
 
         {% if booking.experiences %}
         <p style="margin:0 0 12px;color:#4a5a54;">
-            <strong style="color:#192924;">Esperienze richieste:</strong> {{ booking.experiences }}
+            <strong style="color:#192924;">{% translate "Esperienze richieste:" %}</strong> {{ booking.experiences }}
         </p>
         {% endif %}
         {% if booking.guest_notes %}
         <tr>
           <td style="padding:16px 32px 0 32px; font-size:13px; color:#525252;">
-            <strong style="color:#192924;">Le tue note:</strong> {{ booking.guest_notes }}
+            <strong style="color:#192924;">{% translate "Le tue note:" %}</strong> {{ booking.guest_notes }}
           </td>
         </tr>
         {% endif %}
@@ -104,23 +104,23 @@
         <!-- Info -->
         <tr>
           <td style="padding:28px 32px 0 32px; font-size:14px; line-height:1.7; color:#404040;">
-            <strong style="color:#192924;">Come raggiungerci</strong><br>
+            <strong style="color:#192924;">{% translate "Come raggiungerci" %}</strong><br>
             Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria<br>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=43.20914077758789,12.454292297363281" style="color:#b8a46b; text-decoration:none; font-weight:bold;">Apri in Google Maps &rarr;</a>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=43.20914077758789,12.454292297363281" style="color:#b8a46b; text-decoration:none; font-weight:bold;">{% translate "Apri in Google Maps &rarr;" %}</a>
           </td>
         </tr>
         <tr>
           <td style="padding:16px 32px 0 32px; font-size:14px; line-height:1.7; color:#404040;">
-            Per qualsiasi richiesta siamo a tua disposizione:<br>
-            Email: <a href="mailto:info@altesiasuite.com" style="color:#b8a46b; text-decoration:none;">info@altesiasuite.com</a><br>
-            Telefono: <a href="tel:+393476532405" style="color:#b8a46b; text-decoration:none;">+39 347 6532405</a>
+            {% translate "Per qualsiasi richiesta siamo a tua disposizione:" %}<br>
+            {% translate "Email:" %} <a href="mailto:info@altesiasuite.com" style="color:#b8a46b; text-decoration:none;">info@altesiasuite.com</a><br>
+            {% translate "Telefono:" %} <a href="tel:+393476532405" style="color:#b8a46b; text-decoration:none;">+39 347 6532405</a>
           </td>
         </tr>
 
         <!-- Footer -->
         <tr>
           <td align="center" style="padding:32px; margin-top:16px;">
-            <p style="font-family:Georgia,serif; font-style:italic; color:#254037; font-size:15px; margin:0 0 24px 0;">Ti aspettiamo ad Alt&egrave;sia.</p>
+            <p style="font-family:Georgia,serif; font-style:italic; color:#254037; font-size:15px; margin:0 0 24px 0;">{% translate "Ti aspettiamo ad Alt&egrave;sia." %}</p>
           </td>
         </tr>
         <tr>

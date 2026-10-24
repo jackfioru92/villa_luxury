@@ -7,6 +7,7 @@ from django.db.models import Sum, Count, Q
 from django.db.models.functions import TruncMonth
 from django.utils import timezone
 from django.http import JsonResponse
+from django.utils.translation import gettext as _, ngettext
 from datetime import date, timedelta
 from decimal import Decimal
 
@@ -281,7 +282,7 @@ class BlockDatesView(TemplateView):
         note = request.POST.get('note', '')
 
         if not all([unit_id, start_date, end_date, reason]):
-            messages.error(request, 'Compila tutti i campi obbligatori.')
+            messages.error(request, _('Compila tutti i campi obbligatori.'))
             return redirect('dashboard:block_dates')
 
         from datetime import datetime
@@ -292,7 +293,7 @@ class BlockDatesView(TemplateView):
         created = 0
         current = start
         while current <= end:
-            _, is_new = BlockedDate.objects.get_or_create(
+            _block, is_new = BlockedDate.objects.get_or_create(
                 unit=unit,
                 date=current,
                 defaults={'reason': reason, 'note': note}
@@ -301,7 +302,11 @@ class BlockDatesView(TemplateView):
                 created += 1
             current += timedelta(days=1)
 
-        messages.success(request, f'{created} date bloccate con successo.')
+        messages.success(request, ngettext(
+            '%(count)d data bloccata con successo.',
+            '%(count)d date bloccate con successo.',
+            created,
+        ) % {'count': created})
         return redirect('dashboard:block_dates')
 
 
@@ -372,24 +377,30 @@ class BookingActionView(View):
         if action == 'confirm' and booking.status == Booking.Status.PENDING:
             booking.confirm()
             send_booking_confirmation_to_guest(booking)
-            messages.success(request, f'Prenotazione #{booking.booking_number} confermata con successo. Email inviata all\'ospite.')
+            messages.success(request, _(
+                'Prenotazione #%(number)s confermata con successo. Email inviata all\'ospite.'
+            ) % {'number': booking.booking_number})
 
         elif action == 'reject' and booking.status == Booking.Status.PENDING:
             reason = request.POST.get('reason', 'Rifiutata dall\'amministratore')
             booking.cancel(reason=reason or 'Rifiutata dall\'amministratore')
-            messages.warning(request, f'Prenotazione #{booking.booking_number} rifiutata.')
+            messages.warning(request, _(
+                'Prenotazione #%(number)s rifiutata.'
+            ) % {'number': booking.booking_number})
 
         elif action == 'cancel' and booking.status == Booking.Status.CONFIRMED:
             booking.cancel(reason='Cancellata dall\'amministratore')
-            messages.warning(request, f'Prenotazione #{booking.booking_number} cancellata.')
+            messages.warning(request, _(
+                'Prenotazione #%(number)s cancellata.'
+            ) % {'number': booking.booking_number})
 
         elif action == 'update_notes':
             booking.admin_notes = request.POST.get('admin_notes', '')
             booking.save(update_fields=['admin_notes'])
-            messages.success(request, 'Note aggiornate.')
+            messages.success(request, _('Note aggiornate.'))
 
         else:
-            messages.error(request, 'Azione non valida.')
+            messages.error(request, _('Azione non valida.'))
 
         return redirect('dashboard:booking_detail', pk=booking.pk)
 
@@ -443,5 +454,9 @@ class DeleteBlockView(View):
         for b in dates_to_delete:
             b.delete()
         
-        messages.success(request, f'{count} date sbloccate con successo.')
+        messages.success(request, ngettext(
+            '%(count)d data sbloccata con successo.',
+            '%(count)d date sbloccate con successo.',
+            count,
+        ) % {'count': count})
         return redirect('dashboard:block_dates')

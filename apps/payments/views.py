@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.urls import reverse
+from django.utils.translation import gettext as _
 import json
 import logging
 
@@ -28,7 +29,7 @@ class CreateCheckoutSessionView(View):
 
         # Verify booking is in correct state
         if booking.status not in [Booking.Status.PENDING, Booking.Status.CONFIRMED]:
-            messages.error(request, 'Questa prenotazione non può essere pagata.')
+            messages.error(request, _('Questa prenotazione non può essere pagata.'))
             return redirect('core:home')
 
         # Determine payment type
@@ -55,7 +56,10 @@ class CreateCheckoutSessionView(View):
 
         except Exception as e:
             logger.error(f"Error creating checkout session: {str(e)}")
-            messages.error(request, f'Errore nella creazione del pagamento: {str(e)}')
+            messages.error(
+                request,
+                _('Errore nella creazione del pagamento: %(error)s') % {'error': str(e)},
+            )
             return redirect('booking:wizard')
 
 

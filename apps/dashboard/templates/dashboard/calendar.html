@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Calendario - Dashboard - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Calendario" %} - {% translate "Dashboard" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -18,10 +18,10 @@
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
-                Calendario
+                {% translate "Calendario" %}
             </h1>
             <p class="text-primary-600 mt-2">
-                Visualizza prenotazioni e disponibilità
+                {% translate "Visualizza prenotazioni e disponibilità" %}
             </p>
         </div>
         
@@ -33,26 +33,26 @@
                 
                 <!-- Legend -->
                 <div class="mt-6 bg-white rounded-xl shadow-lg p-6">
-                    <h3 class="font-semibold text-primary-900 mb-4">Legenda</h3>
+                    <h3 class="font-semibold text-primary-900 mb-4">{% translate "Legenda" %}</h3>
                     <div class="space-y-2">
                         <div class="flex items-center space-x-2">
                             <span class="w-4 h-4 rounded bg-green-500"></span>
-                            <span class="text-sm text-primary-600">Confermata</span>
+                            <span class="text-sm text-primary-600">{% translate "Confermata" %}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="w-4 h-4 rounded bg-yellow-500"></span>
-                            <span class="text-sm text-primary-600">In attesa</span>
+                            <span class="text-sm text-primary-600">{% translate "In attesa" %}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="w-4 h-4 rounded bg-red-500"></span>
-                            <span class="text-sm text-primary-600">Bloccata</span>
+                            <span class="text-sm text-primary-600">{% translate "Bloccata" %}</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Unit Filter -->
                 <div class="mt-6 bg-white rounded-xl shadow-lg p-6">
-                    <h3 class="font-semibold text-primary-900 mb-4">Filtra per Unità</h3>
+                    <h3 class="font-semibold text-primary-900 mb-4">{% translate "Filtra per Unità" %}</h3>
                     <div class="space-y-2">
                         {% for unit in units %}
                         <label class="flex items-center space-x-2 cursor-pointer">
@@ -83,7 +83,7 @@
      onclick="if(event.target === this) closeModal()">
     <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden">
         <div class="px-6 py-4 bg-primary-50 border-b border-primary-100 flex items-center justify-between">
-            <h3 class="font-semibold text-primary-900" id="modal-title">Dettagli Prenotazione</h3>
+            <h3 class="font-semibold text-primary-900" id="modal-title">{% translate "Dettagli Prenotazione" %}</h3>
             <button onclick="closeModal()" class="text-primary-400 hover:text-primary-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -100,6 +100,20 @@
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 <script>
+    // Etichette tradotte usate dal calendario e dal modale
+    const i18n = {
+        blockedDates: "{% translate 'Date Bloccate' %}",
+        noReason: "{% translate 'Nessun motivo specificato' %}",
+        from: "{% translate 'Dal:' %}",
+        to: "{% translate 'Al:' %}",
+        guest: "{% translate 'Ospite:' %}",
+        checkIn: "{% translate 'Check-in:' %}",
+        checkOut: "{% translate 'Check-out:' %}",
+        unit: "{% translate 'Unità:' %}",
+        status: "{% translate 'Stato:' %}",
+        fullDetails: "{% translate 'Vedi Dettagli Completi' %}"
+    };
+
     let calendar;
     
     document.addEventListener('DOMContentLoaded', function() {
@@ -107,7 +121,7 @@
         
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            locale: 'it',
+            locale: '{{ LANGUAGE_CODE }}',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
@@ -140,16 +154,16 @@
         const content = document.getElementById('modal-content');
         
         if (event.extendedProps.type === 'blocked') {
-            title.textContent = 'Date Bloccate';
+            title.textContent = i18n.blockedDates;
             content.innerHTML = `
-                <p class="text-primary-600 mb-4">${event.extendedProps.reason || 'Nessun motivo specificato'}</p>
+                <p class="text-primary-600 mb-4">${event.extendedProps.reason || i18n.noReason}</p>
                 <dl class="space-y-2">
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Dal:</dt>
+                        <dt class="text-primary-500">${i18n.from}</dt>
                         <dd class="font-medium">${formatDate(event.start)}</dd>
                     </div>
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Al:</dt>
+                        <dt class="text-primary-500">${i18n.to}</dt>
                         <dd class="font-medium">${formatDate(event.end)}</dd>
                     </div>
                 </dl>
@@ -159,29 +173,29 @@
             content.innerHTML = `
                 <dl class="space-y-3">
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Ospite:</dt>
+                        <dt class="text-primary-500">${i18n.guest}</dt>
                         <dd class="font-medium">${event.title}</dd>
                     </div>
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Check-in:</dt>
+                        <dt class="text-primary-500">${i18n.checkIn}</dt>
                         <dd class="font-medium">${formatDate(event.start)}</dd>
                     </div>
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Check-out:</dt>
+                        <dt class="text-primary-500">${i18n.checkOut}</dt>
                         <dd class="font-medium">${formatDate(event.end)}</dd>
                     </div>
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Unità:</dt>
+                        <dt class="text-primary-500">${i18n.unit}</dt>
                         <dd class="font-medium">${event.extendedProps.unitName}</dd>
                     </div>
                     <div class="flex justify-between">
-                        <dt class="text-primary-500">Stato:</dt>
+                        <dt class="text-primary-500">${i18n.status}</dt>
                         <dd class="font-medium">${event.extendedProps.status}</dd>
                     </div>
                 </dl>
                 <div class="mt-6">
                     <a href="/dashboard/bookings/${event.extendedProps.bookingId}/" class="btn-primary w-full text-center">
-                        Vedi Dettagli Completi
+                        ${i18n.fullDetails}
                     </a>
                 </div>
             `;
@@ -195,7 +209,7 @@
     }
     
     function formatDate(date) {
-        return new Date(date).toLocaleDateString('it-IT', {
+        return new Date(date).toLocaleDateString('{{ LANGUAGE_CODE }}', {
             weekday: 'long',
             day: 'numeric',
             month: 'long',

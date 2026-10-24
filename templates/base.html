@@ -1,6 +1,7 @@
-{% load static %}
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
 <!DOCTYPE html>
-<html lang="it" class="scroll-smooth">
+<html lang="{{ CURRENT_LANGUAGE }}" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,14 @@
     
     <!-- SEO -->
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{{ site_settings.site_description|default:'Villa di lusso in Italia - Prenota la tua esperienza esclusiva' }}{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}villa lusso, vacanze Italia, affitto villa, luxury villa{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{{ site_settings.site_description|default:_("Villa di lusso in Italia - Prenota la tua esperienza esclusiva") }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% translate "villa lusso, vacanze Italia, affitto villa, luxury villa" %}{% endblock %}">
+
+    <!-- Versioni in altre lingue (SEO) -->
+    {% for lang_code, lang_name in LANGUAGES %}
+    <link rel="alternate" hreflang="{{ lang_code }}" href="{% translate_current_url lang_code %}">
+    {% endfor %}
+    <link rel="alternate" hreflang="x-default" href="{% translate_current_url 'it' %}">
     
     <!-- Open Graph -->
     <meta property="og:title" content="{% block og_title %}{{ SITE_NAME }}{% endblock %}">
@@ -49,6 +56,29 @@
         .htmx-settling { transition: opacity 0.3s ease-in-out; }
         .htmx-swapping { opacity: 0; }
         
+        /* Selettore lingua (templates/components/language_switcher.html).
+           Stile a mano: output.css e' compilato a parte e il deploy non
+           ricompila gli asset, quindi le utility Tailwind nuove mancherebbero. */
+        .lang-switch { display: flex; align-items: center; gap: 6px; }
+        .lang-switch__btn {
+            display: block;
+            padding: 0;
+            border: 0;
+            background: none;
+            line-height: 0;
+            cursor: pointer;
+            border-radius: 2px;
+            opacity: .55;
+            box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+            transition: opacity .2s ease, box-shadow .2s ease;
+        }
+        .lang-switch__btn:hover,
+        .lang-switch__btn:focus-visible { opacity: 1; outline: none; }
+        .lang-switch__btn:focus-visible { box-shadow: 0 0 0 2px #E7D4A2; }
+        .lang-switch__btn--active { opacity: 1; box-shadow: 0 0 0 2px #ffffff; }
+        .lang-switch__btn--active.lang-switch__btn--dark { box-shadow: 0 0 0 2px #254037; }
+        .lang-switch__flag { display: block; width: 26px; height: 17px; }
+
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f0f9f6; }

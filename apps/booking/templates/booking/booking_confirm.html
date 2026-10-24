@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Prenotazione Confermata - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Prenotazione Confermata" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -20,56 +20,56 @@
                     </div>
                     
                     <h1 class="text-3xl font-serif font-semibold text-primary-900 mb-4">
-                        Prenotazione Confermata!
+                        {% translate "Prenotazione Confermata!" %}
                     </h1>
                     
                     <p class="text-primary-600 mb-6">
-                        Grazie per la tua prenotazione. Abbiamo inviato una email di conferma 
-                        a <strong>{{ booking.guest_email }}</strong> con tutti i dettagli.
+                        {% blocktranslate with email=booking.guest_email %}Grazie per la tua prenotazione. Abbiamo inviato una email di conferma
+                        a <strong>{{ email }}</strong> con tutti i dettagli.{% endblocktranslate %}
                     </p>
                     
                     <div class="inline-block bg-primary-50 rounded-lg px-6 py-3 mb-8">
-                        <span class="text-primary-500 text-sm">Numero prenotazione:</span>
+                        <span class="text-primary-500 text-sm">{% translate "Numero prenotazione:" %}</span>
                         <span class="block text-2xl font-semibold text-primary-900">{{ booking.booking_number }}</span>
                     </div>
                 </div>
                 
                 <!-- Booking Details -->
                 <div class="bg-primary-50 p-8 border-t border-primary-100">
-                    <h2 class="font-semibold text-primary-900 mb-4">Dettagli Prenotazione</h2>
+                    <h2 class="font-semibold text-primary-900 mb-4">{% translate "Dettagli Prenotazione" %}</h2>
                     
                     <dl class="space-y-3">
                         <div class="flex justify-between">
-                            <dt class="text-primary-600">Sistemazione:</dt>
+                            <dt class="text-primary-600">{% translate "Sistemazione:" %}</dt>
                             <dd class="font-medium text-primary-900">{{ booking.unit.name }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-primary-600">Check-in:</dt>
+                            <dt class="text-primary-600">{% translate "Check-in:" %}</dt>
                             <dd class="font-medium text-primary-900">
                                 {{ booking.check_in|date:"l d F Y" }}
                             </dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-primary-600">Check-out:</dt>
+                            <dt class="text-primary-600">{% translate "Check-out:" %}</dt>
                             <dd class="font-medium text-primary-900">
                                 {{ booking.check_out|date:"l d F Y" }}
                             </dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-primary-600">Ospiti:</dt>
+                            <dt class="text-primary-600">{% translate "Ospiti:" %}</dt>
                             <dd class="font-medium text-primary-900">{{ booking.num_guests }}</dd>
                         </div>
                         <hr class="border-primary-200">
                         <div class="flex justify-between">
-                            <dt class="text-primary-600">Acconto pagato:</dt>
+                            <dt class="text-primary-600">{% translate "Acconto pagato:" %}</dt>
                             <dd class="font-semibold text-green-600">€{{ booking.deposit_amount|floatformat:0 }}</dd>
                         </div>
                         <div class="flex justify-between">
-                            <dt class="text-primary-600">Saldo al check-in:</dt>
+                            <dt class="text-primary-600">{% translate "Saldo al check-in:" %}</dt>
                             <dd class="font-medium text-primary-900">€{{ booking.balance_amount|floatformat:0 }}</dd>
                         </div>
                         <div class="flex justify-between text-lg">
-                            <dt class="font-semibold text-primary-900">Totale:</dt>
+                            <dt class="font-semibold text-primary-900">{% translate "Totale:" %}</dt>
                             <dd class="font-bold text-primary-900">€{{ booking.total_amount|floatformat:0 }}</dd>
                         </div>
                     </dl>
@@ -77,7 +77,7 @@
                 
                 <!-- Next Steps -->
                 <div class="p-8">
-                    <h2 class="font-semibold text-primary-900 mb-4">Prossimi Passi</h2>
+                    <h2 class="font-semibold text-primary-900 mb-4">{% translate "Prossimi Passi" %}</h2>
                     
                     <div class="space-y-4">
                         <div class="flex items-start space-x-3">
@@ -85,9 +85,9 @@
                                 <span class="text-tertiary-600 font-semibold text-sm">1</span>
                             </div>
                             <div>
-                                <h3 class="font-medium text-primary-900">Controlla la tua email</h3>
+                                <h3 class="font-medium text-primary-900">{% translate "Controlla la tua email" %}</h3>
                                 <p class="text-sm text-primary-600">
-                                    Riceverai la conferma con tutti i dettagli e le istruzioni per il check-in.
+                                    {% translate "Riceverai la conferma con tutti i dettagli e le istruzioni per il check-in." %}
                                 </p>
                             </div>
                         </div>
@@ -97,9 +97,9 @@
                                 <span class="text-tertiary-600 font-semibold text-sm">2</span>
                             </div>
                             <div>
-                                <h3 class="font-medium text-primary-900">Preparati per il viaggio</h3>
+                                <h3 class="font-medium text-primary-900">{% translate "Preparati per il viaggio" %}</h3>
                                 <p class="text-sm text-primary-600">
-                                    Ti contatteremo qualche giorno prima dell'arrivo con le indicazioni.
+                                    {% translate "Ti contatteremo qualche giorno prima dell'arrivo con le indicazioni." %}
                                 </p>
                             </div>
                         </div>
@@ -109,9 +109,9 @@
                                 <span class="text-tertiary-600 font-semibold text-sm">3</span>
                             </div>
                             <div>
-                                <h3 class="font-medium text-primary-900">Goditi il soggiorno!</h3>
+                                <h3 class="font-medium text-primary-900">{% translate "Goditi il soggiorno!" %}</h3>
                                 <p class="text-sm text-primary-600">
-                                    Non vediamo l'ora di accoglierti nella nostra villa.
+                                    {% translate "Non vediamo l'ora di accoglierti nella nostra villa." %}
                                 </p>
                             </div>
                         </div>
@@ -122,11 +122,11 @@
                 <div class="px-8 pb-8 flex flex-col sm:flex-row gap-4">
                     {% if user.is_authenticated %}
                     <a href="{% url 'accounts:my_bookings' %}" class="btn-primary flex-1 text-center">
-                        Le Mie Prenotazioni
+                        {% translate "Le Mie Prenotazioni" %}
                     </a>
                     {% endif %}
                     <a href="{% url 'core:home' %}" class="btn-outline flex-1 text-center">
-                        Torna alla Home
+                        {% translate "Torna alla Home" %}
                     </a>
                 </div>
             </div>
@@ -134,8 +134,8 @@
             <!-- Contact Info -->
             <div class="mt-8 text-center">
                 <p class="text-primary-600">
-                    Hai domande? Contattaci a 
-                    <a href="mailto:info@example.com" class="text-tertiary-500 underline">info@example.com</a>
+                    {% blocktranslate %}Hai domande? Contattaci a
+                    <a href="mailto:info@example.com" class="text-tertiary-500 underline">info@example.com</a>{% endblocktranslate %}
                 </p>
             </div>
         </div>

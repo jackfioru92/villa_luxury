@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Le Mie Prenotazioni - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Le Mie Prenotazioni" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -10,10 +10,10 @@
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
-                Le Mie Prenotazioni
+                {% translate "Le Mie Prenotazioni" %}
             </h1>
             <p class="text-primary-600 mt-2">
-                Visualizza e gestisci le tue prenotazioni
+                {% translate "Visualizza e gestisci le tue prenotazioni" %}
             </p>
         </div>
         
@@ -28,7 +28,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
-                        <span class="text-primary-600">Profilo</span>
+                        <span class="text-primary-600">{% translate "Profilo" %}</span>
                     </a>
                     <a href="{% url 'accounts:my_bookings' %}" 
                        class="flex items-center space-x-3 px-6 py-4 bg-tertiary-50 border-l-4 border-tertiary-500">
@@ -36,7 +36,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="font-medium text-primary-900">Le Mie Prenotazioni</span>
+                        <span class="font-medium text-primary-900">{% translate "Le Mie Prenotazioni" %}</span>
                     </a>
                     <a href="{% url 'accounts:password_change' %}" 
                        class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
@@ -44,7 +44,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
-                        <span class="text-primary-600">Cambia Password</span>
+                        <span class="text-primary-600">{% translate "Cambia Password" %}</span>
                     </a>
                     <hr class="border-primary-100">
                     <a href="{% url 'accounts:logout' %}" 
@@ -53,7 +53,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                         </svg>
-                        <span>Esci</span>
+                        <span>{% translate "Esci" %}</span>
                     </a>
                 </nav>
                 
@@ -63,7 +63,7 @@
                         <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        Nuova Prenotazione
+                        {% translate "Nuova Prenotazione" %}
                     </a>
                 </div>
             </div>
@@ -78,9 +78,9 @@
                 
                 {% for group in booking_groups %}
                 {% if group.grouper %}
-                <h2 class="text-xl font-semibold text-primary-900">Prenotazioni Imminenti</h2>
+                <h2 class="text-xl font-semibold text-primary-900">{% translate "Prenotazioni Imminenti" %}</h2>
                 {% else %}
-                <h2 class="text-xl font-semibold text-primary-900 mt-8">Prenotazioni Passate</h2>
+                <h2 class="text-xl font-semibold text-primary-900 mt-8">{% translate "Prenotazioni Passate" %}</h2>
                 {% endif %}
                 
                 {% for booking in group.list %}
@@ -118,7 +118,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
                                         </svg>
-                                        {{ booking.num_guests }} ospiti
+                                        {% blocktranslate with guests=booking.num_guests %}{{ guests }} ospiti{% endblocktranslate %}
                                     </span>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                                 </p>
                                 {% if booking.status == 'confirmed' and booking.balance_amount > 0 %}
                                 <p class="text-sm text-primary-500">
-                                    Saldo: €{{ booking.balance_amount|floatformat:0 }}
+                                    {% blocktranslate with balance=booking.balance_amount|floatformat:0 %}Saldo: €{{ balance }}{% endblocktranslate %}
                                 </p>
                                 {% endif %}
                             </div>
@@ -138,11 +138,11 @@
                     
                     <div class="px-6 py-4 bg-primary-50 border-t border-primary-100 flex items-center justify-between">
                         <span class="text-sm text-primary-500">
-                            Prenotato il {{ booking.created_at|date:"d F Y" }}
+                            {% blocktranslate with created=booking.created_at|date:"d F Y" %}Prenotato il {{ created }}{% endblocktranslate %}
                         </span>
                         <a href="{% url 'booking:detail' booking.booking_number %}" 
                            class="text-tertiary-500 font-medium hover:underline text-sm">
-                            Vedi Dettagli →
+                            {% translate "Vedi Dettagli →" %}
                         </a>
                     </div>
                 </div>
@@ -157,13 +157,13 @@
                               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
                     <h3 class="text-xl font-semibold text-primary-900 mb-2">
-                        Nessuna prenotazione
+                        {% translate "Nessuna prenotazione" %}
                     </h3>
                     <p class="text-primary-600 mb-6">
-                        Non hai ancora effettuato prenotazioni.
+                        {% translate "Non hai ancora effettuato prenotazioni." %}
                     </p>
                     <a href="{% url 'booking:wizard' %}" class="btn-primary">
-                        Prenota Ora
+                        {% translate "Prenota Ora" %}
                     </a>
                 </div>
                 {% endif %}

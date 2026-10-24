@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 <!-- Navbar -->
 <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
@@ -20,31 +20,34 @@
                 <a href="{% url 'villa:list' %}" 
                    class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
-                    La Villa
+                    {% translate "La Villa" %}
                 </a>
                 <a href="/#sistemazioni"
                    class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
-                    Sistemazioni
+                    {% translate "Sistemazioni" %}
                 </a>
                 <a href="/#esperienze"
                    class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
-                    Esperienze
+                    {% translate "Esperienze" %}
                 </a>
                 <a href="#gallery" 
                    class="font-bold transition-colors tracking-wide text-lg uppercase"
                    :class="scrolled ? 'text-primary-800 hover:text-primary-600' : 'text-white hover:text-tertiary-300'">
-                    Gallery
+                    {% translate "Gallery" %}
                 </a>
                 
                 <!-- CTA Button -->
                 <a href="{% url 'booking:wizard' %}" 
                    class="px-6 py-2 font-semibold rounded-sm transition-colors shadow-lg tracking-wide text-base uppercase"
                    :class="scrolled ? 'bg-primary-800 text-white hover:bg-primary-700' : 'bg-tertiary-500 text-primary-900 hover:bg-tertiary-600'">
-                    Prenota Ora
+                    {% translate "Prenota Ora" %}
                 </a>
                 
+                <!-- Selettore lingua -->
+                {% include 'components/language_switcher.html' with ns="nav" %}
+
                 <!-- User Menu -->
                 {% if user.is_authenticated %}
                 <div class="relative" x-data="{ open: false }">
@@ -67,17 +70,17 @@
                          x-transition:leave-end="transform opacity-0 scale-95"
                          class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2">
                         <a href="{% url 'accounts:profile' %}" 
-                           class="block px-4 py-2 text-primary-700 hover:bg-primary-50">Il mio profilo</a>
+                           class="block px-4 py-2 text-primary-700 hover:bg-primary-50">{% translate "Il mio profilo" %}</a>
                         <a href="{% url 'accounts:my_bookings' %}" 
-                           class="block px-4 py-2 text-primary-700 hover:bg-primary-50">Le mie prenotazioni</a>
+                           class="block px-4 py-2 text-primary-700 hover:bg-primary-50">{% translate "Le mie prenotazioni" %}</a>
                         {% if user.is_staff %}
                         <a href="{% url 'dashboard:overview' %}" 
-                           class="block px-4 py-2 text-primary-700 hover:bg-primary-50">Dashboard</a>
+                           class="block px-4 py-2 text-primary-700 hover:bg-primary-50">{% translate "Dashboard" %}</a>
                         {% endif %}
                         <hr class="my-2 border-primary-100">
                         <form method="post" action="{% url 'accounts:logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">Logout</button>
+                            <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">{% translate "Logout" %}</button>
                         </form>
                     </div>
                 </div>
@@ -118,32 +121,40 @@
          @click.away="mobileMenuOpen = false"
          class="lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl">
         <div class="container mx-auto px-4 py-6 space-y-4">
-            <a href="{% url 'villa:list' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">La Villa</a>
-            <a href="/#sistemazioni" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Sistemazioni</a>
-            <a href="/#esperienze" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Esperienze</a>
-            <a href="#gallery" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">Gallery</a>
+            <a href="{% url 'villa:list' %}" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">{% translate "La Villa" %}</a>
+            <a href="/#sistemazioni" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">{% translate "Sistemazioni" %}</a>
+            <a href="/#esperienze" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">{% translate "Esperienze" %}</a>
+            <a href="#gallery" @click="mobileMenuOpen = false" class="block py-2 text-primary-700 font-medium hover:text-tertiary-500">{% translate "Gallery" %}</a>
             
             <hr class="border-primary-100">
             
             {% if user.is_authenticated %}
-            <a href="{% url 'accounts:profile' %}" class="block py-2 text-primary-700 font-medium">Il mio profilo</a>
-            <a href="{% url 'accounts:my_bookings' %}" class="block py-2 text-primary-700 font-medium">Le mie prenotazioni</a>
+            <a href="{% url 'accounts:profile' %}" class="block py-2 text-primary-700 font-medium">{% translate "Il mio profilo" %}</a>
+            <a href="{% url 'accounts:my_bookings' %}" class="block py-2 text-primary-700 font-medium">{% translate "Le mie prenotazioni" %}</a>
             {% if user.is_staff %}
-            <a href="{% url 'dashboard:overview' %}" class="block py-2 text-primary-700 font-medium">Dashboard</a>
+            <a href="{% url 'dashboard:overview' %}" class="block py-2 text-primary-700 font-medium">{% translate "Dashboard" %}</a>
             {% endif %}
             <form method="post" action="{% url 'accounts:logout' %}">
                 {% csrf_token %}
-                <button type="submit" class="block w-full text-left py-2 text-red-600 font-medium">Logout</button>
+                <button type="submit" class="block w-full text-left py-2 text-red-600 font-medium">{% translate "Logout" %}</button>
             </form>
             {% else %}
-            <a href="{% url 'accounts:login' %}" class="block py-2 text-primary-700 font-medium">Accedi</a>
-            <a href="{% url 'accounts:register' %}" class="block py-2 text-primary-700 font-medium">Registrati</a>
+            <a href="{% url 'accounts:login' %}" class="block py-2 text-primary-700 font-medium">{% translate "Accedi" %}</a>
+            <a href="{% url 'accounts:register' %}" class="block py-2 text-primary-700 font-medium">{% translate "Registrati" %}</a>
             {% endif %}
             
             <a href="{% url 'booking:wizard' %}" 
                class="block w-full px-6 py-3 bg-tertiary-500 text-primary-900 text-center font-semibold rounded-sm hover:bg-tertiary-600">
-                Prenota Ora
+                {% translate "Prenota Ora" %}
             </a>
+
+            <hr class="border-primary-100">
+
+            <!-- Selettore lingua -->
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-primary-500 uppercase tracking-wide">{% translate "Lingua" %}</span>
+                {% include 'components/language_switcher.html' with ns="navmob" variant="dark" %}
+            </div>
         </div>
     </div>
 </nav>

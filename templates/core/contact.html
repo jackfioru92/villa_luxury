@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Contatti - {{ SITE_NAME|default:"Altèsia" }}{% endblock %}
+{% block title %}{% translate "Contatti" %} - {{ SITE_NAME|default:"Altèsia" }}{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
 <section class="relative pt-32 pb-20 bg-primary-900">
     <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('/media/villa/Home%20sito.JPG');"></div>
     <div class="relative z-10 container mx-auto px-4 lg:px-8 text-center">
-        <span class="text-tertiary-400 font-semibold tracking-widest uppercase text-sm">Contattaci</span>
+        <span class="text-tertiary-400 font-semibold tracking-widest uppercase text-sm">{% translate "Contattaci" %}</span>
         <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-white mt-3">
-            Siamo qui per voi
+            {% translate "Siamo qui per voi" %}
         </h1>
         <p class="text-primary-300 text-lg mt-4 max-w-2xl mx-auto">
-            Per informazioni, disponibilità o richieste speciali, non esitate a contattarci.
+            {% translate "Per informazioni, disponibilità o richieste speciali, non esitate a contattarci." %}
         </p>
     </div>
 </section>
@@ -25,7 +25,7 @@
 
             <!-- Contact Info -->
             <div>
-                <h2 class="text-3xl font-serif font-semibold text-primary-900 mb-8">Informazioni di contatto</h2>
+                <h2 class="text-3xl font-serif font-semibold text-primary-900 mb-8">{% translate "Informazioni di contatto" %}</h2>
                 
                 <div class="space-y-8">
                     <!-- Phone -->
@@ -38,7 +38,7 @@
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">Telefono</h3>
+                            <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">{% translate "Telefono" %}</h3>
                             <a href="tel:{{ site_settings.phone }}" class="text-primary-600 hover:text-tertiary-600 transition-colors mt-1 block">
                                 {{ site_settings.phone }}
                             </a>
@@ -94,12 +94,12 @@
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">Indirizzo</h3>
+                            <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">{% translate "Indirizzo" %}</h3>
                             <a href="https://www.google.com/maps/search/?api=1&amp;query=43.20914077758789,12.454292297363281"
                                target="_blank" rel="noopener"
                                class="text-primary-600 hover:text-tertiary-600 transition-colors mt-1 block">
                                 {{ site_settings.address|linebreaksbr }}
-                                <span class="block text-tertiary-600 text-sm font-medium mt-1">Apri in Google Maps →</span>
+                                <span class="block text-tertiary-600 text-sm font-medium mt-1">{% translate "Apri in Google Maps →" %}</span>
                             </a>
                         </div>
                     </div>
@@ -114,13 +114,13 @@
                             </svg>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">Orari</h3>
+                            <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider">{% translate "Orari" %}</h3>
                             {% if site_settings %}
-                            <p class="text-primary-600 mt-1">Check-in: dalle {{ site_settings.check_in_time|time:"H:i" }}</p>
-                            <p class="text-primary-600">Check-out: entro le {{ site_settings.check_out_time|time:"H:i" }}</p>
+                            <p class="text-primary-600 mt-1">{% blocktranslate with time=site_settings.check_in_time|time:"H:i" %}Check-in: dalle {{ time }}{% endblocktranslate %}</p>
+                            <p class="text-primary-600">{% blocktranslate with time=site_settings.check_out_time|time:"H:i" %}Check-out: entro le {{ time }}{% endblocktranslate %}</p>
                             {% else %}
-                            <p class="text-primary-600 mt-1">Check-in: dalle 15:00</p>
-                            <p class="text-primary-600">Check-out: entro le 10:00</p>
+                            <p class="text-primary-600 mt-1">{% blocktranslate with time="15:00" %}Check-in: dalle {{ time }}{% endblocktranslate %}</p>
+                            <p class="text-primary-600">{% blocktranslate with time="10:00" %}Check-out: entro le {{ time }}{% endblocktranslate %}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                 <!-- Social Links -->
                 {% if site_settings.facebook_url or site_settings.instagram_url %}
                 <div class="mt-10 pt-8 border-t border-primary-200">
-                    <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider mb-4">Seguici</h3>
+                    <h3 class="text-sm font-semibold text-primary-900 uppercase tracking-wider mb-4">{% translate "Seguici" %}</h3>
                     <div class="flex space-x-4">
                         {% if site_settings.facebook_url %}
                         <a href="{{ site_settings.facebook_url }}" target="_blank" rel="noopener"
@@ -154,7 +154,7 @@
 
             <!-- Contact Form -->
             <div>
-                <h2 class="text-3xl font-serif font-semibold text-primary-900 mb-8">Scrivici un messaggio</h2>
+                <h2 class="text-3xl font-serif font-semibold text-primary-900 mb-8">{% translate "Scrivici un messaggio" %}</h2>
                 
                 <form method="post" action="{% url 'core:contact' %}" class="space-y-6" x-data="{ sending: false, sent: false }"
                       @submit.prevent="sending = true; $el.submit()">
@@ -162,12 +162,12 @@
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-primary-700 mb-1">Nome *</label>
+                            <label for="name" class="block text-sm font-medium text-primary-700 mb-1">{% translate "Nome" %} *</label>
                             <input type="text" id="name" name="name" required
                                    class="w-full px-4 py-3 border border-primary-200 rounded-sm text-primary-900
                                           focus:outline-none focus:ring-1 focus:ring-tertiary-500 focus:border-tertiary-500
                                           bg-white placeholder-primary-400"
-                                   placeholder="Il tuo nome">
+                                   placeholder="{% translate "Il tuo nome" %}">
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-primary-700 mb-1">Email *</label>
@@ -175,68 +175,68 @@
                                    class="w-full px-4 py-3 border border-primary-200 rounded-sm text-primary-900
                                           focus:outline-none focus:ring-1 focus:ring-tertiary-500 focus:border-tertiary-500
                                           bg-white placeholder-primary-400"
-                                   placeholder="La tua email">
+                                   placeholder="{% translate "La tua email" %}">
                         </div>
                     </div>
 
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-primary-700 mb-1">Telefono</label>
+                        <label for="phone" class="block text-sm font-medium text-primary-700 mb-1">{% translate "Telefono" %}</label>
                         <input type="tel" id="phone" name="phone"
                                class="w-full px-4 py-3 border border-primary-200 rounded-sm text-primary-900
                                       focus:outline-none focus:ring-1 focus:ring-tertiary-500 focus:border-tertiary-500
                                       bg-white placeholder-primary-400"
-                               placeholder="Il tuo numero di telefono">
+                               placeholder="{% translate "Il tuo numero di telefono" %}">
                     </div>
 
                     <div>
-                        <label for="subject" class="block text-sm font-medium text-primary-700 mb-1">Oggetto *</label>
+                        <label for="subject" class="block text-sm font-medium text-primary-700 mb-1">{% translate "Oggetto" %} *</label>
                         <select id="subject" name="subject" required
                                 class="w-full px-4 py-3 border border-primary-200 rounded-sm text-primary-900
                                        focus:outline-none focus:ring-1 focus:ring-tertiary-500 focus:border-tertiary-500
                                        bg-white">
-                            <option value="">Seleziona un argomento</option>
-                            <option value="info">Informazioni generali</option>
-                            <option value="booking">Prenotazione</option>
-                            <option value="availability">Disponibilità</option>
-                            <option value="special">Richieste speciali</option>
-                            <option value="other">Altro</option>
+                            <option value="">{% translate "Seleziona un argomento" %}</option>
+                            <option value="info">{% translate "Informazioni generali" %}</option>
+                            <option value="booking">{% translate "Prenotazione" %}</option>
+                            <option value="availability">{% translate "Disponibilità" %}</option>
+                            <option value="special">{% translate "Richieste speciali" %}</option>
+                            <option value="other">{% translate "Altro" %}</option>
                         </select>
                     </div>
 
                     <div>
-                        <span class="block text-sm font-medium text-primary-700 mb-2">Esperienze di interesse</span>
-                        <p class="text-xs text-primary-500 mb-3">Seleziona le esperienze che vorresti prenotare (facoltativo).</p>
+                        <span class="block text-sm font-medium text-primary-700 mb-2">{% translate "Esperienze di interesse" %}</span>
+                        <p class="text-xs text-primary-500 mb-3">{% translate "Seleziona le esperienze che vorresti prenotare (facoltativo)." %}</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {% for experience in EXPERIENCES %}
+                            {% for experience_value, experience_label in EXPERIENCES %}
                             <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-sm bg-white cursor-pointer hover:shadow-xl transition-shadow">
-                                <input type="checkbox" name="experiences" value="{{ experience }}"
+                                <input type="checkbox" name="experiences" value="{{ experience_value }}"
                                        class="h-5 w-5 rounded border-primary-300 text-tertiary-600 focus:ring-tertiary-500">
-                                <span class="text-sm text-primary-700">{{ experience }}</span>
+                                <span class="text-sm text-primary-700">{{ experience_label }}</span>
                             </label>
                             {% endfor %}
                         </div>
                     </div>
 
                     <div>
-                        <label for="message" class="block text-sm font-medium text-primary-700 mb-1">Messaggio *</label>
+                        <label for="message" class="block text-sm font-medium text-primary-700 mb-1">{% translate "Messaggio" %} *</label>
                         <textarea id="message" name="message" rows="5" required
                                   class="w-full px-4 py-3 border border-primary-200 rounded-sm text-primary-900
                                          focus:outline-none focus:ring-1 focus:ring-tertiary-500 focus:border-tertiary-500
                                          bg-white placeholder-primary-400 resize-none"
-                                  placeholder="Scrivi il tuo messaggio..."></textarea>
+                                  placeholder="{% translate "Scrivi il tuo messaggio..." %}"></textarea>
                     </div>
 
                     <button type="submit" 
                             class="w-full sm:w-auto px-8 py-3 bg-tertiary-500 text-primary-900 font-semibold text-sm rounded-sm 
                                    hover:bg-tertiary-600 transition-all shadow-md uppercase tracking-wider"
                             :disabled="sending">
-                        <span x-show="!sending">Invia messaggio</span>
+                        <span x-show="!sending">{% translate "Invia messaggio" %}</span>
                         <span x-show="sending" class="flex items-center justify-center">
                             <svg class="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            Invio in corso...
+                            {% translate "Invio in corso..." %}
                         </span>
                     </button>
                 </form>
@@ -263,7 +263,7 @@
         class="w-full h-full border-0"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="Posizione Altèsia Suites">
+        title="{% translate "Posizione Altèsia Suites" %}">
     </iframe>
     <a href="https://www.google.com/maps/search/?api=1&amp;query=43.20914077758789,12.454292297363281"
        target="_blank" rel="noopener"
@@ -272,7 +272,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
         </svg>
-        Apri in Google Maps
+        {% translate "Apri in Google Maps" %}
     </a>
 </section>
 {% endblock %}

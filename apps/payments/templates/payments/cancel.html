@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Pagamento annullato - {{ SITE_NAME|default:"Altèsia Suites" }}{% endblock %}
+{% block title %}{% translate "Pagamento annullato" %} - {{ SITE_NAME|default:"Altèsia Suites" }}{% endblock %}
 
 {% block content %}
 <section class="min-h-screen flex items-center justify-center bg-primary-50 py-24 px-4">
@@ -13,31 +13,31 @@
             </svg>
         </div>
 
-        <span class="text-tertiary-600 font-semibold tracking-widest uppercase text-sm">Pagamento annullato</span>
+        <span class="text-tertiary-600 font-semibold tracking-widest uppercase text-sm">{% translate "Pagamento annullato" %}</span>
         <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900 mt-3 mb-4">
-            Nessun addebito effettuato
+            {% translate "Nessun addebito effettuato" %}
         </h1>
         <p class="text-primary-600 text-lg leading-relaxed mb-8">
-            Il pagamento è stato annullato e non è stato addebitato nulla.
-            {% if booking %}La tua prenotazione <strong>#{{ booking.booking_number }}</strong> resta <strong>in attesa</strong>: puoi completare il pagamento quando vuoi.{% else %}Puoi riprovare quando vuoi.{% endif %}
+            {% translate "Il pagamento è stato annullato e non è stato addebitato nulla." %}
+            {% if booking %}{% blocktranslate with number=booking.booking_number %}La tua prenotazione <strong>#{{ number }}</strong> resta <strong>in attesa</strong>: puoi completare il pagamento quando vuoi.{% endblocktranslate %}{% else %}{% translate "Puoi riprovare quando vuoi." %}{% endif %}
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             {% if booking %}
             <a href="{% url 'payments:checkout' booking_id=booking.id %}"
                class="w-full sm:w-auto px-8 py-3 bg-tertiary-500 text-primary-900 font-semibold text-sm rounded-sm hover:bg-tertiary-600 transition-all shadow-md uppercase tracking-wider">
-                Riprova il pagamento
+                {% translate "Riprova il pagamento" %}
             </a>
             {% endif %}
             <a href="{% url 'core:contact' %}"
                class="w-full sm:w-auto px-8 py-3 bg-transparent text-primary-800 font-semibold text-sm rounded-sm border-2 border-primary-200 hover:bg-primary-50 transition-all uppercase tracking-wider">
-                Contattaci
+                {% translate "Contattaci" %}
             </a>
         </div>
 
         <p class="text-primary-400 text-sm mt-8">
-            Problemi con il pagamento? Scrivici a
-            <a href="mailto:info@altesiasuite.com" class="text-tertiary-600 hover:text-tertiary-700">info@altesiasuite.com</a>
+            {% blocktranslate %}Problemi con il pagamento? Scrivici a
+            <a href="mailto:info@altesiasuite.com" class="text-tertiary-600 hover:text-tertiary-700">info@altesiasuite.com</a>{% endblocktranslate %}
         </p>
 
     </div>

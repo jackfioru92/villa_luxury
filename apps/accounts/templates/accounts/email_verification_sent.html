@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Verifica Email - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Verifica Email" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16 flex items-center">
@@ -20,55 +20,55 @@
 
             <!-- Message -->
             <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-primary-900 mb-4">
-                Controlla la tua email
+                {% translate "Controlla la tua email" %}
             </h1>
             <p class="text-primary-600 mb-8 leading-relaxed">
-                Ti abbiamo inviato un'email con un link per verificare il tuo account. 
-                Clicca sul link nell'email per completare la registrazione.
+                {% blocktranslate %}Ti abbiamo inviato un'email con un link per verificare il tuo account.
+                Clicca sul link nell'email per completare la registrazione.{% endblocktranslate %}
             </p>
 
             <!-- Info box -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-8 text-left">
-                <h3 class="font-semibold text-primary-800 mb-3">Non trovi l'email?</h3>
+                <h3 class="font-semibold text-primary-800 mb-3">{% translate "Non trovi l'email?" %}</h3>
                 <ul class="text-sm text-primary-600 space-y-2">
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 text-tertiary-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        Controlla la cartella <strong>Spam</strong> o <strong>Posta indesiderata</strong>
+                        {% blocktranslate %}Controlla la cartella <strong>Spam</strong> o <strong>Posta indesiderata</strong>{% endblocktranslate %}
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 text-tertiary-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        L'email potrebbe impiegare qualche minuto ad arrivare
+                        {% translate "L'email potrebbe impiegare qualche minuto ad arrivare" %}
                     </li>
                     <li class="flex items-start gap-2">
                         <svg class="w-4 h-4 mt-0.5 text-tertiary-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
-                        Verifica che l'indirizzo email sia corretto
+                        {% translate "Verifica che l'indirizzo email sia corretto" %}
                     </li>
                 </ul>
             </div>
 
             <!-- Resend form -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
-                <p class="text-sm text-primary-600 mb-4">Non hai ricevuto nulla? Rinvia l'email di verifica:</p>
+                <p class="text-sm text-primary-600 mb-4">{% translate "Non hai ricevuto nulla? Rinvia l'email di verifica:" %}</p>
                 <form method="post" action="{% url 'accounts:resend_verification' %}" class="flex flex-col sm:flex-row gap-3">
                     {% csrf_token %}
                     <input type="email" name="email" required
                            class="form-input flex-1"
-                           placeholder="La tua email">
+                           placeholder="{% translate "La tua email" %}">
                     <button type="submit" class="btn-primary whitespace-nowrap">
-                        Rinvia email
+                        {% translate "Rinvia email" %}
                     </button>
                 </form>
             </div>
 
             <!-- Back to login -->
             <a href="{% url 'accounts:login' %}" class="text-tertiary-500 hover:underline font-medium">
-                ← Torna al login
+                {% translate "← Torna al login" %}
             </a>
         </div>
     </div>

@@ -98,6 +98,30 @@ Il comando sostituisce tutti i periodi esistenti delle unità attive e aggiorna
 il `base_price` alla bassa stagione. Non tocca le prenotazioni già create.
 Per cambiare le tariffe: modificare le tabelle nel comando, deploy, rilanciare.
 
+## 🌍 Traduzioni (italiano / inglese)
+
+Il sito è bilingue: l'italiano resta sugli indirizzi attuali (`/`, `/villa/`,
+`/prenota/`...), l'inglese vive sotto `/en/`. La lingua si cambia con le
+bandierine in navbar e footer.
+
+I testi tradotti stanno in `locale/en/LC_MESSAGES/django.po`. Il file `.mo`
+compilato **è versionato**: sul server non c'è `gettext`, quindi il deploy non
+può eseguire `compilemessages`. Dopo aver cambiato o aggiunto un testo:
+
+```bash
+# in locale (serve gettext: brew install gettext)
+python manage.py makemessages -l en --no-wrap --no-location
+#  -> apri locale/en/LC_MESSAGES/django.po e traduci le voci nuove
+python manage.py compilemessages
+git add locale/ && git commit && git push
+```
+
+Poi il solito deploy: il `.mo` arriva con il `git pull`, basta riavviare.
+
+**Attenzione**: i testi che stanno nel database (descrizioni della villa e
+delle suite, testi di `SiteSettings`, pagine `Page`) non passano dai file di
+traduzione e restano nella lingua in cui sono stati scritti.
+
 ## 📅 Sincronizzazione Calendari (Booking.com)
 
 Import dei portali esterni, da cron ogni 15 minuti:

@@ -8,6 +8,9 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.utils import translation
+from django.utils.formats import date_format
+from django.utils.translation import get_language, gettext as _
 from apps.villa.models import BookableUnit, SeasonPrice
 from apps.booking.models import BlockedDate, Booking, BookingPriceDetail
 
@@ -60,66 +63,101 @@ def send_new_booking_notification(booking: Booking):
 def send_booking_confirmation_to_guest(booking: Booking):
     """
     Invia email di conferma all'ospite quando la prenotazione viene confermata.
+
+    Va nella lingua scelta dall'ospite sul sito: questa funzione viene
+    chiamata dal webhook Stripe, fuori da una richiesta HTTP, quindi la
+    lingua attiva non è quella dell'ospite e va forzata a mano.
     """
     try:
-        subject = f'Prenotazione Confermata #{booking.booking_number} - Altèsia Suite'
-        
-        message = (
-            f"Gentile {booking.guest_first_name},\n\n"
-            f"La tua prenotazione è stata confermata! Ti aspettiamo.\n\n"
-            f"{'=' * 50}\n"
-            f"DETTAGLI PRENOTAZIONE\n"
-            f"{'=' * 50}\n\n"
-            f"Numero prenotazione: {booking.booking_number}\n"
-            f"Sistemazione: {booking.unit.name}\n\n"
-            f"Check-in: {booking.check_in.strftime('%A %d %B %Y')}\n"
-            f"   Orario: dalle 15:00\n"
-            f"Check-out: {booking.check_out.strftime('%A %d %B %Y')}\n"
-            f"   Orario: entro le 10:00\n\n"
-            f"Notti: {booking.nights}\n"
-            f"Ospiti: {booking.num_guests}\n\n"
-            f"{'=' * 50}\n"
-            f"RIEPILOGO PAGAMENTO\n"
-            f"{'=' * 50}\n\n"
-            f"Totale soggiorno: €{booking.total_amount}\n"
-            f"Acconto pagato: €{booking.deposit_amount}\n"
-            f"Saldo da pagare in loco: €{booking.balance_due}\n\n"
-        )
-        
-        if booking.experiences:
-            message += f"Esperienze richieste: {booking.experiences}\n"
-        if booking.guest_notes:
-            message += f"Le tue note: {booking.guest_notes}\n\n"
-        
-        message += (
-            f"{'=' * 50}\n"
-            f"INFORMAZIONI UTILI\n"
-            f"{'=' * 50}\n\n"
-            f"Indirizzo: Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria\n"
-            f"Mappa: https://www.google.com/maps/search/?api=1&query=43.20914077758789,12.454292297363281\n\n"
-            f"Per qualsiasi domanda o richiesta speciale,\n"
-            f"non esitare a contattarci:\n"
-            f"Email: info@altesiasuite.com\n"
-            f"Telefono: +39 347 6532405\n\n"
-            f"Ti aspettiamo!\n"
-            f"Il team di Altèsia Suite\n"
-        )
-        
-        try:
-            html_message = render_to_string(
-                'booking/email/booking_confirmation.html', {'booking': booking}
-            )
-        except Exception:
-            html_message = None
+        with translation.override(booking.language or settings.LANGUAGE_CODE):
+            separator = '=' * 50
+            subject = _(
+                'Prenotazione Confermata #%(number)s - Altèsia Suite'
+            ) % {'number': booking.booking_number}
 
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[booking.guest_email],
-            html_message=html_message,
-            fail_silently=True,
-        )
+            message = _(
+                "Gentile %(first_name)s,\n"
+                "\n"
+                "La tua prenotazione è stata confermata! Ti aspettiamo.\n"
+                "\n"
+                "%(separator)s\n"
+                "DETTAGLI PRENOTAZIONE\n"
+                "%(separator)s\n"
+                "\n"
+                "Numero prenotazione: %(number)s\n"
+                "Sistemazione: %(unit)s\n"
+                "\n"
+                "Check-in: %(check_in)s\n"
+                "   Orario: dalle 15:00\n"
+                "Check-out: %(check_out)s\n"
+                "   Orario: entro le 10:00\n"
+                "\n"
+                "Notti: %(nights)s\n"
+                "Ospiti: %(guests)s\n"
+                "\n"
+                "%(separator)s\n"
+                "RIEPILOGO PAGAMENTO\n"
+                "%(separator)s\n"
+                "\n"
+                "Totale soggiorno: €%(total)s\n"
+                "Acconto pagato: €%(deposit)s\n"
+                "Saldo da pagare in loco: €%(balance)s\n"
+                "\n"
+            ) % {
+                'first_name': booking.guest_first_name,
+                'separator': separator,
+                'number': booking.booking_number,
+                'unit': booking.unit.name,
+                'check_in': date_format(booking.check_in, 'l j F Y'),
+                'check_out': date_format(booking.check_out, 'l j F Y'),
+                'nights': booking.nights,
+                'guests': booking.num_guests,
+                'total': booking.total_amount,
+                'deposit': booking.deposit_amount,
+                'balance': booking.balance_due,
+            }
+
+            if booking.experiences:
+                message += _('Esperienze richieste: %(experiences)s\n') % {
+                    'experiences': booking.experiences
+                }
+            if booking.guest_notes:
+                message += _('Le tue note: %(notes)s\n\n') % {
+                    'notes': booking.guest_notes
+                }
+
+            message += _(
+                "%(separator)s\n"
+                "INFORMAZIONI UTILI\n"
+                "%(separator)s\n"
+                "\n"
+                "Indirizzo: Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria\n"
+                "Mappa: https://www.google.com/maps/search/?api=1&query=43.20914077758789,12.454292297363281\n"
+                "\n"
+                "Per qualsiasi domanda o richiesta speciale,\n"
+                "non esitare a contattarci:\n"
+                "Email: info@altesiasuite.com\n"
+                "Telefono: +39 347 6532405\n"
+                "\n"
+                "Ti aspettiamo!\n"
+                "Il team di Altèsia Suite\n"
+            ) % {'separator': separator}
+
+            try:
+                html_message = render_to_string(
+                    'booking/email/booking_confirmation.html', {'booking': booking}
+                )
+            except Exception:
+                html_message = None
+
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[booking.guest_email],
+                html_message=html_message,
+                fail_silently=True,
+            )
     except Exception:
         pass
 
@@ -254,16 +292,22 @@ class PricingService:
         nights = (check_out - check_in).days
         
         if nights <= 0:
-            raise ValueError("Check-out deve essere dopo check-in")
+            raise ValueError(_("Check-out deve essere dopo check-in"))
         
         if nights < unit.min_nights:
-            raise ValueError(f"Soggiorno minimo: {unit.min_nights} notti")
+            raise ValueError(
+                _("Soggiorno minimo: %(nights)s notti") % {'nights': unit.min_nights}
+            )
         
         if nights > unit.max_nights:
-            raise ValueError(f"Soggiorno massimo: {unit.max_nights} notti")
+            raise ValueError(
+                _("Soggiorno massimo: %(nights)s notti") % {'nights': unit.max_nights}
+            )
         
         if num_guests > unit.max_guests:
-            raise ValueError(f"Massimo {unit.max_guests} ospiti")
+            raise ValueError(
+                _("Massimo %(guests)s ospiti") % {'guests': unit.max_guests}
+            )
         
         # Calculate price per night
         price_breakdown = []
@@ -325,7 +369,7 @@ class BookingService:
         """
         # Verify availability
         if not AvailabilityService.is_range_available(unit, check_in, check_out):
-            raise ValueError("Le date selezionate non sono più disponibili")
+            raise ValueError(_("Le date selezionate non sono più disponibili"))
         
         # Calculate pricing
         num_guests = guest_data.get('num_guests', 1)
@@ -337,6 +381,7 @@ class BookingService:
         booking = Booking.objects.create(
             unit=unit,
             user=user,
+            language=get_language() or settings.LANGUAGE_CODE,
             experiences=guest_data.get('experiences', ''),
             guest_first_name=guest_data['first_name'],
             guest_last_name=guest_data['last_name'],
@@ -385,7 +430,7 @@ class BookingService:
             booking.unit, booking.check_in, booking.check_out
         ):
             # Someone else booked in the meantime
-            raise ValueError("Le date non sono più disponibili")
+            raise ValueError(_("Le date non sono più disponibili"))
         
         booking.confirm()
         

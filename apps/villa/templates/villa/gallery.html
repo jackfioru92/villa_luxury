@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Galleria - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Galleria" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -9,10 +9,10 @@
         
         <div class="text-center mb-12">
             <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900">
-                Galleria Fotografica
+                {% translate "Galleria Fotografica" %}
             </h1>
             <p class="text-primary-600 text-lg mt-4">
-                Esplora tutti gli spazi della nostra villa
+                {% translate "Esplora tutti gli spazi della nostra villa" %}
             </p>
         </div>
         
@@ -28,7 +28,7 @@
             </div>
             {% empty %}
             <div class="col-span-full text-center py-16">
-                <p class="text-primary-500">Nessuna immagine disponibile.</p>
+                <p class="text-primary-500">{% translate "Nessuna immagine disponibile." %}</p>
             </div>
             {% endfor %}
             
@@ -60,18 +60,18 @@
                 {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}" 
                    class="px-4 py-2 border border-primary-300 rounded-sm hover:bg-primary-100">
-                    ← Precedente
+                    {% translate "← Precedente" %}
                 </a>
                 {% endif %}
                 
                 <span class="px-4 py-2 text-primary-600">
-                    Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}
+                    {% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Pagina {{ current }} di {{ total }}{% endblocktranslate %}
                 </span>
                 
                 {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}" 
                    class="px-4 py-2 border border-primary-300 rounded-sm hover:bg-primary-100">
-                    Successiva →
+                    {% translate "Successiva →" %}
                 </a>
                 {% endif %}
             </nav>

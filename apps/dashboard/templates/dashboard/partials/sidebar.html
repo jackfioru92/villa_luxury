@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- Dashboard Sidebar Navigation -->
 <nav class="bg-white rounded-xl shadow-lg overflow-hidden">
     <a href="{% url 'dashboard:overview' %}" 
@@ -6,7 +7,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
-        <span class="{% if active == 'overview' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">Panoramica</span>
+        <span class="{% if active == 'overview' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">{% translate "Panoramica" %}</span>
     </a>
     <a href="{% url 'dashboard:booking_list' %}" 
        class="flex items-center space-x-3 px-6 py-4 {% if active == 'bookings' %}bg-tertiary-50 border-l-4 border-tertiary-500{% else %}hover:bg-primary-50{% endif %} transition-colors">
@@ -14,7 +15,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
         </svg>
-        <span class="{% if active == 'bookings' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">Prenotazioni</span>
+        <span class="{% if active == 'bookings' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">{% translate "Prenotazioni" %}</span>
         {% if pending_count > 0 %}
         <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
             {{ pending_count }}
@@ -27,7 +28,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
         </svg>
-        <span class="{% if active == 'calendar' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">Calendario</span>
+        <span class="{% if active == 'calendar' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">{% translate "Calendario" %}</span>
     </a>
     <a href="{% url 'dashboard:block_dates' %}" 
        class="flex items-center space-x-3 px-6 py-4 {% if active == 'block_dates' %}bg-tertiary-50 border-l-4 border-tertiary-500{% else %}hover:bg-primary-50{% endif %} transition-colors">
@@ -35,7 +36,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                   d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
         </svg>
-        <span class="{% if active == 'block_dates' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">Blocca Date</span>
+        <span class="{% if active == 'block_dates' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">{% translate "Blocca Date" %}</span>
     </a>
     <a href="{% url 'dashboard:reports' %}" 
        class="flex items-center space-x-3 px-6 py-4 {% if active == 'reports' %}bg-tertiary-50 border-l-4 border-tertiary-500{% else %}hover:bg-primary-50{% endif %} transition-colors">
@@ -43,7 +44,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
         </svg>
-        <span class="{% if active == 'reports' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">Report</span>
+        <span class="{% if active == 'reports' %}font-medium text-primary-900{% else %}text-primary-600{% endif %}">{% translate "Report" %}</span>
     </a>
     <hr class="border-primary-100">
     <a href="{% url 'admin:index' %}" target="_blank"
@@ -54,7 +55,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
         </svg>
-        <span class="text-primary-600">Admin Django</span>
+        <span class="text-primary-600">{% translate "Admin Django" %}</span>
         <svg class="w-4 h-4 ml-auto text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
         </svg>

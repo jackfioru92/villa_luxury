@@ -1,0 +1,3034 @@
+# Traduzione inglese di Altèsia Suites.
+# Le stringhe originali (msgid) sono in italiano: la lingua di default del sito.
+# Per aggiornare: python manage.py makemessages -l en, poi compilemessages.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: altesiasuite\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-24 19:10+0200\n"
+"PO-Revision-Date: 2026-10-24 19:10+0200\n"
+"Last-Translator: Altèsia Suites\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Informazioni personali"
+msgstr "Personal information"
+
+msgid "Permessi"
+msgstr "Permissions"
+
+msgid "Date importanti"
+msgstr "Important dates"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Nome"
+msgstr "First name"
+
+msgid "Cognome"
+msgstr "Last name"
+
+msgid "Telefono"
+msgstr "Phone"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Conferma password"
+msgstr "Confirm password"
+
+msgid "L'email è obbligatoria"
+msgstr "Email is required"
+
+msgid "Superuser deve avere is_staff=True."
+msgstr "Superuser must have is_staff=True."
+
+msgid "Superuser deve avere is_superuser=True."
+msgstr "Superuser must have is_superuser=True."
+
+msgid "Paese"
+msgstr "Country"
+
+msgid "Attivo"
+msgstr "Active"
+
+msgid "Staff"
+msgstr "Staff"
+
+msgid "Data registrazione"
+msgstr "Date joined"
+
+msgid "Ultimo accesso"
+msgstr "Last login"
+
+msgid "Email verificata"
+msgstr "Email verified"
+
+msgid "Email verificata il"
+msgstr "Email verified on"
+
+msgid "Utente"
+msgstr "User"
+
+msgid "Utenti"
+msgstr "Users"
+
+msgid "Conferma Email"
+msgstr "Confirm Email"
+
+msgid "Email verificata!"
+msgstr "Email verified!"
+
+#, python-format
+msgid ""
+"Il tuo indirizzo email <strong>%(email)s</strong> è stato verificato con successo.\n"
+"                Ora puoi accedere al tuo account."
+msgstr "Your email address <strong>%(email)s</strong> has been verified successfully. You can now sign in to your account."
+
+msgid "Accedi"
+msgstr "Sign in"
+
+msgid "Link non valido"
+msgstr "Invalid link"
+
+msgid ""
+"Questo link di verifica non è valido o è scaduto.\n"
+"                Puoi richiedere un nuovo link di verifica."
+msgstr "This verification link is invalid or has expired. You can request a new verification link."
+
+msgid "Rinvia email di verifica"
+msgstr "Resend verification email"
+
+msgid "Torna al login"
+msgstr "Back to sign in"
+
+msgid "Verifica Email"
+msgstr "Email Verification"
+
+msgid "Controlla la tua email"
+msgstr "Check your email"
+
+msgid ""
+"Ti abbiamo inviato un'email con un link per verificare il tuo account.\n"
+"                Clicca sul link nell'email per completare la registrazione."
+msgstr "We have sent you an email with a link to verify your account. Click the link in the email to complete your registration."
+
+msgid "Non trovi l'email?"
+msgstr "Can't find the email?"
+
+msgid "Controlla la cartella <strong>Spam</strong> o <strong>Posta indesiderata</strong>"
+msgstr "Check your <strong>Spam</strong> or <strong>Junk</strong> folder"
+
+msgid "L'email potrebbe impiegare qualche minuto ad arrivare"
+msgstr "The email may take a few minutes to arrive"
+
+msgid "Verifica che l'indirizzo email sia corretto"
+msgstr "Make sure the email address is correct"
+
+msgid "Non hai ricevuto nulla? Rinvia l'email di verifica:"
+msgstr "Didn't receive anything? Resend the verification email:"
+
+msgid "La tua email"
+msgstr "Your email"
+
+msgid "Rinvia email"
+msgstr "Resend email"
+
+msgid "← Torna al login"
+msgstr "← Back to sign in"
+
+msgid "Accedi al tuo account"
+msgstr "Sign in to your account"
+
+msgid "Ricordami"
+msgstr "Remember me"
+
+msgid "Password dimenticata?"
+msgstr "Forgot your password?"
+
+msgid "oppure"
+msgstr "or"
+
+msgid "Accedi con Google"
+msgstr "Sign in with Google"
+
+msgid "o con email"
+msgstr "or with email"
+
+msgid "Non hai un account?"
+msgstr "Don't have an account?"
+
+msgid "Registrati"
+msgstr "Sign up"
+
+#, python-format
+msgid ""
+"Puoi anche prenotare come\n"
+"                    <a href=\"%(wizard_url)s\" class=\"text-tertiary-500 hover:underline\">ospite senza account</a>"
+msgstr "You can also book as a <a href=\"%(wizard_url)s\" class=\"text-tertiary-500 hover:underline\">guest without an account</a>"
+
+msgid "Le Mie Prenotazioni"
+msgstr "My Bookings"
+
+msgid "Visualizza e gestisci le tue prenotazioni"
+msgstr "View and manage your bookings"
+
+msgid "Profilo"
+msgstr "Profile"
+
+msgid "Cambia Password"
+msgstr "Change Password"
+
+msgid "Esci"
+msgstr "Sign out"
+
+msgid "Nuova Prenotazione"
+msgstr "New Booking"
+
+msgid "Prenotazioni Imminenti"
+msgstr "Upcoming Bookings"
+
+msgid "Prenotazioni Passate"
+msgstr "Past Bookings"
+
+#, python-format
+msgid "%(guests)s ospiti"
+msgstr "%(guests)s guests"
+
+#, python-format
+msgid "Saldo: €%(balance)s"
+msgstr "Balance: €%(balance)s"
+
+#, python-format
+msgid "Prenotato il %(created)s"
+msgstr "Booked on %(created)s"
+
+msgid "Vedi Dettagli →"
+msgstr "View Details →"
+
+msgid "Nessuna prenotazione"
+msgstr "No bookings"
+
+msgid "Non hai ancora effettuato prenotazioni."
+msgstr "You haven't made any bookings yet."
+
+msgid "Prenota Ora"
+msgstr "Book Now"
+
+msgid "Password Attuale"
+msgstr "Current Password"
+
+msgid "Nuova Password"
+msgstr "New Password"
+
+msgid "Conferma Nuova Password"
+msgstr "Confirm New Password"
+
+msgid "Annulla"
+msgstr "Cancel"
+
+msgid "Password Modificata"
+msgstr "Password Changed"
+
+msgid "Password Modificata!"
+msgstr "Password Changed!"
+
+msgid "La tua password è stata modificata con successo."
+msgstr "Your password has been changed successfully."
+
+msgid "Torna al Profilo"
+msgstr "Back to Profile"
+
+msgid "Recupera Password"
+msgstr "Reset Password"
+
+msgid "Recupera la tua password"
+msgstr "Reset your password"
+
+msgid "Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la password."
+msgstr "Enter your email address and we'll send you a link to reset your password."
+
+msgid "Invia Link di Recupero"
+msgstr "Send Reset Link"
+
+msgid "Password Reimpostata"
+msgstr "Password Reset"
+
+msgid "Password Reimpostata!"
+msgstr "Password Reset!"
+
+msgid "La tua password è stata reimpostata con successo. Ora puoi accedere con la nuova password."
+msgstr "Your password has been reset successfully. You can now sign in with your new password."
+
+msgid "Imposta Nuova Password"
+msgstr "Set a New Password"
+
+msgid "Conferma Password"
+msgstr "Confirm Password"
+
+msgid "Imposta Password"
+msgstr "Set Password"
+
+msgid "Il link per reimpostare la password non è valido o è scaduto."
+msgstr "The password reset link is invalid or has expired."
+
+msgid "Richiedi nuovo link"
+msgstr "Request a new link"
+
+msgid "Email Inviata"
+msgstr "Email Sent"
+
+msgid "Email Inviata!"
+msgstr "Email Sent!"
+
+msgid "Se l'indirizzo email inserito è associato a un account, riceverai un'email con le istruzioni per reimpostare la password."
+msgstr "If the email address you entered is associated with an account, you will receive an email with instructions to reset your password."
+
+msgid "Controlla anche la cartella spam se non trovi l'email."
+msgstr "Also check your spam folder if you can't find the email."
+
+msgid "Torna al Login"
+msgstr "Back to Sign In"
+
+#, python-format
+msgid ""
+"Ciao,\n"
+"\n"
+"Hai richiesto il reset della password per il tuo account su %(site)s.\n"
+"\n"
+"Clicca sul link seguente per impostare una nuova password:\n"
+"\n"
+"%(reset_url)s\n"
+"\n"
+"Se non hai richiesto tu il reset della password, ignora questa email.\n"
+"\n"
+"Cordiali saluti,\n"
+"Il team di %(site)s"
+msgstr "Hello,\n\nYou requested a password reset for your account on %(site)s.\n\nClick the link below to set a new password:\n\n%(reset_url)s\n\nIf you did not request this password reset, please ignore this email.\n\nKind regards,\nThe %(site)s team"
+
+msgid "Completa il tuo profilo"
+msgstr "Complete your profile"
+
+msgid "Benvenuto!"
+msgstr "Welcome!"
+
+msgid "Per completare la registrazione, inserisci il tuo numero di telefono:"
+msgstr "To complete your registration, please enter your phone number:"
+
+msgid "Salva e continua"
+msgstr "Save and continue"
+
+msgid "Il Mio Profilo"
+msgstr "My Profile"
+
+msgid "Gestisci le tue informazioni personali"
+msgstr "Manage your personal information"
+
+msgid "L'email non può essere modificata"
+msgstr "The email address cannot be changed"
+
+msgid "Salva Modifiche"
+msgstr "Save Changes"
+
+msgid "Informazioni Account"
+msgstr "Account Information"
+
+msgid "Registrato il:"
+msgstr "Registered on:"
+
+msgid "Ultimo accesso:"
+msgstr "Last login:"
+
+msgid "Crea il tuo account"
+msgstr "Create your account"
+
+msgid "Registrati con Google"
+msgstr "Sign up with Google"
+
+msgid "Minimo 8 caratteri, con lettere e numeri"
+msgstr "At least 8 characters, with letters and numbers"
+
+#, python-format
+msgid ""
+"Accetto i <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Termini e Condizioni</a>\n"
+"                                e la <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Privacy Policy</a>"
+msgstr "I accept the <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Terms and Conditions</a> and the <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Privacy Policy</a>"
+
+msgid "Desidero ricevere offerte e novità via email"
+msgstr "I would like to receive offers and news by email"
+
+msgid "Crea Account"
+msgstr "Create Account"
+
+msgid "Hai già un account?"
+msgstr "Already have an account?"
+
+msgid "Numero di telefono salvato!"
+msgstr "Phone number saved!"
+
+msgid "Devi verificare la tua email prima di accedere. Controlla la tua casella di posta."
+msgstr "You need to verify your email before signing in. Please check your inbox."
+
+msgid "Logout effettuato con successo."
+msgstr "You have been signed out successfully."
+
+msgid "Account creato! Ti abbiamo inviato un'email di verifica. Controlla la tua casella di posta."
+msgstr "Account created! We've sent you a verification email. Please check your inbox."
+
+msgid "Profilo aggiornato con successo."
+msgstr "Profile updated successfully."
+
+msgid "Email verificata con successo! Ora puoi accedere."
+msgstr "Email verified successfully! You can now sign in."
+
+msgid "Email di verifica inviata! Controlla la tua casella di posta."
+msgstr "Verification email sent! Please check your inbox."
+
+msgid "Se l'indirizzo è registrato, riceverai un'email di verifica."
+msgstr "If the address is registered, you will receive a verification email."
+
+msgid "Inserisci un indirizzo email."
+msgstr "Please enter an email address."
+
+msgid "Check-in"
+msgstr "Check-in"
+
+msgid "Check-out"
+msgstr "Check-out"
+
+msgid "Numero ospiti"
+msgstr "Number of guests"
+
+msgid "Note o richieste speciali"
+msgstr "Notes or special requests"
+
+msgid "Orario di arrivo previsto"
+msgstr "Estimated arrival time"
+
+msgid "Accetto i termini e le condizioni"
+msgstr "I accept the terms and conditions"
+
+msgid "Accetto la privacy policy"
+msgstr "I accept the privacy policy"
+
+msgid "Numero prenotazione"
+msgstr "Booking number"
+
+msgid "In attesa"
+msgstr "Pending"
+
+msgid "Confermata"
+msgstr "Confirmed"
+
+msgid "Cancellata"
+msgstr "Cancelled"
+
+msgid "Completata"
+msgstr "Completed"
+
+msgid "No show"
+msgstr "No show"
+
+msgid "Acconto pagato"
+msgstr "Deposit paid"
+
+msgid "Pagato totalmente"
+msgstr "Fully paid"
+
+msgid "Rimborsato"
+msgstr "Refunded"
+
+msgid "Parzialmente rimborsato"
+msgstr "Partially refunded"
+
+msgid "Unità"
+msgstr "Unit"
+
+msgid "Notti"
+msgstr "Nights"
+
+msgid "Prezzo medio/notte"
+msgstr "Average price/night"
+
+msgid "Subtotale"
+msgstr "Subtotal"
+
+msgid "Costo pulizie"
+msgstr "Cleaning fee"
+
+msgid "Totale"
+msgstr "Total"
+
+msgid "Acconto"
+msgstr "Deposit"
+
+msgid "Saldo dovuto"
+msgstr "Balance due"
+
+msgid "Valuta"
+msgstr "Currency"
+
+msgid "Stato"
+msgstr "Status"
+
+msgid "Stato pagamento"
+msgstr "Payment status"
+
+msgid "Esperienze richieste"
+msgstr "Requested experiences"
+
+msgid "Selezionate dall'ospite durante la prenotazione, separate da virgola"
+msgstr "Selected by the guest during booking, comma separated"
+
+msgid "Lingua"
+msgstr "Language"
+
+msgid "Note ospite"
+msgstr "Guest notes"
+
+msgid "Note admin"
+msgstr "Admin notes"
+
+msgid "Orario arrivo previsto"
+msgstr "Estimated arrival time"
+
+msgid "Confermata il"
+msgstr "Confirmed on"
+
+msgid "Cancellata il"
+msgstr "Cancelled on"
+
+msgid "Motivo cancellazione"
+msgstr "Cancellation reason"
+
+msgid "Prenotazione"
+msgstr "Booking"
+
+msgid "Prenotazioni"
+msgstr "Bookings"
+
+msgid "Canale esterno"
+msgstr "External channel"
+
+msgid "Manutenzione"
+msgstr "Maintenance"
+
+msgid "Uso proprietario"
+msgstr "Owner use"
+
+msgid "Altro"
+msgstr "Other"
+
+msgid "Data"
+msgstr "Date"
+
+msgid "Motivo"
+msgstr "Reason"
+
+msgid "Feed di origine"
+msgstr "Source feed"
+
+msgid "UID evento esterno"
+msgstr "External event UID"
+
+msgid "Nota"
+msgstr "Note"
+
+msgid "Data bloccata"
+msgstr "Blocked date"
+
+msgid "Date bloccate"
+msgstr "Blocked dates"
+
+msgid "Prezzo"
+msgstr "Price"
+
+msgid "Stagione"
+msgstr "Season"
+
+msgid "Dettaglio prezzo"
+msgstr "Price detail"
+
+msgid "Dettagli prezzo"
+msgstr "Price details"
+
+msgid "Canale"
+msgstr "Channel"
+
+msgid "Es: Booking.com, Airbnb"
+msgstr "E.g. Booking.com, Airbnb"
+
+msgid "URL feed .ics"
+msgstr ".ics feed URL"
+
+msgid "Ultimo sync"
+msgstr "Last sync"
+
+msgid "Ultimo sync riuscito"
+msgstr "Last successful sync"
+
+msgid "Ultimo errore"
+msgstr "Last error"
+
+msgid "Notti bloccate"
+msgstr "Blocked nights"
+
+msgid "Feed calendario"
+msgstr "Calendar feed"
+
+#, python-format
+msgid "Prenotazione Confermata #%(number)s - Altèsia Suite"
+msgstr "Booking Confirmed #%(number)s - Altèsia Suite"
+
+#, python-format
+msgid ""
+"Gentile %(first_name)s,\n"
+"\n"
+"La tua prenotazione è stata confermata! Ti aspettiamo.\n"
+"\n"
+"%(separator)s\n"
+"DETTAGLI PRENOTAZIONE\n"
+"%(separator)s\n"
+"\n"
+"Numero prenotazione: %(number)s\n"
+"Sistemazione: %(unit)s\n"
+"\n"
+"Check-in: %(check_in)s\n"
+"   Orario: dalle 15:00\n"
+"Check-out: %(check_out)s\n"
+"   Orario: entro le 10:00\n"
+"\n"
+"Notti: %(nights)s\n"
+"Ospiti: %(guests)s\n"
+"\n"
+"%(separator)s\n"
+"RIEPILOGO PAGAMENTO\n"
+"%(separator)s\n"
+"\n"
+"Totale soggiorno: €%(total)s\n"
+"Acconto pagato: €%(deposit)s\n"
+"Saldo da pagare in loco: €%(balance)s\n"
+"\n"
+msgstr "Dear %(first_name)s,\n\nYour booking is confirmed! We look forward to welcoming you.\n\n%(separator)s\nBOOKING DETAILS\n%(separator)s\n\nBooking number: %(number)s\nAccommodation: %(unit)s\n\nCheck-in: %(check_in)s\n   Time: from 3:00 PM\nCheck-out: %(check_out)s\n   Time: by 10:00 AM\n\nNights: %(nights)s\nGuests: %(guests)s\n\n%(separator)s\nPAYMENT SUMMARY\n%(separator)s\n\nStay total: €%(total)s\nDeposit paid: €%(deposit)s\nBalance due on arrival: €%(balance)s\n\n"
+
+#, python-format
+msgid "Esperienze richieste: %(experiences)s\n"
+msgstr "Requested experiences: %(experiences)s\n"
+
+#, python-format
+msgid ""
+"Le tue note: %(notes)s\n"
+"\n"
+msgstr "Your notes: %(notes)s\n\n"
+
+#, python-format
+msgid ""
+"%(separator)s\n"
+"INFORMAZIONI UTILI\n"
+"%(separator)s\n"
+"\n"
+"Indirizzo: Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria\n"
+"Mappa: https://www.google.com/maps/search/?api=1&query=43.20914077758789,12.454292297363281\n"
+"\n"
+"Per qualsiasi domanda o richiesta speciale,\n"
+"non esitare a contattarci:\n"
+"Email: info@altesiasuite.com\n"
+"Telefono: +39 347 6532405\n"
+"\n"
+"Ti aspettiamo!\n"
+"Il team di Altèsia Suite\n"
+msgstr "%(separator)s\nUSEFUL INFORMATION\n%(separator)s\n\nAddress: Strada di Civitella Benazzone 20, 06134 Perugia (PG), Umbria\nMap: https://www.google.com/maps/search/?api=1&query=43.20914077758789,12.454292297363281\n\nFor any question or special request,\nplease don't hesitate to contact us:\nEmail: info@altesiasuite.com\nPhone: +39 347 6532405\n\nWe look forward to seeing you!\nThe Altèsia Suite team\n"
+
+msgid "Check-out deve essere dopo check-in"
+msgstr "Check-out must be after check-in"
+
+#, python-format
+msgid "Soggiorno minimo: %(nights)s notti"
+msgstr "Minimum stay: %(nights)s nights"
+
+#, python-format
+msgid "Soggiorno massimo: %(nights)s notti"
+msgstr "Maximum stay: %(nights)s nights"
+
+#, python-format
+msgid "Massimo %(guests)s ospiti"
+msgstr "Maximum %(guests)s guests"
+
+msgid "Le date selezionate non sono più disponibili"
+msgstr "The selected dates are no longer available"
+
+msgid "Le date non sono più disponibili"
+msgstr "The dates are no longer available"
+
+msgid "Prenotazione Confermata"
+msgstr "Booking Confirmed"
+
+msgid "Prenotazione Confermata!"
+msgstr "Booking Confirmed!"
+
+#, python-format
+msgid ""
+"Grazie per la tua prenotazione. Abbiamo inviato una email di conferma\n"
+"                        a <strong>%(email)s</strong> con tutti i dettagli."
+msgstr "Thank you for your booking. We have sent a confirmation email to <strong>%(email)s</strong> with all the details."
+
+msgid "Numero prenotazione:"
+msgstr "Booking number:"
+
+msgid "Dettagli Prenotazione"
+msgstr "Booking Details"
+
+msgid "Sistemazione:"
+msgstr "Accommodation:"
+
+msgid "Check-in:"
+msgstr "Check-in:"
+
+msgid "Check-out:"
+msgstr "Check-out:"
+
+msgid "Ospiti:"
+msgstr "Guests:"
+
+msgid "Acconto pagato:"
+msgstr "Deposit paid:"
+
+msgid "Saldo al check-in:"
+msgstr "Balance at check-in:"
+
+msgid "Totale:"
+msgstr "Total:"
+
+msgid "Prossimi Passi"
+msgstr "Next Steps"
+
+msgid "Riceverai la conferma con tutti i dettagli e le istruzioni per il check-in."
+msgstr "You will receive the confirmation with all the details and the check-in instructions."
+
+msgid "Preparati per il viaggio"
+msgstr "Get ready for your trip"
+
+msgid "Ti contatteremo qualche giorno prima dell'arrivo con le indicazioni."
+msgstr "We will contact you a few days before your arrival with directions."
+
+msgid "Goditi il soggiorno!"
+msgstr "Enjoy your stay!"
+
+msgid "Non vediamo l'ora di accoglierti nella nostra villa."
+msgstr "We can't wait to welcome you to our villa."
+
+msgid "Torna alla Home"
+msgstr "Back to Home"
+
+msgid ""
+"Hai domande? Contattaci a\n"
+"                    <a href=\"mailto:info@example.com\" class=\"text-tertiary-500 underline\">info@example.com</a>"
+msgstr "Any questions? Contact us at <a href=\"mailto:info@example.com\" class=\"text-tertiary-500 underline\">info@example.com</a>"
+
+msgid "Grazie per aver prenotato. Riceverai una email di conferma a breve."
+msgstr "Thank you for booking. You will receive a confirmation email shortly."
+
+msgid "Soggiorno"
+msgstr "Stay"
+
+msgid "Ospiti"
+msgstr "Guests"
+
+msgid "Ospite"
+msgstr "Guest"
+
+msgid "Riepilogo costi"
+msgstr "Cost summary"
+
+#, python-format
+msgid "%(nights)s notti x €%(price)s/notte"
+msgstr "%(nights)s nights x €%(price)s/night"
+
+msgid "Pulizie finali"
+msgstr "Final cleaning"
+
+#, python-format
+msgid "Acconto pagato (€%(deposit)s)"
+msgstr "Deposit paid (€%(deposit)s)"
+
+msgid "Pagato interamente"
+msgstr "Paid in full"
+
+msgid "Saldo al check-in"
+msgstr "Balance at check-in"
+
+msgid "Stampa"
+msgstr "Print"
+
+msgid "Informazioni utili"
+msgstr "Useful information"
+
+msgid "Riceverai un'email di conferma con tutti i dettagli"
+msgstr "You will receive a confirmation email with all the details"
+
+msgid "Check-in dalle ore 15:00, check-out entro le 10:00"
+msgstr "Check-in from 3:00 PM, check-out by 10:00 AM"
+
+msgid "Per qualsiasi domanda contattaci al telefono o via email"
+msgstr "For any question contact us by phone or email"
+
+msgid "Prenota"
+msgstr "Book"
+
+msgid "Prenota il Tuo Soggiorno"
+msgstr "Book Your Stay"
+
+msgid "Seleziona le date e completa la prenotazione in pochi semplici passi."
+msgstr "Select your dates and complete your booking in a few simple steps."
+
+msgid "Seleziona la Sistemazione"
+msgstr "Select your Accommodation"
+
+#, python-format
+msgid "%(bedrooms)s camere"
+msgstr "%(bedrooms)s bedrooms"
+
+msgid "Colazione inclusa"
+msgstr "Breakfast included"
+
+msgid "Nessuna unità disponibile al momento."
+msgstr "No accommodation available at the moment."
+
+msgid "Seleziona le Date"
+msgstr "Select your Dates"
+
+msgid "Numero Ospiti"
+msgstr "Number of Guests"
+
+msgid "Soggiorno minimo:"
+msgstr "Minimum stay:"
+
+msgid "notti"
+msgstr "nights"
+
+msgid "Disponibilità"
+msgstr "Availability"
+
+msgid "Seleziona una sistemazione per vedere la disponibilità"
+msgstr "Select an accommodation to see its availability"
+
+msgid "I Tuoi Dati"
+msgstr "Your Details"
+
+#, python-format
+msgid "Ciao <strong>%(first_name)s</strong>! I tuoi dati sono stati precompilati."
+msgstr "Hello <strong>%(first_name)s</strong>! Your details have been pre-filled."
+
+msgid "Italia"
+msgstr "Italy"
+
+msgid "Eventuali richieste..."
+msgstr "Any requests..."
+
+msgid "Esperienze di interesse"
+msgstr "Experiences you're interested in"
+
+msgid ""
+"Seleziona le esperienze che vorresti prenotare (facoltativo).\n"
+"                                    Ti ricontatteremo per organizzarle."
+msgstr "Select the experiences you would like to book (optional). We will get back to you to arrange them."
+
+#, python-format
+msgid "Accetto i <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Termini e Condizioni</a>"
+msgstr "I accept the <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Terms and Conditions</a>"
+
+#, python-format
+msgid "Accetto la <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Privacy Policy</a>"
+msgstr "I accept the <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-tertiary-500 underline\">Privacy Policy</a>"
+
+msgid "Riepilogo e Pagamento"
+msgstr "Summary and Payment"
+
+msgid "Riepilogo Prenotazione"
+msgstr "Booking Summary"
+
+msgid "Esperienze:"
+msgstr "Experiences:"
+
+msgid "Acconto da pagare:"
+msgstr "Deposit to pay:"
+
+msgid "Caricamento del dettaglio prezzo..."
+msgstr "Loading the price breakdown..."
+
+#, python-format
+msgid ""
+"Pagherai l'acconto del <strong>30%%</strong> ora. Il saldo sarà dovuto al check-in.\n"
+"                                Pagamento sicuro con Stripe."
+msgstr "You will pay the <strong>30%%</strong> deposit now. The balance is due at check-in. Secure payment with Stripe."
+
+msgid "Indietro"
+msgstr "Back"
+
+msgid "Continua"
+msgstr "Continue"
+
+msgid "Procedi al Pagamento"
+msgstr "Proceed to Payment"
+
+msgid "Elaborazione..."
+msgstr "Processing..."
+
+msgid "Sistemazione"
+msgstr "Accommodation"
+
+msgid "Date"
+msgstr "Dates"
+
+msgid "Dati"
+msgstr "Details"
+
+msgid "Pagamento"
+msgstr "Payment"
+
+msgid "ospite"
+msgstr "guest"
+
+msgid "ospiti"
+msgstr "guests"
+
+msgid "Si è verificato un errore. Riprova."
+msgstr "Something went wrong. Please try again."
+
+msgid "Errore di connessione. Verifica la tua connessione e riprova."
+msgstr "Connection error. Please check your connection and try again."
+
+msgid "Prenotazione confermata"
+msgstr "Booking confirmed"
+
+msgid "Luxury Retreat in Umbria"
+msgstr "Luxury Retreat in Umbria"
+
+#, python-format
+msgid "Numero prenotazione <strong style=\"color:#192924;\">#%(number)s</strong>"
+msgstr "Booking number <strong style=\"color:#192924;\">#%(number)s</strong>"
+
+#, python-format
+msgid ""
+"Gentile %(first_name)s,<br>\n"
+"            grazie per aver scelto Alt&egrave;sia Suites. La tua prenotazione &egrave; <strong>confermata</strong>: non vediamo l'ora di accoglierti."
+msgstr "Dear %(first_name)s,<br>\n            thank you for choosing Alt&egrave;sia Suites. Your booking is <strong>confirmed</strong> — we can't wait to welcome you."
+
+#, python-format
+msgid "%(day)s &middot; dalle 15:00"
+msgstr "%(day)s &middot; from 3:00 PM"
+
+#, python-format
+msgid "%(day)s &middot; entro le 10:00"
+msgstr "%(day)s &middot; by 10:00 AM"
+
+msgid "Notti / Ospiti"
+msgstr "Nights / Guests"
+
+#, python-format
+msgid "%(nights)s notti &middot; %(guests)s ospiti"
+msgstr "%(nights)s nights &middot; %(guests)s guests"
+
+msgid "Totale soggiorno"
+msgstr "Stay total"
+
+msgid "Saldo da pagare in loco"
+msgstr "Balance due on arrival"
+
+msgid "Esperienze richieste:"
+msgstr "Requested experiences:"
+
+msgid "Le tue note:"
+msgstr "Your notes:"
+
+msgid "Come raggiungerci"
+msgstr "How to reach us"
+
+msgid "Apri in Google Maps &rarr;"
+msgstr "Open in Google Maps &rarr;"
+
+msgid "Per qualsiasi richiesta siamo a tua disposizione:"
+msgstr "We are at your disposal for any request:"
+
+msgid "Email:"
+msgstr "Email:"
+
+msgid "Telefono:"
+msgstr "Phone:"
+
+msgid "Ti aspettiamo ad Alt&egrave;sia."
+msgstr "We look forward to seeing you at Alt&egrave;sia."
+
+msgid "Selezionato"
+msgstr "Selected"
+
+msgid "Oggi"
+msgstr "Today"
+
+msgid "Prenotato"
+msgstr "Booked"
+
+msgid "Non disponibile"
+msgstr "Unavailable"
+
+msgid "Clicca su un giorno per selezionare il check-in"
+msgstr "Click a day to select your check-in"
+
+msgid "Ora seleziona la data di check-out"
+msgstr "Now select your check-out date"
+
+msgid "Riepilogo Prezzo"
+msgstr "Price Summary"
+
+#, python-format
+msgid "%(nights)s notti x €%(price)s"
+msgstr "%(nights)s nights x €%(price)s"
+
+msgid "Pulizia finale"
+msgstr "Final cleaning"
+
+#, python-format
+msgid "Ospiti extra (%(extra)s)"
+msgstr "Extra guests (%(extra)s)"
+
+#, python-format
+msgid "Sconto %(discount_type)s"
+msgstr "%(discount_type)s discount"
+
+#, python-format
+msgid "Acconto da versare (30%%)"
+msgstr "Deposit to pay (30%%)"
+
+#, python-format
+msgid "Saldo di €%(balance)s al check-in"
+msgstr "Balance of €%(balance)s at check-in"
+
+msgid "Le date selezionate non sono disponibili."
+msgstr "The selected dates are not available."
+
+msgid "Seleziona le date per vedere il prezzo"
+msgstr "Select your dates to see the price"
+
+msgid "Prenotazione non trovata"
+msgstr "Booking not found"
+
+msgid "Le date selezionate non sono disponibili"
+msgstr "The selected dates are not available"
+
+msgid "Dati non validi."
+msgstr "Invalid data."
+
+#, python-format
+msgid "Campi obbligatori mancanti: %(fields)s"
+msgstr "Missing required fields: %(fields)s"
+
+msgid "Devi accettare i Termini e la Privacy Policy."
+msgstr "You must accept the Terms and the Privacy Policy."
+
+msgid "Date non valide."
+msgstr "Invalid dates."
+
+msgid "Il check-out deve essere dopo il check-in."
+msgstr "Check-out must be after check-in."
+
+msgid "Il check-in deve essere una data futura."
+msgstr "Check-in must be a future date."
+
+msgid "Chef Privato"
+msgstr "Private Chef"
+
+msgid "Colazione Privata"
+msgstr "Private Breakfast"
+
+msgid "Aperitivi & Cene Esclusive"
+msgstr "Aperitifs & Exclusive Dinners"
+
+msgid "Massaggi & Benessere"
+msgstr "Massages & Wellness"
+
+msgid "Passeggiate a Cavallo"
+msgstr "Horse Riding"
+
+msgid "Golf & Tennis"
+msgstr "Golf & Tennis"
+
+msgid "Creato il"
+msgstr "Created on"
+
+msgid "Aggiornato il"
+msgstr "Updated on"
+
+msgid "Nome sito"
+msgstr "Site name"
+
+msgid "Descrizione sito"
+msgstr "Site description"
+
+msgid "Keywords SEO"
+msgstr "SEO keywords"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Indirizzo"
+msgstr "Address"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Orario check-in"
+msgstr "Check-in time"
+
+msgid "Orario check-out"
+msgstr "Check-out time"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Termini e Condizioni"
+msgstr "Terms and Conditions"
+
+msgid "Impostazioni sito"
+msgstr "Site settings"
+
+msgid "Titolo"
+msgstr "Title"
+
+msgid "Slug"
+msgstr "Slug"
+
+msgid "Contenuto"
+msgstr "Content"
+
+msgid "Meta description"
+msgstr "Meta description"
+
+msgid "Pubblicata"
+msgstr "Published"
+
+msgid "Mostra nel menu"
+msgstr "Show in menu"
+
+msgid "Ordine menu"
+msgstr "Menu order"
+
+msgid "Pagina"
+msgstr "Page"
+
+msgid "Pagine"
+msgstr "Pages"
+
+msgid "Domanda"
+msgstr "Question"
+
+msgid "Risposta"
+msgstr "Answer"
+
+msgid "Ordine"
+msgstr "Order"
+
+msgid "Attiva"
+msgstr "Active"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Nome ospite"
+msgstr "Guest name"
+
+msgid "Testimonianza"
+msgstr "Testimonial"
+
+msgid "Valutazione"
+msgstr "Rating"
+
+msgid "Data soggiorno"
+msgstr "Stay date"
+
+msgid "In evidenza"
+msgstr "Featured"
+
+msgid "Testimonianze"
+msgstr "Testimonials"
+
+msgid "Iscrizione newsletter"
+msgstr "Newsletter subscription"
+
+msgid "Iscrizioni newsletter"
+msgstr "Newsletter subscriptions"
+
+msgid "Per favore compila tutti i campi obbligatori."
+msgstr "Please fill in all the required fields."
+
+msgid "Messaggio inviato con successo! Ti risponderemo al più presto."
+msgstr "Message sent successfully! We will get back to you as soon as possible."
+
+msgid "Si è verificato un errore nell'invio del messaggio. Riprova più tardi."
+msgstr "An error occurred while sending your message. Please try again later."
+
+msgid "Per favore inserisci un indirizzo email."
+msgstr "Please enter an email address."
+
+msgid "Questa email è già iscritta alla newsletter!"
+msgstr "This email is already subscribed to the newsletter!"
+
+#, python-format
+msgid "Benvenuto nella newsletter di %(site_name)s!"
+msgstr "Welcome to the %(site_name)s newsletter!"
+
+#, python-format
+msgid ""
+"Ciao!\n"
+"\n"
+"Grazie per esserti iscritto alla newsletter di %(site_name)s.\n"
+"\n"
+"Riceverai aggiornamenti su offerte esclusive, eventi speciali e tutte le novità dalla nostra struttura.\n"
+"\n"
+"Se non hai richiesto questa iscrizione, puoi semplicemente ignorare questa email.\n"
+"\n"
+"A presto,\n"
+"Il team di %(site_name)s\n"
+"https://www.altesiasuite.com\n"
+msgstr "Hello!\n\nThank you for subscribing to the %(site_name)s newsletter.\n\nYou will receive updates on exclusive offers, special events and all the news from our property.\n\nIf you did not request this subscription, you can simply ignore this email.\n\nSee you soon,\nThe %(site_name)s team\nhttps://www.altesiasuite.com\n"
+
+msgid "Iscrizione completata!"
+msgstr "Subscription complete!"
+
+msgid "Ti abbiamo inviato una email di conferma."
+msgstr "We have sent you a confirmation email."
+
+msgid "Blocca Date"
+msgstr "Block Dates"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Rendi non disponibili date specifiche per manutenzione o uso personale"
+msgstr "Make specific dates unavailable for maintenance or personal use"
+
+msgid "Blocca Nuove Date"
+msgstr "Block New Dates"
+
+msgid "Seleziona unità..."
+msgstr "Select a unit..."
+
+msgid "Es: Manutenzione, Uso personale..."
+msgstr "E.g. Maintenance, Personal use..."
+
+msgid "Data Inizio"
+msgstr "Start Date"
+
+msgid "Data Fine"
+msgstr "End Date"
+
+msgid "Date Bloccate"
+msgstr "Blocked Dates"
+
+msgid "Azioni"
+msgstr "Actions"
+
+msgid "Sei sicuro di voler rimuovere questo blocco?"
+msgstr "Are you sure you want to remove this block?"
+
+msgid "Rimuovi"
+msgstr "Remove"
+
+msgid "Nessuna data bloccata"
+msgstr "No blocked dates"
+
+#, python-format
+msgid "Prenotazione #%(number)s"
+msgstr "Booking #%(number)s"
+
+msgid "Torna alle prenotazioni"
+msgstr "Back to bookings"
+
+msgid "Prenotazione in attesa di conferma"
+msgstr "Booking awaiting confirmation"
+
+msgid "Questa prenotazione richiede la tua approvazione. Conferma o rifiuta la richiesta."
+msgstr "This booking requires your approval. Confirm or reject the request."
+
+msgid "Conferma Prenotazione"
+msgstr "Confirm Booking"
+
+msgid "Rifiuta Prenotazione"
+msgstr "Reject Booking"
+
+msgid "Motivo del rifiuto (opzionale)"
+msgstr "Reason for rejection (optional)"
+
+msgid "Inserisci il motivo del rifiuto..."
+msgstr "Enter the reason for rejection..."
+
+msgid "Conferma Rifiuto"
+msgstr "Confirm Rejection"
+
+#, python-format
+msgid "Confermata il %(confirmed)s"
+msgstr "Confirmed on %(confirmed)s"
+
+msgid "Sei sicuro di voler cancellare questa prenotazione?"
+msgstr "Are you sure you want to cancel this booking?"
+
+msgid "Cancella prenotazione"
+msgstr "Cancel booking"
+
+msgid "Dati Ospite"
+msgstr "Guest Details"
+
+msgid "Nome completo"
+msgstr "Full name"
+
+msgid "Utente registrato"
+msgstr "Registered user"
+
+msgid "Dettagli Soggiorno"
+msgstr "Stay Details"
+
+msgid "Riepilogo Economico"
+msgstr "Financial Summary"
+
+msgid "Dettaglio per notte"
+msgstr "Breakdown per night"
+
+#, python-format
+msgid "Subtotale (%(nights)s notti × €%(avg)s media)"
+msgstr "Subtotal (%(nights)s nights × €%(avg)s average)"
+
+msgid "Pulizie"
+msgstr "Cleaning"
+
+msgid "Acconto richiesto"
+msgstr "Deposit required"
+
+msgid "Pagamenti"
+msgstr "Payments"
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "Importo"
+msgstr "Amount"
+
+msgid "Note Ospite"
+msgstr "Guest Notes"
+
+msgid "Note Admin"
+msgstr "Admin Notes"
+
+msgid "Aggiungi note interne..."
+msgstr "Add internal notes..."
+
+msgid "Salva Note"
+msgstr "Save Notes"
+
+msgid "Informazioni Sistema"
+msgstr "System Information"
+
+msgid "Creata il"
+msgstr "Created on"
+
+msgid "Gestisci tutte le prenotazioni"
+msgstr "Manage all bookings"
+
+msgid "Esporta CSV"
+msgstr "Export CSV"
+
+msgid "Tutti"
+msgstr "All"
+
+msgid "Tutte"
+msgstr "All"
+
+msgid "Dal"
+msgstr "From"
+
+msgid "Filtra"
+msgstr "Filter"
+
+#, python-format
+msgid "%(nights)s notti • %(guests)s ospiti"
+msgstr "%(nights)s nights • %(guests)s guests"
+
+#, python-format
+msgid "Acconto: €%(deposit)s"
+msgstr "Deposit: €%(deposit)s"
+
+msgid "Dettagli →"
+msgstr "Details →"
+
+msgid "Nessuna prenotazione trovata"
+msgstr "No bookings found"
+
+#, python-format
+msgid "Mostrando %(start)s-%(end)s di %(total)s"
+msgstr "Showing %(start)s-%(end)s of %(total)s"
+
+msgid "Calendario"
+msgstr "Calendar"
+
+msgid "Visualizza prenotazioni e disponibilità"
+msgstr "View bookings and availability"
+
+msgid "Legenda"
+msgstr "Legend"
+
+msgid "Bloccata"
+msgstr "Blocked"
+
+msgid "Filtra per Unità"
+msgstr "Filter by Unit"
+
+msgid "Nessun motivo specificato"
+msgstr "No reason specified"
+
+msgid "Dal:"
+msgstr "From:"
+
+msgid "Al:"
+msgstr "To:"
+
+msgid "Ospite:"
+msgstr "Guest:"
+
+msgid "Unità:"
+msgstr "Unit:"
+
+msgid "Stato:"
+msgstr "Status:"
+
+msgid "Vedi Dettagli Completi"
+msgstr "View Full Details"
+
+msgid "Dashboard Admin"
+msgstr "Admin Dashboard"
+
+#, python-format
+msgid "Benvenuto, %(name)s"
+msgstr "Welcome, %(name)s"
+
+msgid "Admin Django"
+msgstr "Django Admin"
+
+msgid "Panoramica"
+msgstr "Overview"
+
+msgid "Report"
+msgstr "Reports"
+
+msgid "Prenotazioni Oggi"
+msgstr "Bookings Today"
+
+msgid "Check-in Oggi"
+msgstr "Check-ins Today"
+
+msgid "Check-out Oggi"
+msgstr "Check-outs Today"
+
+msgid "Fatturato Mese"
+msgstr "Monthly Revenue"
+
+msgid "Ultime Prenotazioni"
+msgstr "Latest Bookings"
+
+msgid "Vedi tutte →"
+msgstr "View all →"
+
+msgid "Nessuna prenotazione recente"
+msgstr "No recent bookings"
+
+msgid "Azioni Rapide"
+msgstr "Quick Actions"
+
+msgid "Rendi non disponibili date specifiche"
+msgstr "Make specific dates unavailable"
+
+msgid "Gestisci Prezzi"
+msgstr "Manage Prices"
+
+msgid "Modifica prezzi stagionali"
+msgstr "Edit seasonal prices"
+
+msgid "Esporta Report"
+msgstr "Export Reports"
+
+msgid "Scarica statistiche e prenotazioni"
+msgstr "Download statistics and bookings"
+
+msgid "Prossimi Arrivi (7 giorni)"
+msgstr "Upcoming Arrivals (7 days)"
+
+msgid "Dettagli"
+msgstr "Details"
+
+msgid "Nessun arrivo previsto nei prossimi 7 giorni"
+msgstr "No arrivals expected in the next 7 days"
+
+msgid "Statistiche e report delle prenotazioni"
+msgstr "Booking statistics and reports"
+
+msgid "Al"
+msgstr "To"
+
+msgid "Applica"
+msgstr "Apply"
+
+msgid "Prenotazioni Totali"
+msgstr "Total Bookings"
+
+msgid "confermate"
+msgstr "confirmed"
+
+msgid "Fatturato Totale"
+msgstr "Total Revenue"
+
+msgid "incassato"
+msgstr "collected"
+
+msgid "Notti Prenotate"
+msgstr "Nights Booked"
+
+msgid "Media:"
+msgstr "Average:"
+
+#, python-format
+msgid "%(nights)s notti"
+msgstr "%(nights)s nights"
+
+msgid "Fatturato Mensile"
+msgstr "Monthly Revenue"
+
+msgid "Prenotazioni per Unità"
+msgstr "Bookings by Unit"
+
+msgid "Esporta Dati"
+msgstr "Export Data"
+
+msgid "Esporta Excel"
+msgstr "Export Excel"
+
+msgid "Riepilogo per Unità"
+msgstr "Summary by Unit"
+
+msgid "Occupazione"
+msgstr "Occupancy"
+
+msgid "Fatturato"
+msgstr "Revenue"
+
+msgid "Fatturato €"
+msgstr "Revenue €"
+
+msgid "Compila tutti i campi obbligatori."
+msgstr "Please fill in all the required fields."
+
+#, python-format
+msgid "%(count)d data bloccata con successo."
+msgid_plural "%(count)d date bloccate con successo."
+msgstr[0] "%(count)d date blocked successfully."
+msgstr[1] "%(count)d dates blocked successfully."
+
+#, python-format
+msgid "Prenotazione #%(number)s confermata con successo. Email inviata all'ospite."
+msgstr "Booking #%(number)s confirmed successfully. Email sent to the guest."
+
+#, python-format
+msgid "Prenotazione #%(number)s rifiutata."
+msgstr "Booking #%(number)s rejected."
+
+#, python-format
+msgid "Prenotazione #%(number)s cancellata."
+msgstr "Booking #%(number)s cancelled."
+
+msgid "Note aggiornate."
+msgstr "Notes updated."
+
+msgid "Azione non valida."
+msgstr "Invalid action."
+
+#, python-format
+msgid "%(count)d data sbloccata con successo."
+msgid_plural "%(count)d date sbloccate con successo."
+msgstr[0] "%(count)d date unblocked successfully."
+msgstr[1] "%(count)d dates unblocked successfully."
+
+msgid "Saldo"
+msgstr "Balance"
+
+msgid "Pagamento completo"
+msgstr "Full payment"
+
+msgid "Rimborso"
+msgstr "Refund"
+
+msgid "In elaborazione"
+msgstr "Processing"
+
+msgid "Completato"
+msgstr "Completed"
+
+msgid "Fallito"
+msgstr "Failed"
+
+msgid "Cancellato"
+msgstr "Cancelled"
+
+msgid "Stripe Checkout Session ID"
+msgstr "Stripe Checkout Session ID"
+
+msgid "Stripe Payment Intent ID"
+msgstr "Stripe Payment Intent ID"
+
+msgid "Stripe Charge ID"
+msgstr "Stripe Charge ID"
+
+msgid "Email cliente"
+msgstr "Customer email"
+
+msgid "URL ricevuta"
+msgstr "Receipt URL"
+
+msgid "Completato il"
+msgstr "Completed on"
+
+msgid "Fallito il"
+msgstr "Failed on"
+
+msgid "Motivo fallimento"
+msgstr "Failure reason"
+
+msgid "Stripe Event ID"
+msgstr "Stripe Event ID"
+
+msgid "Tipo evento"
+msgstr "Event type"
+
+msgid "Dati evento"
+msgstr "Event data"
+
+msgid "Processato"
+msgstr "Processed"
+
+msgid "Processato il"
+msgstr "Processed on"
+
+msgid "Errore"
+msgstr "Error"
+
+msgid "Ricevuto il"
+msgstr "Received on"
+
+msgid "Log pagamento"
+msgstr "Payment log"
+
+msgid "Log pagamenti"
+msgstr "Payment logs"
+
+msgid "Pagamento annullato"
+msgstr "Payment cancelled"
+
+msgid "Nessun addebito effettuato"
+msgstr "No charge was made"
+
+msgid "Il pagamento è stato annullato e non è stato addebitato nulla."
+msgstr "The payment was cancelled and nothing has been charged."
+
+#, python-format
+msgid "La tua prenotazione <strong>#%(number)s</strong> resta <strong>in attesa</strong>: puoi completare il pagamento quando vuoi."
+msgstr "Your booking <strong>#%(number)s</strong> remains <strong>pending</strong>: you can complete the payment whenever you like."
+
+msgid "Puoi riprovare quando vuoi."
+msgstr "You can try again whenever you like."
+
+msgid "Riprova il pagamento"
+msgstr "Retry the payment"
+
+msgid "Contattaci"
+msgstr "Contact us"
+
+msgid ""
+"Problemi con il pagamento? Scrivici a\n"
+"            <a href=\"mailto:info@altesiasuite.com\" class=\"text-tertiary-600 hover:text-tertiary-700\">info@altesiasuite.com</a>"
+msgstr "Trouble with the payment? Write to us at <a href=\"mailto:info@altesiasuite.com\" class=\"text-tertiary-600 hover:text-tertiary-700\">info@altesiasuite.com</a>"
+
+msgid "Pagamento riuscito"
+msgstr "Payment successful"
+
+#, python-format
+msgid "Grazie, %(first_name)s!"
+msgstr "Thank you, %(first_name)s!"
+
+msgid "Grazie!"
+msgstr "Thank you!"
+
+msgid "Abbiamo ricevuto il tuo pagamento e la tua prenotazione è <strong>confermata</strong>."
+msgstr "We have received your payment and your booking is <strong>confirmed</strong>."
+
+#, python-format
+msgid "Ti abbiamo inviato una email di conferma a <strong>%(email)s</strong>."
+msgstr "We have sent a confirmation email to <strong>%(email)s</strong>."
+
+msgid "Riceverai a breve una email di conferma."
+msgstr "You will receive a confirmation email shortly."
+
+msgid "Saldo in loco"
+msgstr "Balance on arrival"
+
+msgid "Vedi la prenotazione"
+msgstr "View the booking"
+
+msgid "Torna alla home"
+msgstr "Back to home"
+
+msgid "Questa prenotazione non può essere pagata."
+msgstr "This booking cannot be paid."
+
+#, python-format
+msgid "Errore nella creazione del pagamento: %(error)s"
+msgstr "Error while creating the payment: %(error)s"
+
+msgid "Tagline"
+msgstr "Tagline"
+
+msgid "Descrizione"
+msgstr "Description"
+
+msgid "Descrizione breve"
+msgstr "Short description"
+
+msgid "Città"
+msgstr "City"
+
+msgid "Provincia"
+msgstr "Province"
+
+msgid "CAP"
+msgstr "Postcode"
+
+msgid "Latitudine"
+msgstr "Latitude"
+
+msgid "Longitudine"
+msgstr "Longitude"
+
+msgid "Ospiti totali"
+msgstr "Total guests"
+
+msgid "Camere totali"
+msgstr "Total bedrooms"
+
+msgid "Bagni totali"
+msgstr "Total bathrooms"
+
+msgid "Metri quadri"
+msgstr "Square metres"
+
+msgid "Immagine hero"
+msgstr "Hero image"
+
+msgid "URL video hero"
+msgstr "Hero video URL"
+
+msgid "Meta title"
+msgstr "Meta title"
+
+msgid "Villa"
+msgstr "Villa"
+
+msgid "Ville"
+msgstr "Villas"
+
+msgid "Intera Villa"
+msgstr "Whole Villa"
+
+msgid "Appartamento"
+msgstr "Apartment"
+
+msgid "Camera"
+msgstr "Room"
+
+msgid "Ospiti max"
+msgstr "Max guests"
+
+msgid "Camere"
+msgstr "Bedrooms"
+
+msgid "Bagni"
+msgstr "Bathrooms"
+
+msgid "Descrizione letti"
+msgstr "Beds description"
+
+msgid "Prezzo base/notte"
+msgstr "Base price/night"
+
+msgid "Prezzo per notte in bassa stagione"
+msgstr "Price per night in low season"
+
+msgid "Notti minime"
+msgstr "Minimum nights"
+
+msgid "Notti massime"
+msgstr "Maximum nights"
+
+msgid "Immagine principale"
+msgstr "Main image"
+
+msgid "Unità in conflitto"
+msgstr "Conflicting units"
+
+msgid "Unità che condividono lo stesso spazio e non possono essere prenotate in contemporanea"
+msgstr "Units that share the same space and cannot be booked at the same time"
+
+msgid "Token feed iCal"
+msgstr "iCal feed token"
+
+msgid "Parte segreta dell'URL del feed .ics. NON modificare dopo averlo pubblicato su un portale: il link smetterebbe di funzionare"
+msgstr "Secret part of the .ics feed URL. Do NOT change it after publishing it on a channel: the link would stop working"
+
+msgid "Visibile sul sito"
+msgstr "Visible on the site"
+
+msgid "Se disattivata l'unità sparisce da tutto il sito"
+msgstr "If disabled, the unit disappears from the whole site"
+
+msgid "Prenotabile singolarmente"
+msgstr "Bookable on its own"
+
+msgid "Se disattivata resta visibile (foto e descrizione) ma non è prenotabile da sola"
+msgstr "If disabled it stays visible (photos and description) but cannot be booked on its own"
+
+msgid "Unità prenotabile"
+msgstr "Bookable unit"
+
+msgid "Unità prenotabili"
+msgstr "Bookable units"
+
+msgid "Nome stagione"
+msgstr "Season name"
+
+msgid "Data inizio"
+msgstr "Start date"
+
+msgid "Data fine"
+msgstr "End date"
+
+msgid "Prezzo/notte"
+msgstr "Price/night"
+
+msgid "Sovrascrive il minimo dell'unità per questa stagione"
+msgstr "Overrides the unit's minimum for this season"
+
+msgid "Prezzo stagionale"
+msgstr "Seasonal price"
+
+msgid "Prezzi stagionali"
+msgstr "Seasonal prices"
+
+msgid "Comfort"
+msgstr "Comfort"
+
+msgid "Esterni"
+msgstr "Outdoors"
+
+msgid "Cucina"
+msgstr "Kitchen"
+
+msgid "Servizi"
+msgstr "Services"
+
+msgid "Intrattenimento"
+msgstr "Entertainment"
+
+msgid "Sicurezza"
+msgstr "Safety"
+
+msgid "Icona"
+msgstr "Icon"
+
+msgid "Classe icona (es: heroicons)"
+msgstr "Icon class (e.g. heroicons)"
+
+msgid "Categoria"
+msgstr "Category"
+
+msgid "Amenity"
+msgstr "Amenity"
+
+msgid "Amenities"
+msgstr "Amenities"
+
+msgid "Amenity villa"
+msgstr "Villa amenity"
+
+msgid "Amenities villa"
+msgstr "Villa amenities"
+
+msgid "Amenity unità"
+msgstr "Unit amenity"
+
+msgid "Amenities unità"
+msgstr "Unit amenities"
+
+msgid "Immagine"
+msgstr "Image"
+
+msgid "Alt text"
+msgstr "Alt text"
+
+msgid "Didascalia"
+msgstr "Caption"
+
+msgid "Immagine galleria"
+msgstr "Gallery image"
+
+msgid "Immagini galleria"
+msgstr "Gallery images"
+
+msgid "Galleria"
+msgstr "Gallery"
+
+msgid "Galleria Fotografica"
+msgstr "Photo Gallery"
+
+msgid "Esplora tutti gli spazi della nostra villa"
+msgstr "Explore every space of our villa"
+
+msgid "Nessuna immagine disponibile."
+msgstr "No images available."
+
+msgid "← Precedente"
+msgstr "← Previous"
+
+#, python-format
+msgid "Pagina %(current)s di %(total)s"
+msgstr "Page %(current)s of %(total)s"
+
+msgid "Successiva →"
+msgstr "Next →"
+
+msgid "Home"
+msgstr "Home"
+
+#, python-format
+msgid "%(guests)s ospiti max"
+msgstr "%(guests)s guests max"
+
+#, python-format
+msgid "%(counter)s suite"
+msgid_plural "%(counter)s suite"
+msgstr[0] "%(counter)s suite"
+msgstr[1] "%(counter)s suites"
+
+#, python-format
+msgid "%(counter)s camera"
+msgid_plural "%(counter)s camere"
+msgstr[0] "%(counter)s bedroom"
+msgstr[1] "%(counter)s bedrooms"
+
+#, python-format
+msgid "%(counter)s bagno"
+msgid_plural "%(counter)s bagni"
+msgstr[0] "%(counter)s bathroom"
+msgstr[1] "%(counter)s bathrooms"
+
+msgid "Servizi e Comfort"
+msgstr "Services and Comfort"
+
+msgid "Pernottamento con colazione inclusa."
+msgstr "Overnight stay with breakfast included."
+
+msgid "Verifica le date per conoscere la tariffa del periodo."
+msgstr "Check the dates to see the rate for that period."
+
+#, python-format
+msgid "Soggiorno minimo: %(counter)s notte"
+msgid_plural "Soggiorno minimo: %(counter)s notti"
+msgstr[0] "Minimum stay: %(counter)s night"
+msgstr[1] "Minimum stay: %(counter)s nights"
+
+msgid "Verifica Disponibilità"
+msgstr "Check Availability"
+
+msgid "Prenota ora, paga l'acconto online"
+msgstr "Book now, pay the deposit online"
+
+msgid "Questa suite fa parte di"
+msgstr "This suite is part of"
+
+msgid ""
+"La struttura si prenota per intero: tutte le suite, gli spazi comuni\n"
+"                            e il parco sono a disposizione dei vostri ospiti."
+msgstr "The property is booked in its entirety: all the suites, the common areas and the grounds are at your guests' disposal."
+
+msgid "Prenotazione dell'intera struttura, colazione inclusa"
+msgstr "Booking of the whole property, breakfast included"
+
+msgid "Altre Sistemazioni"
+msgstr "Other Accommodations"
+
+msgid "Inclusa nell'intera struttura"
+msgstr "Included in the whole property"
+
+msgid "Le Nostre Sistemazioni"
+msgstr "Our Accommodations"
+
+msgid "Scegli il Tuo Soggiorno"
+msgstr "Choose Your Stay"
+
+#, python-format
+msgid "%(bathrooms)s bagni"
+msgstr "%(bathrooms)s bathrooms"
+
+msgid "Scopri"
+msgstr "Discover"
+
+msgid "Scopri i Nostri Spazi"
+msgstr "Discover Our Spaces"
+
+msgid "Vedi Tutta la Galleria"
+msgstr "See the Whole Gallery"
+
+msgid "Pronto per la Tua Esperienza di Lusso?"
+msgstr "Ready for Your Luxury Experience?"
+
+msgid "Prenota ora il tuo soggiorno e vivi momenti indimenticabili."
+msgstr "Book your stay now and live unforgettable moments."
+
+msgid "La Villa"
+msgstr "The Villa"
+
+msgid "La Nostra Villa"
+msgstr "Our Villa"
+
+msgid "Un'esperienza di lusso immersa nella natura italiana"
+msgstr "A luxury experience surrounded by Italian nature"
+
+msgid "Nessuna villa disponibile al momento. Contattaci per maggiori informazioni."
+msgstr "No villa available at the moment. Contact us for more information."
+
+msgid "Prenota ora il tuo soggiorno e vivi momenti indimenticabili nella nostra villa esclusiva."
+msgstr "Book your stay now and live unforgettable moments in our exclusive villa."
+
+msgid "Italiano"
+msgstr "Italiano"
+
+msgid "English"
+msgstr "English"
+
+#, python-format
+msgid "Verifica il tuo indirizzo email per %(site_name)s"
+msgstr "Verify your email address for %(site_name)s"
+
+msgid "Villa di lusso in Italia - Prenota la tua esperienza esclusiva"
+msgstr "Luxury villa in Italy - Book your exclusive experience"
+
+msgid "villa lusso, vacanze Italia, affitto villa, luxury villa"
+msgstr "luxury villa, Italy holidays, villa rental, villa Umbria"
+
+msgid "La tua privacy è importante"
+msgstr "Your privacy matters"
+
+#, python-format
+msgid ""
+"Utilizziamo cookie per migliorare la tua esperienza sul nostro sito, analizzare il traffico e personalizzare i contenuti.\n"
+"                        Puoi scegliere quali cookie accettare. Per maggiori informazioni, consulta la nostra\n"
+"                        <a href=\"%(cookie_policy_url)s\" class=\"text-tertiary-400 underline hover:text-tertiary-300\">Cookie Policy</a> e la\n"
+"                        <a href=\"%(privacy_url)s\" class=\"text-tertiary-400 underline hover:text-tertiary-300\">Privacy Policy</a>."
+msgstr "We use cookies to improve your experience on our site, analyse traffic and personalise content. You can choose which cookies to accept. For more information, see our <a href=\"%(cookie_policy_url)s\" class=\"text-tertiary-400 underline hover:text-tertiary-300\">Cookie Policy</a> and our <a href=\"%(privacy_url)s\" class=\"text-tertiary-400 underline hover:text-tertiary-300\">Privacy Policy</a>."
+
+msgid "Personalizza"
+msgstr "Customise"
+
+msgid "Rifiuta non essenziali"
+msgstr "Reject non-essential"
+
+msgid "Accetta tutti"
+msgstr "Accept all"
+
+msgid "Impostazioni Cookie"
+msgstr "Cookie Settings"
+
+msgid "Cookie Essenziali"
+msgstr "Essential Cookies"
+
+msgid "Necessari per il funzionamento del sito. Non possono essere disattivati."
+msgstr "Required for the site to work. They cannot be disabled."
+
+msgid "Sempre attivi"
+msgstr "Always on"
+
+msgid "Cookie Analitici"
+msgstr "Analytics Cookies"
+
+msgid "Google Analytics - informazioni anonime sull'utilizzo del sito."
+msgstr "Google Analytics - anonymous information about how the site is used."
+
+msgid "Cookie di Marketing"
+msgstr "Marketing Cookies"
+
+msgid "Annunci e contenuti personalizzati su altri siti."
+msgstr "Personalised ads and content on other sites."
+
+msgid "Salva preferenze"
+msgstr "Save preferences"
+
+msgid "Un'esperienza di lusso unica nel cuore dell'Italia. Scopri la bellezza della vita in villa."
+msgstr "A unique luxury experience in the heart of Italy. Discover the beauty of villa living."
+
+msgid "Link Utili"
+msgstr "Useful Links"
+
+msgid "Gallery"
+msgstr "Gallery"
+
+msgid "Contatti"
+msgstr "Contact"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Iscriviti per ricevere offerte esclusive e novità."
+msgstr "Subscribe to receive exclusive offers and news."
+
+msgid "Iscriviti"
+msgstr "Subscribe"
+
+msgid "Tutti i diritti riservati."
+msgstr "All rights reserved."
+
+msgid "Cookie Policy"
+msgstr "Cookie Policy"
+
+msgid "Area Admin"
+msgstr "Admin Area"
+
+msgid "Sistemazioni"
+msgstr "Accommodations"
+
+msgid "Esperienze"
+msgstr "Experiences"
+
+msgid "Il mio profilo"
+msgstr "My profile"
+
+msgid "Le mie prenotazioni"
+msgstr "My bookings"
+
+msgid "Logout"
+msgstr "Sign out"
+
+msgid "Siamo qui per voi"
+msgstr "We are here for you"
+
+msgid "Per informazioni, disponibilità o richieste speciali, non esitate a contattarci."
+msgstr "For information, availability or special requests, please don't hesitate to contact us."
+
+msgid "Informazioni di contatto"
+msgstr "Contact information"
+
+msgid "Apri in Google Maps →"
+msgstr "Open in Google Maps →"
+
+msgid "Orari"
+msgstr "Opening times"
+
+#, python-format
+msgid "Check-in: dalle %(time)s"
+msgstr "Check-in: from %(time)s"
+
+#, python-format
+msgid "Check-out: entro le %(time)s"
+msgstr "Check-out: by %(time)s"
+
+msgid "Seguici"
+msgstr "Follow us"
+
+msgid "Scrivici un messaggio"
+msgstr "Send us a message"
+
+msgid "Il tuo nome"
+msgstr "Your name"
+
+msgid "Il tuo numero di telefono"
+msgstr "Your phone number"
+
+msgid "Oggetto"
+msgstr "Subject"
+
+msgid "Seleziona un argomento"
+msgstr "Select a topic"
+
+msgid "Informazioni generali"
+msgstr "General information"
+
+msgid "Richieste speciali"
+msgstr "Special requests"
+
+msgid "Seleziona le esperienze che vorresti prenotare (facoltativo)."
+msgstr "Select the experiences you would like to book (optional)."
+
+msgid "Messaggio"
+msgstr "Message"
+
+msgid "Scrivi il tuo messaggio..."
+msgstr "Write your message..."
+
+msgid "Invia messaggio"
+msgstr "Send message"
+
+msgid "Invio in corso..."
+msgstr "Sending..."
+
+msgid "Posizione Altèsia Suites"
+msgstr "Altèsia Suites location"
+
+msgid "Apri in Google Maps"
+msgstr "Open in Google Maps"
+
+#, python-format
+msgid "Informativa sui cookie di %(site_name)s. Scopri quali cookie utilizziamo e come gestire le tue preferenze."
+msgstr "Cookie notice for %(site_name)s. Find out which cookies we use and how to manage your preferences."
+
+#, python-format
+msgid "Ultimo aggiornamento: %(updated_on)s"
+msgstr "Last updated: %(updated_on)s"
+
+msgid "1. Cosa sono i Cookie"
+msgstr "1. What Cookies Are"
+
+msgid ""
+"I cookie sono piccoli file di testo che vengono memorizzati sul tuo dispositivo (computer, tablet o smartphone)\n"
+"                        quando visiti un sito web. Vengono utilizzati per far funzionare il sito in modo efficiente e per fornire\n"
+"                        informazioni ai proprietari del sito."
+msgstr "Cookies are small text files stored on your device (computer, tablet or smartphone) when you visit a website. They are used to make the site work efficiently and to provide information to the site owners."
+
+#, python-format
+msgid ""
+"Questo sito (<strong>%(site_name)s</strong> - altesiasuite.com) utilizza diversi tipi di cookie,\n"
+"                        descritti in dettaglio di seguito. Puoi scegliere quali categorie di cookie accettare tramite il nostro\n"
+"                        pannello delle preferenze."
+msgstr "This site (<strong>%(site_name)s</strong> - altesiasuite.com) uses several types of cookie, described in detail below. You can choose which categories of cookie to accept through our preferences panel."
+
+msgid "2. Titolare del Trattamento"
+msgstr "2. Data Controller"
+
+#, python-format
+msgid "Il titolare del trattamento dei dati è <strong>%(site_name)s</strong>."
+msgstr "The data controller is <strong>%(site_name)s</strong>."
+
+msgid "Indirizzo:"
+msgstr "Address:"
+
+msgid "3. Cookie Essenziali (Tecnici)"
+msgstr "3. Essential (Technical) Cookies"
+
+msgid ""
+"Questi cookie sono strettamente necessari per il funzionamento del sito e <strong>non possono essere disattivati</strong>.\n"
+"                        Vengono impostati in risposta ad azioni da te effettuate, come la configurazione delle preferenze sulla privacy,\n"
+"                        l'accesso al tuo account o la compilazione di moduli."
+msgstr "These cookies are strictly necessary for the site to work and <strong>cannot be disabled</strong>. They are set in response to actions you take, such as setting your privacy preferences, signing in to your account or filling in forms."
+
+msgid "Cookie"
+msgstr "Cookie"
+
+msgid "Finalità"
+msgstr "Purpose"
+
+msgid "Durata"
+msgstr "Duration"
+
+msgid "Mantiene la sessione utente attiva durante la navigazione"
+msgstr "Keeps your session active while you browse"
+
+msgid "2 settimane"
+msgstr "2 weeks"
+
+msgid "Protezione contro attacchi Cross-Site Request Forgery (CSRF)"
+msgstr "Protection against Cross-Site Request Forgery (CSRF) attacks"
+
+msgid "1 anno"
+msgstr "1 year"
+
+msgid "Memorizza le tue preferenze sui cookie"
+msgstr "Stores your cookie preferences"
+
+msgid "Memorizza la lingua scelta per il sito"
+msgstr "Stores the language you chose for the site"
+
+msgid "4. Cookie Analitici"
+msgstr "4. Analytics Cookies"
+
+msgid ""
+"Questi cookie ci permettono di contare le visite e le fonti di traffico, in modo da poter misurare e migliorare\n"
+"                        le prestazioni del nostro sito. I dati raccolti sono aggregati e anonimi. Se non consenti questi cookie, non\n"
+"                        sapremo quando hai visitato il nostro sito."
+msgstr "These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. The data collected is aggregated and anonymous. If you do not allow these cookies, we will not know when you visited our site."
+
+msgid ""
+"Utilizziamo <strong>Google Analytics</strong> con la funzione di anonimizzazione dell'indirizzo IP attiva\n"
+"                        (<code>anonymize_ip: true</code>), in conformità con le linee guida del Garante per la protezione dei dati personali."
+msgstr "We use <strong>Google Analytics</strong> with IP address anonymisation enabled (<code>anonymize_ip: true</code>), in line with the guidelines of the Italian Data Protection Authority."
+
+msgid "Fornitore"
+msgstr "Provider"
+
+msgid "Distingue gli utenti unici assegnando un numero generato casualmente"
+msgstr "Distinguishes unique users by assigning a randomly generated number"
+
+msgid "2 anni"
+msgstr "2 years"
+
+msgid "Mantiene lo stato della sessione"
+msgstr "Maintains the session state"
+
+msgid "5. Cookie di Marketing"
+msgstr "5. Marketing Cookies"
+
+msgid ""
+"Questi cookie possono essere impostati tramite il nostro sito dai nostri partner pubblicitari. Vengono utilizzati\n"
+"                        per creare un profilo dei tuoi interessi e mostrarti annunci pertinenti su altri siti. Non memorizzano direttamente\n"
+"                        informazioni personali, ma sono basati sull'identificazione univoca del tuo browser e del tuo dispositivo."
+msgstr "These cookies may be set through our site by our advertising partners. They are used to build a profile of your interests and show you relevant ads on other sites. They do not store personal information directly, but are based on uniquely identifying your browser and device."
+
+msgid ""
+"Attualmente questo sito <strong>non utilizza cookie di marketing</strong>. Se in futuro verranno introdotti,\n"
+"                        questa sezione sarà aggiornata e verrà richiesto il tuo consenso."
+msgstr "This site currently <strong>does not use marketing cookies</strong>. If any are introduced in future, this section will be updated and your consent will be requested."
+
+msgid "6. Servizi di Terze Parti"
+msgstr "6. Third-Party Services"
+
+msgid "Google Fonts"
+msgstr "Google Fonts"
+
+msgid ""
+"Utilizziamo Google Fonts per caricare i caratteri tipografici del sito. Quando visiti una pagina,\n"
+"                        il tuo browser scarica i font dai server di Google. Google potrebbe raccogliere il tuo indirizzo IP durante\n"
+"                        il caricamento. Per maggiori informazioni:\n"
+"                        <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">Privacy Policy di Google</a>."
+msgstr "We use Google Fonts to load the site's typefaces. When you visit a page, your browser downloads the fonts from Google's servers. Google may collect your IP address during that request. For more information: <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">Google's Privacy Policy</a>."
+
+msgid "Stripe (Pagamenti)"
+msgstr "Stripe (Payments)"
+
+msgid ""
+"Per i pagamenti online utilizziamo <strong>Stripe</strong>, un servizio di pagamento sicuro.\n"
+"                        I dati della tua carta di credito vengono gestiti direttamente da Stripe e <strong>non transitano\n"
+"                        né vengono memorizzati sui nostri server</strong>. Stripe può utilizzare cookie propri durante il processo\n"
+"                        di pagamento. Per maggiori informazioni:\n"
+"                        <a href=\"https://stripe.com/it/privacy\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">Privacy Policy di Stripe</a>."
+msgstr "For online payments we use <strong>Stripe</strong>, a secure payment service. Your card details are handled directly by Stripe and <strong>never pass through nor are stored on our servers</strong>. Stripe may use its own cookies during the payment process. For more information: <a href=\"https://stripe.com/it/privacy\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">Stripe's Privacy Policy</a>."
+
+msgid "Google OAuth"
+msgstr "Google OAuth"
+
+msgid ""
+"Offriamo la possibilità di registrarsi e accedere al sito tramite il tuo account Google.\n"
+"                        In questo caso, Google condivide con noi il tuo nome, email e immagine del profilo, come specificato\n"
+"                        nella schermata di autorizzazione. Per maggiori informazioni:\n"
+"                        <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">Privacy Policy di Google</a>."
+msgstr "We offer the option to sign up and sign in using your Google account. In that case Google shares your name, email and profile picture with us, as set out on the authorisation screen. For more information: <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">Google's Privacy Policy</a>."
+
+msgid "7. Come Gestire i Cookie"
+msgstr "7. How to Manage Cookies"
+
+msgid "Tramite il nostro sito"
+msgstr "Through our site"
+
+msgid "Puoi modificare le tue preferenze in qualsiasi momento cliccando sul pulsante qui sotto:"
+msgstr "You can change your preferences at any time by clicking the button below:"
+
+msgid "Gestisci preferenze cookie"
+msgstr "Manage cookie preferences"
+
+msgid "Tramite il browser"
+msgstr "Through your browser"
+
+msgid ""
+"Puoi anche gestire i cookie direttamente dalle impostazioni del tuo browser. Ecco le guide\n"
+"                        per i principali browser:"
+msgstr "You can also manage cookies directly from your browser settings. Here are the guides for the main browsers:"
+
+msgid "<strong>Nota:</strong> la disattivazione dei cookie tecnici potrebbe rendere il sito non utilizzabile."
+msgstr "<strong>Note:</strong> disabling technical cookies may make the site unusable."
+
+msgid "8. Aggiornamenti"
+msgstr "8. Updates"
+
+msgid ""
+"Questa Cookie Policy potrebbe essere aggiornata periodicamente. Ti invitiamo a consultare questa pagina\n"
+"                        regolarmente per essere informato su eventuali modifiche. La data dell'ultimo aggiornamento è indicata\n"
+"                        all'inizio di questo documento."
+msgstr "This Cookie Policy may be updated from time to time. We invite you to check this page regularly to stay informed about any changes. The date of the last update is shown at the top of this document."
+
+msgid "9. Contatti"
+msgstr "9. Contact"
+
+msgid "Per qualsiasi domanda relativa all'uso dei cookie su questo sito, puoi contattarci:"
+msgstr "For any question about the use of cookies on this site, you can contact us:"
+
+msgid "Pagina contatti:"
+msgstr "Contact page:"
+
+msgid "Altèsia - Villa di Lusso in Umbria"
+msgstr "Altèsia - Luxury Villa in Umbria"
+
+msgid "La vostra esperienza di lusso in Umbria"
+msgstr "Your luxury experience in Umbria"
+
+msgid "Prenota ora"
+msgstr "Book now"
+
+msgid "Le Sistemazioni"
+msgstr "The Accommodations"
+
+msgid "Scegli la tua esperienza"
+msgstr "Choose your experience"
+
+msgid "Due suite dal carattere unico o l'intera struttura in esclusiva: ad Altèsia trovi la soluzione perfetta per il tuo soggiorno."
+msgstr "Two suites with a character of their own, or the whole property exclusively yours: at Altèsia you'll find the perfect option for your stay."
+
+#, python-format
+msgid "%(guests)s ospiti &middot; colazione inclusa"
+msgstr "%(guests)s guests &middot; breakfast included"
+
+msgid "Scopri →"
+msgstr "Discover →"
+
+msgid "Esperienze su misura"
+msgstr "Tailor-made experiences"
+
+msgid ""
+"Ad Altèsia ogni soggiorno può diventare un'esperienza unica. Personalizza la tua permanenza\n"
+"                con una selezione di servizi esclusivi, pensati per vivere l'Umbria in modo autentico e su misura.\n"
+"                Tutti disponibili su richiesta."
+msgstr "At Altèsia every stay can become a unique experience. Tailor your time with us through a selection of exclusive services, designed to let you experience Umbria authentically and on your own terms. All available on request."
+
+msgid "Uno chef prepara per te un menu su misura ispirato ai sapori dell'Umbria, nella tua suite o in giardino."
+msgstr "A chef prepares a tailor-made menu inspired by the flavours of Umbria, in your suite or in the garden."
+
+msgid "Prodotti locali selezionati, serviti nel living, in giardino o a bordo piscina, per un risveglio autentico."
+msgstr "Selected local produce, served in the living room, in the garden or by the pool, for an authentic start to the day."
+
+msgid "Aperitivi &amp; Cene Esclusive"
+msgstr "Aperitifs &amp; Exclusive Dinners"
+
+msgid "Un aperitivo al tramonto o una cena privata nella quiete del giardino, organizzati su misura."
+msgstr "An aperitif at sunset or a private dinner in the quiet of the garden, arranged just for you."
+
+msgid "Massaggi &amp; Benessere"
+msgstr "Massages &amp; Wellness"
+
+msgid "Trattamenti e massaggi eseguiti in struttura da professionisti qualificati, in totale relax e privacy."
+msgstr "Treatments and massages carried out on site by qualified professionals, in complete relaxation and privacy."
+
+msgid "Itinerari a cavallo tra colline, boschi e sentieri, presso maneggi selezionati del territorio."
+msgstr "Horse riding routes across hills, woods and trails, with selected local riding stables."
+
+msgid "Golf &amp; Tennis"
+msgstr "Golf &amp; Tennis"
+
+msgid "Accesso ai migliori golf club e tennis club del territorio, per un soggiorno anche all'insegna dello sport."
+msgstr "Access to the best golf and tennis clubs in the area, for a stay with a sporting side too."
+
+msgid "Richiedi un'esperienza"
+msgstr "Request an experience"
+
+msgid "Scopri Altèsia"
+msgstr "Discover Altèsia"
+
+msgid "Altèsia - Piscina e struttura"
+msgstr "Altèsia - Pool and property"
+
+msgid "Altèsia - Suite Silva"
+msgstr "Altèsia - Silva Suite"
+
+msgid "Altèsia - Giardino"
+msgstr "Altèsia - Garden"
+
+msgid "Altèsia - Suite Aura"
+msgstr "Altèsia - Aura Suite"
+
+msgid "Altèsia - Zona living e relax"
+msgstr "Altèsia - Living and relaxation area"
+
+msgid "Altèsia - Suite Aura, dettaglio"
+msgstr "Altèsia - Aura Suite, detail"
+
+msgid "Vedi tutta la gallery"
+msgstr "See the whole gallery"
+
+msgid "Posizione Altèsia"
+msgstr "Altèsia location"
+
+msgid "Posizione"
+msgstr "Location"
+
+msgid "Nel cuore dell'Umbria"
+msgstr "In the heart of Umbria"
+
+msgid ""
+"Altèsia è situata in una posizione strategica, nel cuore verde dell'Italia,\n"
+"                    circondata da colline, vigneti e borghi medievali."
+msgstr "Altèsia sits in a prime location in Italy's green heart, surrounded by hills, vineyards and medieval villages."
+
+msgid "30 min da Assisi"
+msgstr "30 min from Assisi"
+
+msgid "Patrimonio UNESCO, terra di San Francesco"
+msgstr "UNESCO World Heritage site, land of Saint Francis"
+
+msgid "15 min da Perugia"
+msgstr "15 min from Perugia"
+
+msgid "Capoluogo dell'Umbria, città d'arte e cultura"
+msgstr "Capital of Umbria, a city of art and culture"
+
+msgid "Wine & Truffle Region"
+msgstr "Wine & Truffle Region"
+
+msgid "Sagrantino, Trebbiano e tartufo nero pregiato"
+msgstr "Sagrantino, Trebbiano and prized black truffle"
+
+msgid "Pronto per la Tua Esperienza?"
+msgstr "Ready for Your Experience?"
+
+msgid "Prenota ora il tuo soggiorno ad Altèsia e inizia a vivere un sogno ad occhi aperti."
+msgstr "Book your stay at Altèsia now and start living a waking dream."
+
+#, python-format
+msgid "Informativa sulla privacy di %(site_name)s. Come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali."
+msgstr "Privacy notice for %(site_name)s. How we collect, use and protect your personal data."
+
+msgid "1. Introduzione"
+msgstr "1. Introduction"
+
+#, python-format
+msgid ""
+"La presente informativa sulla privacy descrive come <strong>%(site_name)s</strong> (di seguito \"noi\", \"nostro\"\n"
+"                        o \"il Sito\") raccoglie, utilizza, conserva e protegge i tuoi dati personali quando utilizzi il nostro sito web\n"
+"                        (altesiasuite.com)."
+msgstr "This privacy notice describes how <strong>%(site_name)s</strong> (hereinafter \"we\", \"our\" or \"the Site\") collects, uses, stores and protects your personal data when you use our website (altesiasuite.com)."
+
+msgid ""
+"Il trattamento dei tuoi dati personali avviene nel rispetto del Regolamento (UE) 2016/679 (GDPR) e del\n"
+"                        D.Lgs. 196/2003 (Codice Privacy), come modificato dal D.Lgs. 101/2018."
+msgstr "Your personal data is processed in compliance with Regulation (EU) 2016/679 (GDPR) and Italian Legislative Decree 196/2003 (Privacy Code), as amended by Legislative Decree 101/2018."
+
+msgid "Il titolare del trattamento dei dati personali è:"
+msgstr "The controller of your personal data is:"
+
+msgid "3. Dati Personali Raccolti"
+msgstr "3. Personal Data We Collect"
+
+msgid "Raccogliamo le seguenti categorie di dati personali:"
+msgstr "We collect the following categories of personal data:"
+
+msgid "3.1 Dati forniti volontariamente"
+msgstr "3.1 Data you provide voluntarily"
+
+msgid "<strong>Registrazione account:</strong> nome, cognome, indirizzo email, numero di telefono, password (criptata)"
+msgstr "<strong>Account registration:</strong> first name, last name, email address, phone number, password (encrypted)"
+
+msgid "<strong>Prenotazione:</strong> nome, cognome, email, telefono, paese, date di soggiorno, numero ospiti, note e richieste speciali"
+msgstr "<strong>Booking:</strong> first name, last name, email, phone, country, stay dates, number of guests, notes and special requests"
+
+msgid "<strong>Modulo di contatto:</strong> nome, email, messaggio"
+msgstr "<strong>Contact form:</strong> name, email, message"
+
+msgid "<strong>Login sociale (Google):</strong> nome, cognome, email, immagine profilo (dati condivisi da Google con il tuo consenso)"
+msgstr "<strong>Social login (Google):</strong> first name, last name, email, profile picture (data shared by Google with your consent)"
+
+msgid "3.2 Dati raccolti automaticamente"
+msgstr "3.2 Data collected automatically"
+
+msgid "<strong>Dati di navigazione:</strong> indirizzo IP (anonimizzato), tipo di browser, sistema operativo, pagine visitate, data e ora di accesso"
+msgstr "<strong>Browsing data:</strong> IP address (anonymised), browser type, operating system, pages visited, date and time of access"
+
+#, python-format
+msgid "<strong>Cookie:</strong> informazioni descritte nella nostra <a href=\"%(cookie_policy_url)s\" class=\"text-tertiary-500 underline\">Cookie Policy</a>"
+msgstr "<strong>Cookies:</strong> information described in our <a href=\"%(cookie_policy_url)s\" class=\"text-tertiary-500 underline\">Cookie Policy</a>"
+
+msgid "3.3 Dati di pagamento"
+msgstr "3.3 Payment data"
+
+msgid ""
+"I pagamenti sono gestiti da <strong>Stripe</strong>. I dati della carta di credito/debito\n"
+"                        <strong>non vengono memorizzati né transitano sui nostri server</strong>.\n"
+"                        Noi conserviamo solo: importo della transazione, stato del pagamento e ID transazione Stripe."
+msgstr "Payments are handled by <strong>Stripe</strong>. Credit/debit card details <strong>are never stored on nor pass through our servers</strong>. We only keep the transaction amount, the payment status and the Stripe transaction ID."
+
+msgid "4. Finalità del Trattamento"
+msgstr "4. Purposes of Processing"
+
+msgid "I tuoi dati personali sono trattati per le seguenti finalità:"
+msgstr "Your personal data is processed for the following purposes:"
+
+msgid "Base giuridica"
+msgstr "Legal basis"
+
+msgid "Dati trattati"
+msgstr "Data processed"
+
+msgid "Gestione prenotazioni"
+msgstr "Managing bookings"
+
+msgid "Esecuzione contratto"
+msgstr "Performance of a contract"
+
+msgid "Nome, email, telefono, date soggiorno"
+msgstr "Name, email, phone, stay dates"
+
+msgid "Creazione e gestione account"
+msgstr "Creating and managing accounts"
+
+msgid "Nome, email, telefono, password"
+msgstr "Name, email, phone, password"
+
+msgid "Elaborazione pagamenti"
+msgstr "Processing payments"
+
+msgid "Dati transazione (tramite Stripe)"
+msgstr "Transaction data (via Stripe)"
+
+msgid "Comunicazioni relative alla prenotazione"
+msgstr "Booking-related communications"
+
+msgid "Nome, email"
+msgstr "Name, email"
+
+msgid "Risposta a richieste di contatto"
+msgstr "Replying to contact requests"
+
+msgid "Legittimo interesse"
+msgstr "Legitimate interest"
+
+msgid "Nome, email, messaggio"
+msgstr "Name, email, message"
+
+msgid "Analisi statistiche (Google Analytics)"
+msgstr "Statistical analysis (Google Analytics)"
+
+msgid "Consenso"
+msgstr "Consent"
+
+msgid "Dati di navigazione anonimizzati"
+msgstr "Anonymised browsing data"
+
+msgid "Sicurezza del sito"
+msgstr "Site security"
+
+msgid "IP, log di accesso"
+msgstr "IP, access logs"
+
+msgid "5. Conservazione dei Dati"
+msgstr "5. Data Retention"
+
+msgid "I tuoi dati personali sono conservati per il tempo strettamente necessario:"
+msgstr "Your personal data is kept only for as long as strictly necessary:"
+
+msgid "<strong>Dati account:</strong> fino alla cancellazione dell'account da parte dell'utente"
+msgstr "<strong>Account data:</strong> until the user deletes the account"
+
+msgid "<strong>Dati prenotazione:</strong> 5 anni dalla data di check-out (obblighi fiscali)"
+msgstr "<strong>Booking data:</strong> 5 years from the check-out date (tax obligations)"
+
+msgid "<strong>Dati di contatto:</strong> 12 mesi dalla richiesta"
+msgstr "<strong>Contact data:</strong> 12 months from the request"
+
+msgid "<strong>Dati di navigazione:</strong> 26 mesi (Google Analytics)"
+msgstr "<strong>Browsing data:</strong> 26 months (Google Analytics)"
+
+msgid "<strong>Log di sicurezza:</strong> 12 mesi"
+msgstr "<strong>Security logs:</strong> 12 months"
+
+msgid "6. Condivisione dei Dati"
+msgstr "6. Data Sharing"
+
+msgid "I tuoi dati personali possono essere condivisi con:"
+msgstr "Your personal data may be shared with:"
+
+msgid "<strong>Stripe:</strong> per l'elaborazione dei pagamenti (dati transazionali)"
+msgstr "<strong>Stripe:</strong> to process payments (transaction data)"
+
+msgid "<strong>Google:</strong> per analytics (dati anonimizzati, previo tuo consenso) e autenticazione OAuth"
+msgstr "<strong>Google:</strong> for analytics (anonymised data, with your consent) and OAuth authentication"
+
+msgid "<strong>Aruba S.p.A.:</strong> hosting del sito e servizio email"
+msgstr "<strong>Aruba S.p.A.:</strong> site hosting and email service"
+
+msgid "<strong>Autorità competenti:</strong> se richiesto dalla legge"
+msgstr "<strong>Competent authorities:</strong> where required by law"
+
+msgid "<strong>Non vendiamo</strong> i tuoi dati personali a terzi e non li utilizziamo per profilazione commerciale."
+msgstr "<strong>We do not sell</strong> your personal data to third parties and we do not use it for commercial profiling."
+
+msgid "7. Trasferimento dei Dati"
+msgstr "7. Data Transfers"
+
+msgid ""
+"Alcuni servizi di terze parti (Google, Stripe) potrebbero trasferire dati verso paesi extra-UE (Stati Uniti).\n"
+"                        Tali trasferimenti avvengono in conformità al GDPR, sulla base del Data Privacy Framework UE-USA\n"
+"                        o di Clausole Contrattuali Standard approvate dalla Commissione Europea."
+msgstr "Some third-party services (Google, Stripe) may transfer data to countries outside the EU (the United States). Such transfers take place in compliance with the GDPR, on the basis of the EU-US Data Privacy Framework or Standard Contractual Clauses approved by the European Commission."
+
+msgid "8. I Tuoi Diritti"
+msgstr "8. Your Rights"
+
+msgid "In base al GDPR, hai il diritto di:"
+msgstr "Under the GDPR, you have the right to:"
+
+msgid "<strong>Accesso:</strong> ottenere conferma dell'esistenza di dati che ti riguardano e la loro copia"
+msgstr "<strong>Access:</strong> obtain confirmation that data concerning you exists and a copy of it"
+
+msgid "<strong>Rettifica:</strong> correggere dati inesatti o incompleti"
+msgstr "<strong>Rectification:</strong> correct inaccurate or incomplete data"
+
+msgid "<strong>Cancellazione:</strong> richiedere la cancellazione dei tuoi dati (\"diritto all'oblio\")"
+msgstr "<strong>Erasure:</strong> request the deletion of your data (the \"right to be forgotten\")"
+
+msgid "<strong>Limitazione:</strong> limitare il trattamento dei tuoi dati"
+msgstr "<strong>Restriction:</strong> restrict the processing of your data"
+
+msgid "<strong>Portabilità:</strong> ricevere i tuoi dati in formato strutturato"
+msgstr "<strong>Portability:</strong> receive your data in a structured format"
+
+msgid "<strong>Opposizione:</strong> opporti al trattamento per legittimo interesse"
+msgstr "<strong>Objection:</strong> object to processing based on legitimate interest"
+
+msgid "<strong>Revoca del consenso:</strong> revocare il consenso in qualsiasi momento"
+msgstr "<strong>Withdrawal of consent:</strong> withdraw your consent at any time"
+
+#, python-format
+msgid ""
+"Per esercitare i tuoi diritti, contattaci all'indirizzo\n"
+"                        <a href=\"mailto:%(email)s\" class=\"text-tertiary-500 underline\">%(email)s</a>."
+msgstr "To exercise your rights, contact us at <a href=\"mailto:%(email)s\" class=\"text-tertiary-500 underline\">%(email)s</a>."
+
+msgid "Per esercitare i tuoi diritti, contattaci all'indirizzo indicato nella sezione contatti."
+msgstr "To exercise your rights, contact us at the address given in the contact section."
+
+msgid ""
+"Hai inoltre il diritto di proporre reclamo al <strong>Garante per la protezione dei dati personali</strong>\n"
+"                        (<a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">www.garanteprivacy.it</a>)."
+msgstr "You also have the right to lodge a complaint with the <strong>Italian Data Protection Authority</strong> (<a href=\"https://www.garanteprivacy.it\" target=\"_blank\" rel=\"noopener\" class=\"text-tertiary-500 underline\">www.garanteprivacy.it</a>)."
+
+msgid "9. Sicurezza"
+msgstr "9. Security"
+
+msgid "Adottiamo misure tecniche e organizzative appropriate per proteggere i tuoi dati personali:"
+msgstr "We take appropriate technical and organisational measures to protect your personal data:"
+
+msgid "Connessione crittografata (HTTPS/SSL)"
+msgstr "Encrypted connection (HTTPS/SSL)"
+
+msgid "Password memorizzate con hashing sicuro"
+msgstr "Passwords stored with secure hashing"
+
+msgid "Protezione CSRF su tutti i moduli"
+msgstr "CSRF protection on all forms"
+
+msgid "Pagamenti gestiti da Stripe (PCI DSS Level 1)"
+msgstr "Payments handled by Stripe (PCI DSS Level 1)"
+
+msgid "Accesso ai dati limitato al personale autorizzato"
+msgstr "Data access limited to authorised staff"
+
+msgid "10. Cookie"
+msgstr "10. Cookies"
+
+#, python-format
+msgid ""
+"Per informazioni dettagliate sui cookie utilizzati dal nostro sito, consulta la nostra\n"
+"                        <a href=\"%(cookie_policy_url)s\" class=\"text-tertiary-500 underline font-semibold\">Cookie Policy</a>."
+msgstr "For detailed information about the cookies used by our site, see our <a href=\"%(cookie_policy_url)s\" class=\"text-tertiary-500 underline font-semibold\">Cookie Policy</a>."
+
+msgid "11. Modifiche alla Privacy Policy"
+msgstr "11. Changes to this Privacy Policy"
+
+msgid ""
+"Ci riserviamo il diritto di aggiornare questa informativa in qualsiasi momento. Le modifiche saranno\n"
+"                        pubblicate su questa pagina con l'indicazione della data di ultimo aggiornamento. Ti invitiamo a consultare\n"
+"                        periodicamente questa pagina."
+msgstr "We reserve the right to update this notice at any time. Changes will be published on this page together with the date of the last update. We invite you to check this page from time to time."
+
+msgid "12. Contatti"
+msgstr "12. Contact"
+
+msgid "Per qualsiasi domanda sulla nostra Privacy Policy, puoi contattarci:"
+msgstr "For any question about our Privacy Policy, you can contact us:"
+
+#, python-format
+msgid "Termini e condizioni di utilizzo del sito %(site_name)s e di prenotazione dei servizi di ospitalità."
+msgstr "Terms and conditions for using the %(site_name)s website and for booking our hospitality services."
+
+msgid "1. Premessa"
+msgstr "1. Introduction"
+
+#, python-format
+msgid ""
+"I presenti Termini e Condizioni (di seguito \"Termini\") regolano l'utilizzo del sito web\n"
+"                        <strong>altesiasuite.com</strong> (di seguito \"il Sito\") e le condizioni di prenotazione dei servizi di\n"
+"                        ospitalità offerti da <strong>%(site_name)s</strong> (di seguito \"la Struttura\")."
+msgstr "These Terms and Conditions (hereinafter the \"Terms\") govern the use of the website <strong>altesiasuite.com</strong> (hereinafter \"the Site\") and the conditions for booking the hospitality services offered by <strong>%(site_name)s</strong> (hereinafter \"the Property\")."
+
+msgid ""
+"Utilizzando il Sito e/o effettuando una prenotazione, l'utente accetta integralmente i presenti Termini.\n"
+"                        Se non accetti questi Termini, ti invitiamo a non utilizzare il Sito."
+msgstr "By using the Site and/or making a booking, you fully accept these Terms. If you do not accept these Terms, please do not use the Site."
+
+msgid "2. Definizioni"
+msgstr "2. Definitions"
+
+msgid "<strong>\"Ospite\":</strong> la persona che effettua una prenotazione"
+msgstr "<strong>\"Guest\":</strong> the person who makes a booking"
+
+msgid "<strong>\"Prenotazione\":</strong> la richiesta di soggiorno confermata dal pagamento dell'acconto"
+msgstr "<strong>\"Booking\":</strong> the stay request confirmed by payment of the deposit"
+
+#, python-format
+msgid "<strong>\"Acconto\":</strong> il 30%% dell'importo totale del soggiorno, dovuto al momento della prenotazione"
+msgstr "<strong>\"Deposit\":</strong> 30%% of the total amount of the stay, payable at the time of booking"
+
+#, python-format
+msgid "<strong>\"Saldo\":</strong> il restante 70%% dell'importo totale, da corrispondere al check-in"
+msgstr "<strong>\"Balance\":</strong> the remaining 70%% of the total amount, payable at check-in"
+
+msgid "<strong>\"Unità\":</strong> l'alloggio prenotato (suite, appartamento, camera)"
+msgstr "<strong>\"Unit\":</strong> the accommodation booked (suite, apartment, room)"
+
+msgid "3. Prenotazioni"
+msgstr "3. Bookings"
+
+msgid "3.1 Come prenotare"
+msgstr "3.1 How to book"
+
+msgid ""
+"Le prenotazioni possono essere effettuate tramite il Sito seguendo la procedura guidata.\n"
+"                        La prenotazione è confermata al ricevimento del pagamento dell'acconto."
+msgstr "Bookings can be made through the Site by following the guided process. A booking is confirmed once payment of the deposit is received."
+
+msgid "3.2 Requisiti"
+msgstr "3.2 Requirements"
+
+msgid "L'Ospite deve avere almeno 18 anni di età"
+msgstr "The Guest must be at least 18 years old"
+
+msgid "Sono richiesti dati di contatto validi (email e telefono)"
+msgstr "Valid contact details are required (email and phone)"
+
+msgid "Il numero di ospiti non può superare la capienza massima dell'unità"
+msgstr "The number of guests may not exceed the maximum capacity of the unit"
+
+msgid "È richiesto un soggiorno minimo (indicato nella scheda dell'unità)"
+msgstr "A minimum stay is required (shown on the unit's page)"
+
+msgid "3.3 Conferma"
+msgstr "3.3 Confirmation"
+
+msgid ""
+"Dopo la prenotazione riceverai un'email di conferma con il riepilogo del soggiorno e il numero\n"
+"                        di prenotazione. Ti invitiamo a conservare questa email."
+msgstr "After booking you will receive a confirmation email with a summary of your stay and your booking number. Please keep this email."
+
+msgid "4. Prezzi e Pagamenti"
+msgstr "4. Prices and Payments"
+
+msgid "4.1 Prezzi"
+msgstr "4.1 Prices"
+
+msgid ""
+"I prezzi indicati sul Sito sono per notte e possono variare in base alla stagione e al periodo.\n"
+"                        Il prezzo totale include il costo del soggiorno e le eventuali pulizie finali.\n"
+"                        L'importo esatto è calcolato e mostrato prima della conferma della prenotazione."
+msgstr "The prices shown on the Site are per night and may vary depending on the season and the period. The total price includes the cost of the stay and any final cleaning. The exact amount is calculated and shown before the booking is confirmed."
+
+msgid "4.2 Acconto"
+msgstr "4.2 Deposit"
+
+#, python-format
+msgid ""
+"Al momento della prenotazione è richiesto il pagamento di un acconto pari al <strong>30%%</strong>\n"
+"                        del totale del soggiorno. Il pagamento avviene tramite <strong>Stripe</strong>, un sistema di pagamento\n"
+"                        sicuro e certificato PCI DSS Level 1."
+msgstr "At the time of booking, a deposit of <strong>30%%</strong> of the total stay is required. Payment is made through <strong>Stripe</strong>, a secure payment system certified to PCI DSS Level 1."
+
+msgid "4.3 Saldo"
+msgstr "4.3 Balance"
+
+#, python-format
+msgid ""
+"Il saldo (70%% rimanente) dovrà essere corrisposto al momento del check-in, con le modalità\n"
+"                        che saranno comunicate dalla Struttura."
+msgstr "The balance (the remaining 70%%) must be paid at check-in, using the methods communicated by the Property."
+
+msgid "4.4 Fatturazione"
+msgstr "4.4 Invoicing"
+
+msgid ""
+"Per richiedere fattura, è necessario comunicare i dati fiscali al momento della prenotazione\n"
+"                        o al più tardi al check-in."
+msgstr "To request an invoice, you must provide your tax details at the time of booking or at the latest at check-in."
+
+msgid "5. Cancellazione e Rimborsi"
+msgstr "5. Cancellations and Refunds"
+
+msgid "5.1 Cancellazione da parte dell'Ospite"
+msgstr "5.1 Cancellation by the Guest"
+
+msgid "<strong>Oltre 30 giorni prima del check-in:</strong> rimborso completo dell'acconto"
+msgstr "<strong>More than 30 days before check-in:</strong> full refund of the deposit"
+
+#, python-format
+msgid "<strong>Da 15 a 30 giorni prima del check-in:</strong> rimborso del 50%% dell'acconto"
+msgstr "<strong>From 15 to 30 days before check-in:</strong> 50%% refund of the deposit"
+
+msgid "<strong>Meno di 15 giorni prima del check-in:</strong> nessun rimborso dell'acconto"
+msgstr "<strong>Less than 15 days before check-in:</strong> no refund of the deposit"
+
+msgid "<strong>No-show (mancata presentazione):</strong> nessun rimborso"
+msgstr "<strong>No-show:</strong> no refund"
+
+msgid "5.2 Cancellazione da parte della Struttura"
+msgstr "5.2 Cancellation by the Property"
+
+msgid ""
+"La Struttura si riserva il diritto di cancellare una prenotazione in caso di forza maggiore,\n"
+"                        problemi tecnici all'immobile o altre circostanze eccezionali. In tal caso, l'Ospite riceverà\n"
+"                        il rimborso integrale dell'acconto e, dove possibile, una proposta di date alternative."
+msgstr "The Property reserves the right to cancel a booking in the event of force majeure, technical problems with the building or other exceptional circumstances. In that case the Guest will receive a full refund of the deposit and, where possible, an offer of alternative dates."
+
+msgid "6. Check-in e Check-out"
+msgstr "6. Check-in and Check-out"
+
+msgid "<strong>Check-in:</strong> dalle ore 15:00 alle ore 20:00"
+msgstr "<strong>Check-in:</strong> from 3:00 PM to 8:00 PM"
+
+msgid "<strong>Check-out:</strong> entro le ore 10:00"
+msgstr "<strong>Check-out:</strong> by 10:00 AM"
+
+msgid ""
+"Orari diversi possono essere concordati previo contatto con la Struttura, compatibilmente con\n"
+"                        la disponibilità. Il check-in tardivo (dopo le 20:00) deve essere comunicato in anticipo."
+msgstr "Different times can be agreed by contacting the Property in advance, subject to availability. Late check-in (after 8:00 PM) must be notified in advance."
+
+msgid "7. Regole della Struttura"
+msgstr "7. House Rules"
+
+msgid "L'Ospite si impegna a:"
+msgstr "The Guest undertakes to:"
+
+msgid "Rispettare la quiete, in particolare dalle 22:00 alle 08:00"
+msgstr "Respect quiet hours, in particular from 10:00 PM to 8:00 AM"
+
+msgid "Non superare il numero massimo di ospiti indicato nella prenotazione"
+msgstr "Not exceed the maximum number of guests stated in the booking"
+
+msgid "Non organizzare feste o eventi senza autorizzazione scritta"
+msgstr "Not hold parties or events without written permission"
+
+msgid "Rispettare gli spazi comuni e le pertinenze"
+msgstr "Respect the common areas and grounds"
+
+msgid "Segnalare tempestivamente eventuali guasti o danni"
+msgstr "Promptly report any faults or damage"
+
+msgid "Lasciare l'alloggio in condizioni ragionevolmente ordinate al check-out"
+msgstr "Leave the accommodation in reasonably tidy condition at check-out"
+
+msgid "8. Danni e Responsabilità"
+msgstr "8. Damage and Liability"
+
+msgid ""
+"L'Ospite è responsabile per eventuali danni causati all'unità, agli arredi o alle pertinenze\n"
+"                        durante il soggiorno. In caso di danni, la Struttura si riserva il diritto di richiedere il risarcimento\n"
+"                        dei costi di riparazione o sostituzione."
+msgstr "The Guest is liable for any damage caused to the unit, its furnishings or the grounds during the stay. In the event of damage, the Property reserves the right to claim the cost of repair or replacement."
+
+msgid ""
+"La Struttura non è responsabile per oggetti di valore lasciati incustoditi o per perdite/danni\n"
+"                        non imputabili alla Struttura stessa."
+msgstr "The Property is not liable for valuables left unattended, or for loss or damage not attributable to the Property itself."
+
+msgid "9. Utilizzo del Sito"
+msgstr "9. Use of the Site"
+
+msgid "L'utente si impegna a:"
+msgstr "The user undertakes to:"
+
+msgid "Fornire dati veritieri e accurati"
+msgstr "Provide truthful and accurate information"
+
+msgid "Non tentare di accedere ad aree non autorizzate del Sito"
+msgstr "Not attempt to access unauthorised areas of the Site"
+
+msgid "Non utilizzare il Sito per scopi illeciti"
+msgstr "Not use the Site for unlawful purposes"
+
+msgid "Non inviare contenuti offensivi, diffamatori o illeciti tramite i moduli di contatto"
+msgstr "Not send offensive, defamatory or unlawful content through the contact forms"
+
+msgid "10. Proprietà Intellettuale"
+msgstr "10. Intellectual Property"
+
+#, python-format
+msgid ""
+"Tutti i contenuti del Sito (testi, immagini, loghi, grafica, design) sono di proprietà di\n"
+"                        %(site_name)s o dei rispettivi titolari dei diritti e sono protetti dalle leggi sul diritto d'autore.\n"
+"                        È vietata la riproduzione, distribuzione o modifica senza autorizzazione scritta."
+msgstr "All content on the Site (text, images, logos, graphics, design) belongs to %(site_name)s or the respective rights holders and is protected by copyright law. Reproduction, distribution or modification without written permission is prohibited."
+
+msgid "11. Legge Applicabile e Foro Competente"
+msgstr "11. Governing Law and Jurisdiction"
+
+msgid ""
+"I presenti Termini sono regolati dalla legge italiana. Per qualsiasi controversia derivante\n"
+"                        dall'utilizzo del Sito o dai servizi offerti, sarà competente il Foro del luogo di residenza\n"
+"                        del consumatore, come previsto dal Codice del Consumo (D.Lgs. 206/2005)."
+msgstr "These Terms are governed by Italian law. Any dispute arising from the use of the Site or the services offered shall fall under the jurisdiction of the court of the consumer's place of residence, as provided by the Italian Consumer Code (Legislative Decree 206/2005)."
+
+msgid "12. Modifiche ai Termini"
+msgstr "12. Changes to the Terms"
+
+msgid ""
+"La Struttura si riserva il diritto di modificare i presenti Termini in qualsiasi momento.\n"
+"                        Le modifiche saranno pubblicate su questa pagina e saranno efficaci dalla data di pubblicazione.\n"
+"                        L'uso continuato del Sito dopo la pubblicazione delle modifiche costituisce accettazione dei nuovi Termini."
+msgstr "The Property reserves the right to amend these Terms at any time. Changes will be published on this page and will take effect from the date of publication. Continued use of the Site after changes are published constitutes acceptance of the new Terms."
+
+msgid "13. Contatti"
+msgstr "13. Contact"
+
+msgid "Per qualsiasi domanda su questi Termini, puoi contattarci:"
+msgstr "For any question about these Terms, you can contact us:"
+
+msgid "Sito in Manutenzione"
+msgstr "Site Under Maintenance"
+
+msgid "Stiamo lavorando per offrirti un'esperienza migliore"
+msgstr "We are working to offer you a better experience"
+
+msgid ""
+"Il nostro sito è temporaneamente non disponibile per manutenzione programmata.\n"
+"                Stiamo implementando importanti miglioramenti per garantirti un servizio ancora più efficiente."
+msgstr "Our site is temporarily unavailable for scheduled maintenance. We are rolling out important improvements to give you an even better service."
+
+msgid "Ci scusiamo per l'inconveniente e ti invitiamo a riprovare tra poco."
+msgstr "We apologise for the inconvenience and invite you to try again shortly."
+
+msgid "Per informazioni urgenti, contattaci:"
+msgstr "For urgent enquiries, contact us:"
+
+msgid "Torneremo online a breve..."
+msgstr "We'll be back online shortly..."

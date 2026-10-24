@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Completa il tuo profilo - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Completa il tuo profilo" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16 flex items-center">
@@ -9,10 +9,10 @@
         <div class="max-w-md mx-auto">
             <div class="bg-white rounded-xl shadow-lg p-8">
                 <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6 text-center">
-                    Benvenuto!
+                    {% translate "Benvenuto!" %}
                 </h2>
                 <p class="text-primary-600 text-center mb-6">
-                    Per completare la registrazione, inserisci il tuo numero di telefono:
+                    {% translate "Per completare la registrazione, inserisci il tuo numero di telefono:" %}
                 </p>
                 <form method="post" class="space-y-6">
                     {% csrf_token %}
@@ -25,7 +25,7 @@
                         {% endif %}
                     </div>
                     <button type="submit" class="btn-primary w-full">
-                        Salva e continua
+                        {% translate "Salva e continua" %}
                     </button>
                 </form>
             </div>

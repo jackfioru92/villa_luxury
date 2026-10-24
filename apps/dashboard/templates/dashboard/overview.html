@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Dashboard Admin - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Dashboard Admin" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -11,10 +11,10 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>
                 <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
-                    Dashboard
+                    {% translate "Dashboard" %}
                 </h1>
                 <p class="text-primary-600 mt-2">
-                    Benvenuto, {{ user.first_name|default:user.email }}
+                    {% blocktranslate with name=user.first_name|default:user.email %}Benvenuto, {{ name }}{% endblocktranslate %}
                 </p>
             </div>
             <div class="mt-4 md:mt-0">
@@ -25,7 +25,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
-                    Admin Django
+                    {% translate "Admin Django" %}
                 </a>
             </div>
         </div>
@@ -41,7 +41,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
-                        <span class="font-medium text-primary-900">Panoramica</span>
+                        <span class="font-medium text-primary-900">{% translate "Panoramica" %}</span>
                     </a>
                     <a href="{% url 'dashboard:booking_list' %}" 
                        class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
@@ -49,7 +49,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
-                        <span class="text-primary-600">Prenotazioni</span>
+                        <span class="text-primary-600">{% translate "Prenotazioni" %}</span>
                         {% if pending_count > 0 %}
                         <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
                             {{ pending_count }}
@@ -62,7 +62,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="text-primary-600">Calendario</span>
+                        <span class="text-primary-600">{% translate "Calendario" %}</span>
                     </a>
                     <a href="{% url 'dashboard:block_dates' %}" 
                        class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
@@ -70,7 +70,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
                         </svg>
-                        <span class="text-primary-600">Blocca Date</span>
+                        <span class="text-primary-600">{% translate "Blocca Date" %}</span>
                     </a>
                     <a href="{% url 'dashboard:reports' %}" 
                        class="flex items-center space-x-3 px-6 py-4 hover:bg-primary-50 transition-colors">
@@ -78,7 +78,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
-                        <span class="text-primary-600">Report</span>
+                        <span class="text-primary-600">{% translate "Report" %}</span>
                     </a>
                 </nav>
             </div>
@@ -91,7 +91,7 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-primary-500">Prenotazioni Oggi</p>
+                                <p class="text-sm text-primary-500">{% translate "Prenotazioni Oggi" %}</p>
                                 <p class="text-3xl font-semibold text-primary-900 mt-1">{{ today_bookings|default:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -106,7 +106,7 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-primary-500">Check-in Oggi</p>
+                                <p class="text-sm text-primary-500">{% translate "Check-in Oggi" %}</p>
                                 <p class="text-3xl font-semibold text-primary-900 mt-1">{{ today_checkins|default:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -121,7 +121,7 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-primary-500">Check-out Oggi</p>
+                                <p class="text-sm text-primary-500">{% translate "Check-out Oggi" %}</p>
                                 <p class="text-3xl font-semibold text-primary-900 mt-1">{{ today_checkouts|default:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
@@ -136,7 +136,7 @@
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-primary-500">Fatturato Mese</p>
+                                <p class="text-sm text-primary-500">{% translate "Fatturato Mese" %}</p>
                                 <p class="text-3xl font-semibold text-primary-900 mt-1">€{{ month_revenue|default:0|floatformat:0 }}</p>
                             </div>
                             <div class="w-12 h-12 bg-tertiary-100 rounded-full flex items-center justify-center">
@@ -155,9 +155,9 @@
                     <!-- Recent Bookings -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                         <div class="px-6 py-4 border-b border-primary-100 flex items-center justify-between">
-                            <h2 class="font-semibold text-primary-900">Ultime Prenotazioni</h2>
+                            <h2 class="font-semibold text-primary-900">{% translate "Ultime Prenotazioni" %}</h2>
                             <a href="{% url 'dashboard:booking_list' %}" class="text-sm text-tertiary-500 hover:underline">
-                                Vedi tutte →
+                                {% translate "Vedi tutte →" %}
                             </a>
                         </div>
                         <div class="divide-y divide-villa-100">
@@ -180,7 +180,7 @@
                             </div>
                             {% empty %}
                             <div class="px-6 py-8 text-center text-primary-500">
-                                Nessuna prenotazione recente
+                                {% translate "Nessuna prenotazione recente" %}
                             </div>
                             {% endfor %}
                         </div>
@@ -189,7 +189,7 @@
                     <!-- Quick Actions -->
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                         <div class="px-6 py-4 border-b border-primary-100">
-                            <h2 class="font-semibold text-primary-900">Azioni Rapide</h2>
+                            <h2 class="font-semibold text-primary-900">{% translate "Azioni Rapide" %}</h2>
                         </div>
                         <div class="p-6 space-y-4">
                             <a href="{% url 'dashboard:block_dates' %}" 
@@ -201,8 +201,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-primary-900">Blocca Date</p>
-                                    <p class="text-sm text-primary-500">Rendi non disponibili date specifiche</p>
+                                    <p class="font-medium text-primary-900">{% translate "Blocca Date" %}</p>
+                                    <p class="text-sm text-primary-500">{% translate "Rendi non disponibili date specifiche" %}</p>
                                 </div>
                             </a>
                             
@@ -215,8 +215,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-primary-900">Gestisci Prezzi</p>
-                                    <p class="text-sm text-primary-500">Modifica prezzi stagionali</p>
+                                    <p class="font-medium text-primary-900">{% translate "Gestisci Prezzi" %}</p>
+                                    <p class="text-sm text-primary-500">{% translate "Modifica prezzi stagionali" %}</p>
                                 </div>
                             </a>
                             
@@ -229,8 +229,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium text-primary-900">Esporta Report</p>
-                                    <p class="text-sm text-primary-500">Scarica statistiche e prenotazioni</p>
+                                    <p class="font-medium text-primary-900">{% translate "Esporta Report" %}</p>
+                                    <p class="text-sm text-primary-500">{% translate "Scarica statistiche e prenotazioni" %}</p>
                                 </div>
                             </a>
                         </div>
@@ -240,18 +240,18 @@
                 <!-- Upcoming Check-ins -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-primary-100">
-                        <h2 class="font-semibold text-primary-900">Prossimi Arrivi (7 giorni)</h2>
+                        <h2 class="font-semibold text-primary-900">{% translate "Prossimi Arrivi (7 giorni)" %}</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <thead class="bg-primary-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Check-in</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Ospite</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Unità</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Notti</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Totale</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">Azioni</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Check-in" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Ospite" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Unità" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Notti" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Totale" %}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">{% translate "Azioni" %}</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-villa-100">
@@ -280,14 +280,14 @@
                                     <td class="px-6 py-4 text-right">
                                         <a href="{% url 'dashboard:booking_detail' booking.id %}" 
                                            class="text-tertiary-500 hover:underline text-sm">
-                                            Dettagli
+                                            {% translate "Dettagli" %}
                                         </a>
                                     </td>
                                 </tr>
                                 {% empty %}
                                 <tr>
                                     <td colspan="6" class="px-6 py-8 text-center text-primary-500">
-                                        Nessun arrivo previsto nei prossimi 7 giorni
+                                        {% translate "Nessun arrivo previsto nei prossimi 7 giorni" %}
                                     </td>
                                 </tr>
                                 {% endfor %}

@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 <!-- Footer -->
 <footer class="bg-primary-900 text-white">
@@ -10,7 +10,7 @@
             <div class="lg:col-span-1">
                 <h3 class="text-2xl font-serif font-semibold mb-4">{{ SITE_NAME|default:"Villa Luxury" }}</h3>
                 <p class="text-primary-300 mb-6">
-                    {{ site_settings.site_description|default:"Un'esperienza di lusso unica nel cuore dell'Italia. Scopri la bellezza della vita in villa." }}
+                    {{ site_settings.site_description|default:_("Un'esperienza di lusso unica nel cuore dell'Italia. Scopri la bellezza della vita in villa.") }}
                 </p>
                 
                 <!-- Social Links -->
@@ -36,18 +36,18 @@
             
             <!-- Quick Links -->
             <div>
-                <h4 class="text-lg font-semibold mb-4">Link Utili</h4>
+                <h4 class="text-lg font-semibold mb-4">{% translate "Link Utili" %}</h4>
                 <ul class="space-y-3">
-                    <li><a href="{% url 'villa:list' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">La Villa</a></li>
-                    <li><a href="{% url 'villa:gallery' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">Gallery</a></li>
-                    <li><a href="{% url 'booking:wizard' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">Prenota</a></li>
-                    <li><a href="{% url 'core:contact' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">Contatti</a></li>
+                    <li><a href="{% url 'villa:list' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">{% translate "La Villa" %}</a></li>
+                    <li><a href="{% url 'villa:gallery' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">{% translate "Gallery" %}</a></li>
+                    <li><a href="{% url 'booking:wizard' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">{% translate "Prenota" %}</a></li>
+                    <li><a href="{% url 'core:contact' %}" class="text-primary-300 hover:text-tertiary-400 transition-colors">{% translate "Contatti" %}</a></li>
                 </ul>
             </div>
             
             <!-- Contact Info -->
             <div>
-                <h4 class="text-lg font-semibold mb-4">Contatti</h4>
+                <h4 class="text-lg font-semibold mb-4">{% translate "Contatti" %}</h4>
                 <ul class="space-y-3 text-primary-300">
                     {% if site_settings.phone %}
                     <li class="flex items-center">
@@ -84,15 +84,15 @@
             
             <!-- Newsletter -->
             <div>
-                <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
-                <p class="text-primary-300 mb-4">Iscriviti per ricevere offerte esclusive e novità.</p>
+                <h4 class="text-lg font-semibold mb-4">{% translate "Newsletter" %}</h4>
+                <p class="text-primary-300 mb-4">{% translate "Iscriviti per ricevere offerte esclusive e novità." %}</p>
                 <div id="newsletter-form-container">
                     <form hx-post="{% url 'core:newsletter_subscribe' %}" 
                           hx-target="#newsletter-form-container" 
                           hx-swap="innerHTML"
                           class="space-y-3">
                         {% csrf_token %}
-                        <input type="email" name="email" required placeholder="La tua email" 
+                        <input type="email" name="email" required placeholder="{% translate "La tua email" %}" 
                                class="w-full px-4 py-3 bg-primary-800 border border-primary-700 rounded-sm 
                                       text-white placeholder-villa-400 focus:outline-none focus:border-tertiary-500">
                         <button type="submit" 
@@ -104,7 +104,7 @@
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                                 </svg>
                             </span>
-                            Iscriviti
+                            {% translate "Iscriviti" %}
                         </button>
                     </form>
                 </div>
@@ -115,12 +115,12 @@
     <!-- Bottom Bar -->
     <div class="border-t border-primary-800">
         <div class="container mx-auto px-4 lg:px-8 py-6">
-            <div class="flex flex-col md:flex-row justify-between items-center text-primary-400 text-sm">
-                <p>&copy; {% now "Y" %} {{ SITE_NAME|default:"Villa Luxury" }}. Tutti i diritti riservati.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-primary-400 text-sm">
+                <p>&copy; {% now "Y" %} {{ SITE_NAME|default:"Villa Luxury" }}. {% translate "Tutti i diritti riservati." %}</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="{% url 'core:privacy' %}" class="hover:text-tertiary-400 transition-colors">Privacy Policy</a>
-                    <a href="{% url 'core:cookie_policy' %}" class="hover:text-tertiary-400 transition-colors">Cookie Policy</a>
-                    <a href="{% url 'core:terms' %}" class="hover:text-tertiary-400 transition-colors">Termini e Condizioni</a>
+                    <a href="{% url 'core:privacy' %}" class="hover:text-tertiary-400 transition-colors">{% translate "Privacy Policy" %}</a>
+                    <a href="{% url 'core:cookie_policy' %}" class="hover:text-tertiary-400 transition-colors">{% translate "Cookie Policy" %}</a>
+                    <a href="{% url 'core:terms' %}" class="hover:text-tertiary-400 transition-colors">{% translate "Termini e Condizioni" %}</a>
                     {% if user.is_staff %}
                     <a href="{% url 'dashboard:overview' %}" class="hover:text-tertiary-400 transition-colors">
                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,9 +128,12 @@
                                   d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        Area Admin
+                        {% translate "Area Admin" %}
                     </a>
                     {% endif %}
+
+                    <!-- Selettore lingua -->
+                    {% include 'components/language_switcher.html' with ns="foot" %}
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static l10n %}
+{% load static l10n i18n %}
 
-{% block title %}Prenota - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Prenota" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -10,10 +10,10 @@
         <!-- Header -->
         <div class="text-center mb-12">
             <h1 class="text-4xl lg:text-5xl font-serif font-semibold text-primary-900">
-                Prenota il Tuo Soggiorno
+                {% translate "Prenota il Tuo Soggiorno" %}
             </h1>
             <p class="text-primary-600 text-lg mt-4">
-                Seleziona le date e completa la prenotazione in pochi semplici passi.
+                {% translate "Seleziona le date e completa la prenotazione in pochi semplici passi." %}
             </p>
         </div>
         
@@ -60,7 +60,7 @@
                 <div x-show="currentStep === 1" x-transition>
                     <div class="p-8">
                         <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
-                            Seleziona la Sistemazione
+                            {% translate "Seleziona la Sistemazione" %}
                         </h2>
                         
                         <div class="grid md:grid-cols-2 gap-6">
@@ -78,18 +78,18 @@
                                         <h3 class="font-semibold text-primary-900">{{ unit.name }}</h3>
                                         <p class="text-sm text-primary-600 mt-1">{{ unit.description_short|truncatewords:15 }}</p>
                                         <div class="flex items-center space-x-3 mt-2 text-sm text-primary-500">
-                                            <span>{{ unit.max_guests }} ospiti</span>
-                                            <span>{{ unit.bedrooms }} camere</span>
+                                            <span>{% blocktranslate with guests=unit.max_guests %}{{ guests }} ospiti{% endblocktranslate %}</span>
+                                            <span>{% blocktranslate with bedrooms=unit.bedrooms %}{{ bedrooms }} camere{% endblocktranslate %}</span>
                                         </div>
                                         <div class="mt-2">
-                                            <span class="text-sm text-primary-500">Colazione inclusa</span>
+                                            <span class="text-sm text-primary-500">{% translate "Colazione inclusa" %}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% empty %}
                             <p class="text-primary-600 col-span-2 text-center py-8">
-                                Nessuna unità disponibile al momento.
+                                {% translate "Nessuna unità disponibile al momento." %}
                             </p>
                             {% endfor %}
                         </div>
@@ -101,14 +101,14 @@
                 <div x-show="currentStep === 2" x-transition>
                     <div class="p-8">
                         <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
-                            Seleziona le Date
+                            {% translate "Seleziona le Date" %}
                         </h2>
                         
                         <div class="max-w-2xl">
                             <!-- Date Inputs + Calendar -->
                             <div class="space-y-6">
                                 <div>
-                                    <label class="form-label">Check-in</label>
+                                    <label class="form-label">{% translate "Check-in" %}</label>
                                     <input type="date" 
                                            x-model="checkIn"
                                            :min="minDate"
@@ -116,7 +116,7 @@
                                            class="form-input">
                                 </div>
                                 <div>
-                                    <label class="form-label">Check-out</label>
+                                    <label class="form-label">{% translate "Check-out" %}</label>
                                     <input type="date" 
                                            x-model="checkOut"
                                            :min="checkIn || minDate"
@@ -124,10 +124,10 @@
                                            class="form-input">
                                 </div>
                                 <div>
-                                    <label class="form-label">Numero Ospiti</label>
+                                    <label class="form-label">{% translate "Numero Ospiti" %}</label>
                                     <select x-model="numGuests" @change="updatePrice()" class="form-input">
                                         <template x-for="n in 15" :key="n">
-                                            <option :value="n" x-text="n + (n === 1 ? ' ospite' : ' ospiti')"></option>
+                                            <option :value="n" x-text="n + ' ' + (n === 1 ? guestLabelSingular : guestLabelPlural)"></option>
                                         </template>
                                     </select>
                                 </div>
@@ -139,14 +139,14 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        Soggiorno minimo: <strong x-text="minNights"></strong> notti
+                                        {% translate "Soggiorno minimo:" %} <strong x-text="minNights"></strong> {% translate "notti" %}
                                     </p>
                                 </div>
 
                                 <!-- Availability Calendar -->
                                 <div>
                                     <h3 class="text-sm font-semibold text-primary-700 uppercase tracking-wider mb-3">
-                                        Disponibilità
+                                        {% translate "Disponibilità" %}
                                     </h3>
                                     <div id="availability-calendar"
                                          x-init="$watch('selectedUnit', value => { if(value) loadCalendar() })"
@@ -156,7 +156,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
-                                            Seleziona una sistemazione per vedere la disponibilità
+                                            {% translate "Seleziona una sistemazione per vedere la disponibilità" %}
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
                 <div x-show="currentStep === 3" x-transition>
                     <div class="p-8">
                         <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
-                            I Tuoi Dati
+                            {% translate "I Tuoi Dati" %}
                         </h2>
                         
                         {% if user.is_authenticated %}
@@ -187,7 +187,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                           d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Ciao <strong>{{ user.first_name }}</strong>! I tuoi dati sono stati precompilati.
+                                {% blocktranslate with first_name=user.first_name %}Ciao <strong>{{ first_name }}</strong>! I tuoi dati sono stati precompilati.{% endblocktranslate %}
                             </p>
                         </div>
                         {% endif %}
@@ -195,13 +195,13 @@
                         <form id="guest-form" class="space-y-6">
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="form-label">Nome *</label>
+                                    <label class="form-label">{% translate "Nome" %} *</label>
                                     <input type="text" name="first_name" required
                                            x-model="guestFirstName"
                                            class="form-input" placeholder="Mario">
                                 </div>
                                 <div>
-                                    <label class="form-label">Cognome *</label>
+                                    <label class="form-label">{% translate "Cognome" %} *</label>
                                     <input type="text" name="last_name" required
                                            x-model="guestLastName"
                                            class="form-input" placeholder="Rossi">
@@ -210,13 +210,13 @@
                             
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="form-label">Email *</label>
+                                    <label class="form-label">{% translate "Email" %} *</label>
                                     <input type="email" name="email" required
                                            x-model="guestEmail"
                                            class="form-input" placeholder="mario.rossi@email.com">
                                 </div>
                                 <div>
-                                    <label class="form-label">Telefono *</label>
+                                    <label class="form-label">{% translate "Telefono" %} *</label>
                                     <input type="tel" name="phone" required
                                            x-model="guestPhone"
                                            class="form-input" placeholder="+39 333 1234567">
@@ -224,39 +224,39 @@
                             </div>
                             
                             <div>
-                                <label class="form-label">Paese</label>
+                                <label class="form-label">{% translate "Paese" %}</label>
                                 <input type="text" name="country"
                                        x-model="guestCountry"
-                                       class="form-input" placeholder="Italia">
+                                       class="form-input" placeholder="{% translate "Italia" %}">
                             </div>
                             
                             <div>
-                                <label class="form-label">Orario di arrivo previsto</label>
+                                <label class="form-label">{% translate "Orario di arrivo previsto" %}</label>
                                 <input type="time" name="arrival_time"
                                        x-model="guestArrivalTime"
                                        class="form-input">
                             </div>
                             
                             <div>
-                                <label class="form-label">Note o richieste speciali</label>
+                                <label class="form-label">{% translate "Note o richieste speciali" %}</label>
                                 <textarea name="notes" rows="3"
                                           x-model="guestNotes"
-                                          class="form-input" placeholder="Eventuali richieste..."></textarea>
+                                          class="form-input" placeholder="{% translate "Eventuali richieste..." %}"></textarea>
                             </div>
 
                             <div>
-                                <span class="form-label block">Esperienze di interesse</span>
+                                <span class="form-label block">{% translate "Esperienze di interesse" %}</span>
                                 <p class="text-xs text-primary-500 mb-3">
-                                    Seleziona le esperienze che vorresti prenotare (facoltativo).
-                                    Ti ricontatteremo per organizzarle.
+                                    {% blocktranslate %}Seleziona le esperienze che vorresti prenotare (facoltativo).
+                                    Ti ricontatteremo per organizzarle.{% endblocktranslate %}
                                 </p>
                                 <div class="grid sm:grid-cols-2 gap-3">
-                                    {% for experience in EXPERIENCES %}
+                                    {% for experience_value, experience_label in EXPERIENCES %}
                                     <label class="flex items-center gap-3 p-3 border border-primary-200 rounded-lg bg-white cursor-pointer hover:border-tertiary-400 transition-colors">
-                                        <input type="checkbox" value="{{ experience }}"
+                                        <input type="checkbox" value="{{ experience_value }}"
                                                x-model="selectedExperiences"
                                                class="h-5 w-5 rounded border-primary-300 text-tertiary-500 focus:ring-tertiary-500">
-                                        <span class="text-sm text-primary-700">{{ experience }}</span>
+                                        <span class="text-sm text-primary-700">{{ experience_label }}</span>
                                     </label>
                                     {% endfor %}
                                 </div>
@@ -268,7 +268,8 @@
                                            x-model="termsAccepted"
                                            class="mt-1 w-5 h-5 rounded border-primary-300 text-tertiary-500 focus:ring-gold-500">
                                     <span class="text-sm text-primary-600">
-                                        Accetto i <a href="{% url 'core:terms' %}" target="_blank" class="text-tertiary-500 underline">Termini e Condizioni</a> *
+                                        {% url 'core:terms' as terms_url %}
+                                        {% blocktranslate %}Accetto i <a href="{{ terms_url }}" target="_blank" class="text-tertiary-500 underline">Termini e Condizioni</a>{% endblocktranslate %} *
                                     </span>
                                 </label>
                                 <label class="flex items-start space-x-3 cursor-pointer">
@@ -276,7 +277,8 @@
                                            x-model="privacyAccepted"
                                            class="mt-1 w-5 h-5 rounded border-primary-300 text-tertiary-500 focus:ring-gold-500">
                                     <span class="text-sm text-primary-600">
-                                        Accetto la <a href="{% url 'core:privacy' %}" target="_blank" class="text-tertiary-500 underline">Privacy Policy</a> *
+                                        {% url 'core:privacy' as privacy_url %}
+                                        {% blocktranslate %}Accetto la <a href="{{ privacy_url }}" target="_blank" class="text-tertiary-500 underline">Privacy Policy</a>{% endblocktranslate %} *
                                     </span>
                                 </label>
                             </div>
@@ -288,38 +290,38 @@
                 <div x-show="currentStep === 4" x-transition>
                     <div class="p-8">
                         <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">
-                            Riepilogo e Pagamento
+                            {% translate "Riepilogo e Pagamento" %}
                         </h2>
                         
                         <!-- Booking Summary -->
                         <div class="bg-primary-50 rounded-lg p-6 mb-8">
-                            <h3 class="font-semibold text-primary-900 mb-4">Riepilogo Prenotazione</h3>
+                            <h3 class="font-semibold text-primary-900 mb-4">{% translate "Riepilogo Prenotazione" %}</h3>
                             <dl class="space-y-3">
                                 <div class="flex justify-between">
-                                    <dt class="text-primary-600">Sistemazione:</dt>
+                                    <dt class="text-primary-600">{% translate "Sistemazione:" %}</dt>
                                     <dd class="font-medium" x-text="selectedUnitName"></dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-primary-600">Check-in:</dt>
+                                    <dt class="text-primary-600">{% translate "Check-in:" %}</dt>
                                     <dd class="font-medium" x-text="formatDate(checkIn)"></dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-primary-600">Check-out:</dt>
+                                    <dt class="text-primary-600">{% translate "Check-out:" %}</dt>
                                     <dd class="font-medium" x-text="formatDate(checkOut)"></dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-primary-600">Ospiti:</dt>
+                                    <dt class="text-primary-600">{% translate "Ospiti:" %}</dt>
                                     <dd class="font-medium" x-text="numGuests"></dd>
                                 </div>
                                 <template x-if="selectedExperiences.length">
                                     <div class="flex justify-between">
-                                        <dt class="text-primary-600">Esperienze:</dt>
+                                        <dt class="text-primary-600">{% translate "Esperienze:" %}</dt>
                                         <dd class="font-medium text-right" x-text="selectedExperiences.join(', ')"></dd>
                                     </div>
                                 </template>
                                 <hr class="border-primary-200">
                                 <div class="flex justify-between text-lg">
-                                    <dt class="font-semibold text-primary-900">Acconto da pagare:</dt>
+                                    <dt class="font-semibold text-primary-900">{% translate "Acconto da pagare:" %}</dt>
                                     <dd class="font-bold text-tertiary-500" x-text="'€' + depositAmount"></dd>
                                 </div>
                             </dl>
@@ -332,7 +334,7 @@
                              hx-include="[name='unit'], [name='check_in'], [name='check_out'], [name='num_guests']"
                              class="bg-primary-50 rounded-lg p-6 mb-8">
                             <div class="text-center text-primary-500 py-8">
-                                Caricamento del dettaglio prezzo...
+                                {% translate "Caricamento del dettaglio prezzo..." %}
                             </div>
                         </div>
 
@@ -343,8 +345,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Pagherai l'acconto del <strong>30%</strong> ora. Il saldo sarà dovuto al check-in.
-                                Pagamento sicuro con Stripe.
+                                {% blocktranslate %}Pagherai l'acconto del <strong>30%</strong> ora. Il saldo sarà dovuto al check-in.
+                                Pagamento sicuro con Stripe.{% endblocktranslate %}
                             </p>
                         </div>
                         
@@ -367,7 +369,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
-                        Indietro
+                        {% translate "Indietro" %}
                     </button>
                     <div x-show="currentStep === firstStep"></div>
                     
@@ -376,7 +378,7 @@
                             :disabled="!canProceed()"
                             :class="canProceed() ? 'btn-primary' : 'bg-primary-300 text-white cursor-not-allowed px-6 py-3 rounded-sm'"
                             class="ml-auto">
-                        Continua
+                        {% translate "Continua" %}
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
@@ -387,7 +389,7 @@
                             :disabled="isSubmitting"
                             class="btn-primary ml-auto">
                         <span x-show="!isSubmitting">
-                            Procedi al Pagamento
+                            {% translate "Procedi al Pagamento" %}
                             <svg class="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -398,7 +400,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            Elaborazione...
+                            {% translate "Elaborazione..." %}
                         </span>
                     </button>
                 </div>
@@ -412,7 +414,7 @@ function bookingWizard() {
     return {
         // Con una sola sistemazione prenotabile il primo passo non esiste:
         // gli step partono dalle date e la numerazione mostrata parte da lì.
-        steps: {% if multiple_units %}['Sistemazione', 'Date', 'Dati', 'Pagamento']{% else %}['Date', 'Dati', 'Pagamento']{% endif %},
+        steps: {% if multiple_units %}["{% translate 'Sistemazione' %}", "{% translate 'Date' %}", "{% translate 'Dati' %}", "{% translate 'Pagamento' %}"]{% else %}["{% translate 'Date' %}", "{% translate 'Dati' %}", "{% translate 'Pagamento' %}"]{% endif %},
         firstStep: {% if multiple_units %}1{% else %}2{% endif %},
         currentStep: {% if multiple_units %}1{% else %}2{% endif %},
         
@@ -445,6 +447,10 @@ function bookingWizard() {
         termsAccepted: false,
         privacyAccepted: false,
         
+        // Etichette tradotte usate dal markup Alpine
+        guestLabelSingular: "{% translate 'ospite' %}",
+        guestLabelPlural: "{% translate 'ospiti' %}",
+
         // State
         isSubmitting: false,
         calendarLoaded: false,
@@ -567,7 +573,7 @@ function bookingWizard() {
         formatDate(dateStr) {
             if (!dateStr) return '';
             const date = new Date(dateStr);
-            return date.toLocaleDateString('it-IT', { 
+            return date.toLocaleDateString('{{ LANGUAGE_CODE }}', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
@@ -576,6 +582,10 @@ function bookingWizard() {
         },
         
         async submitBooking() {
+            {% translate "Si è verificato un errore. Riprova." as generic_error %}
+            {% translate "Errore di connessione. Verifica la tua connessione e riprova." as connection_error %}
+            const genericError = '{{ generic_error|escapejs }}';
+            const connectionError = '{{ connection_error|escapejs }}';
             this.isSubmitting = true;
             
             const form = document.getElementById('guest-form');
@@ -621,11 +631,11 @@ function bookingWizard() {
                     // Redirect to payment checkout
                     window.location.href = result.payment_url;
                 } else {
-                    this.showError(result.error || 'Si è verificato un errore. Riprova.');
+                    this.showError(result.error || genericError);
                 }
             } catch (error) {
                 console.error('Booking error:', error);
-                this.showError('Errore di connessione. Verifica la tua connessione e riprova.');
+                this.showError(connectionError);
             }
             
             this.isSubmitting = false;

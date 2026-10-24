@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language, gettext_lazy as _
 from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserProfileForm
 from .forms_phone import PhoneOnlyForm
@@ -63,9 +63,16 @@ class PhoneRequiredMiddleware(MiddlewareMixin):
         if request.user.is_staff:
             return None
         
-        # Skip exempt URLs
+        # Skip exempt URLs. Il confronto va fatto sul path senza il prefisso
+        # di lingua (/en/account/... -> /account/...), altrimenti sulle pagine
+        # tradotte le URL esenti non vengono riconosciute e si entra in un
+        # ciclo di redirect.
+        path = request.path
+        language_prefix = f'/{get_language() or ""}/'
+        if path.startswith(language_prefix):
+            path = path[len(language_prefix) - 1:]
         for url in self.EXEMPT_URLS:
-            if request.path.startswith(url):
+            if path.startswith(url):
                 return None
         
         return redirect('accounts:phone_required')

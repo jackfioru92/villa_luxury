@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Prenotazioni - Dashboard - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Prenotazioni" %} - {% translate "Dashboard" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -11,10 +11,10 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>
                 <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
-                    Prenotazioni
+                    {% translate "Prenotazioni" %}
                 </h1>
                 <p class="text-primary-600 mt-2">
-                    Gestisci tutte le prenotazioni
+                    {% translate "Gestisci tutte le prenotazioni" %}
                 </p>
             </div>
             <div class="mt-4 md:mt-0 flex items-center space-x-4">
@@ -24,7 +24,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    Esporta CSV
+                    {% translate "Esporta CSV" %}
                 </a>
             </div>
         </div>
@@ -43,19 +43,19 @@
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <form method="get" class="grid md:grid-cols-4 gap-4">
                         <div>
-                            <label class="form-label text-sm">Stato</label>
+                            <label class="form-label text-sm">{% translate "Stato" %}</label>
                             <select name="status" class="form-input text-sm">
-                                <option value="">Tutti</option>
-                                <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>In attesa</option>
-                                <option value="confirmed" {% if request.GET.status == 'confirmed' %}selected{% endif %}>Confermata</option>
-                                <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>Completata</option>
-                                <option value="cancelled" {% if request.GET.status == 'cancelled' %}selected{% endif %}>Cancellata</option>
+                                <option value="">{% translate "Tutti" %}</option>
+                                <option value="pending" {% if request.GET.status == 'pending' %}selected{% endif %}>{% translate "In attesa" %}</option>
+                                <option value="confirmed" {% if request.GET.status == 'confirmed' %}selected{% endif %}>{% translate "Confermata" %}</option>
+                                <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>{% translate "Completata" %}</option>
+                                <option value="cancelled" {% if request.GET.status == 'cancelled' %}selected{% endif %}>{% translate "Cancellata" %}</option>
                             </select>
                         </div>
                         <div>
-                            <label class="form-label text-sm">Unità</label>
+                            <label class="form-label text-sm">{% translate "Unità" %}</label>
                             <select name="unit" class="form-input text-sm">
-                                <option value="">Tutte</option>
+                                <option value="">{% translate "Tutte" %}</option>
                                 {% for unit in units %}
                                 <option value="{{ unit.id }}" {% if request.GET.unit == unit.id|stringformat:"s" %}selected{% endif %}>
                                     {{ unit.name }}
@@ -64,13 +64,13 @@
                             </select>
                         </div>
                         <div>
-                            <label class="form-label text-sm">Dal</label>
+                            <label class="form-label text-sm">{% translate "Dal" %}</label>
                             <input type="date" name="from_date" value="{{ request.GET.from_date }}" 
                                    class="form-input text-sm">
                         </div>
                         <div class="flex items-end">
                             <button type="submit" class="btn-primary text-sm w-full">
-                                Filtra
+                                {% translate "Filtra" %}
                             </button>
                         </div>
                     </form>
@@ -83,22 +83,22 @@
                             <thead class="bg-primary-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
-                                        Prenotazione
+                                        {% translate "Prenotazione" %}
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
-                                        Ospite
+                                        {% translate "Ospite" %}
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
-                                        Date
+                                        {% translate "Date" %}
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
-                                        Stato
+                                        {% translate "Stato" %}
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">
-                                        Totale
+                                        {% translate "Totale" %}
                                     </th>
                                     <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">
-                                        Azioni
+                                        {% translate "Azioni" %}
                                     </th>
                                 </tr>
                             </thead>
@@ -126,7 +126,7 @@
                                             {{ booking.check_in|date:"d M" }} - {{ booking.check_out|date:"d M Y" }}
                                         </div>
                                         <div class="text-xs text-primary-500">
-                                            {{ booking.nights }} notti • {{ booking.num_guests }} ospiti
+                                            {% blocktranslate with nights=booking.nights guests=booking.num_guests %}{{ nights }} notti • {{ guests }} ospiti{% endblocktranslate %}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
@@ -145,14 +145,14 @@
                                         </div>
                                         {% if booking.deposit_paid %}
                                         <div class="text-xs text-green-600">
-                                            Acconto: €{{ booking.deposit_amount|floatformat:0 }}
+                                            {% blocktranslate with deposit=booking.deposit_amount|floatformat:0 %}Acconto: €{{ deposit }}{% endblocktranslate %}
                                         </div>
                                         {% endif %}
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <a href="{% url 'dashboard:booking_detail' booking.id %}" 
                                            class="text-tertiary-500 hover:underline text-sm">
-                                            Dettagli →
+                                            {% translate "Dettagli →" %}
                                         </a>
                                     </td>
                                 </tr>
@@ -163,7 +163,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                         </svg>
-                                        <p class="text-primary-500">Nessuna prenotazione trovata</p>
+                                        <p class="text-primary-500">{% translate "Nessuna prenotazione trovata" %}</p>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -175,7 +175,7 @@
                     {% if is_paginated %}
                     <div class="px-6 py-4 border-t border-primary-100 flex items-center justify-between">
                         <p class="text-sm text-primary-500">
-                            Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} di {{ page_obj.paginator.count }}
+                            {% blocktranslate with start=page_obj.start_index end=page_obj.end_index total=page_obj.paginator.count %}Mostrando {{ start }}-{{ end }} di {{ total }}{% endblocktranslate %}
                         </p>
                         <div class="flex items-center space-x-2">
                             {% if page_obj.has_previous %}

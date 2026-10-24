@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Blocca Date - Dashboard - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Blocca Date" %} - {% translate "Dashboard" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16">
@@ -10,10 +10,10 @@
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-3xl lg:text-4xl font-serif font-semibold text-primary-900">
-                Blocca Date
+                {% translate "Blocca Date" %}
             </h1>
             <p class="text-primary-600 mt-2">
-                Rendi non disponibili date specifiche per manutenzione o uso personale
+                {% translate "Rendi non disponibili date specifiche per manutenzione o uso personale" %}
             </p>
         </div>
         
@@ -29,36 +29,36 @@
                 
                 <!-- Add Block Form -->
                 <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-xl font-semibold text-primary-900 mb-6">Blocca Nuove Date</h2>
+                    <h2 class="text-xl font-semibold text-primary-900 mb-6">{% translate "Blocca Nuove Date" %}</h2>
                     
                     <form method="post" class="space-y-6">
                         {% csrf_token %}
                         
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label class="form-label">Unità</label>
+                                <label class="form-label">{% translate "Unità" %}</label>
                                 <select name="unit" required class="form-input">
-                                    <option value="">Seleziona unità...</option>
+                                    <option value="">{% translate "Seleziona unità..." %}</option>
                                     {% for unit in units %}
                                     <option value="{{ unit.id }}">{{ unit.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div>
-                                <label class="form-label">Motivo</label>
+                                <label class="form-label">{% translate "Motivo" %}</label>
                                 <input type="text" name="reason" 
                                        class="form-input" 
-                                       placeholder="Es: Manutenzione, Uso personale...">
+                                       placeholder="{% translate "Es: Manutenzione, Uso personale..." %}">
                             </div>
                         </div>
                         
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label class="form-label">Data Inizio</label>
+                                <label class="form-label">{% translate "Data Inizio" %}</label>
                                 <input type="date" name="start_date" required class="form-input">
                             </div>
                             <div>
-                                <label class="form-label">Data Fine</label>
+                                <label class="form-label">{% translate "Data Fine" %}</label>
                                 <input type="date" name="end_date" required class="form-input">
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                                 <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
-                                Blocca Date
+                                {% translate "Blocca Date" %}
                             </button>
                         </div>
                     </form>
@@ -77,18 +77,18 @@
                 <!-- Existing Blocks -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-primary-100">
-                        <h2 class="font-semibold text-primary-900">Date Bloccate</h2>
+                        <h2 class="font-semibold text-primary-900">{% translate "Date Bloccate" %}</h2>
                     </div>
                     
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <thead class="bg-primary-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Unità</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Data Inizio</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Data Fine</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">Motivo</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">Azioni</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Unità" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Data Inizio" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Data Fine" %}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-primary-500 uppercase">{% translate "Motivo" %}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-primary-500 uppercase">{% translate "Azioni" %}</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-villa-100">
@@ -110,9 +110,9 @@
                                         <form method="post" action="{% url 'dashboard:delete_block' block.id %}" class="inline">
                                             {% csrf_token %}
                                             <button type="submit" 
-                                                    onclick="return confirm('Sei sicuro di voler rimuovere questo blocco?')"
+                                                    onclick="return confirm('{% translate "Sei sicuro di voler rimuovere questo blocco?" %}')"
                                                     class="text-red-500 hover:underline text-sm">
-                                                Rimuovi
+                                                {% translate "Rimuovi" %}
                                             </button>
                                         </form>
                                     </td>
@@ -120,7 +120,7 @@
                                 {% empty %}
                                 <tr>
                                     <td colspan="5" class="px-6 py-12 text-center text-primary-500">
-                                        Nessuna data bloccata
+                                        {% translate "Nessuna data bloccata" %}
                                     </td>
                                 </tr>
                                 {% endfor %}

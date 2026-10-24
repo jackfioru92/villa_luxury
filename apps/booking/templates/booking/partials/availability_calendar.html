@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- Availability Calendar Partial - HTMX -->
 <div class="bg-white rounded-lg border border-primary-200 overflow-hidden">
     <div class="p-4 bg-primary-50 border-b border-primary-200 flex items-center justify-between">
@@ -59,28 +60,28 @@
     <div class="px-4 pb-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs">
         <div class="flex items-center space-x-1">
             <span class="w-3 h-3 rounded bg-tertiary-500"></span>
-            <span class="text-primary-500">Selezionato</span>
+            <span class="text-primary-500">{% translate "Selezionato" %}</span>
         </div>
         <div class="flex items-center space-x-1">
             <span class="w-3 h-3 rounded ring-2 ring-tertiary-400"></span>
-            <span class="text-primary-500">Oggi</span>
+            <span class="text-primary-500">{% translate "Oggi" %}</span>
         </div>
         <div class="flex items-center space-x-1">
             <span class="w-3 h-3 rounded bg-primary-200"></span>
-            <span class="text-primary-500">Prenotato</span>
+            <span class="text-primary-500">{% translate "Prenotato" %}</span>
         </div>
         <div class="flex items-center space-x-1">
             <span class="w-3 h-3 rounded bg-red-100"></span>
-            <span class="text-primary-500">Non disponibile</span>
+            <span class="text-primary-500">{% translate "Non disponibile" %}</span>
         </div>
     </div>
     <!-- Instruction -->
     <div class="px-4 pb-4 text-center">
         <p class="text-xs text-primary-400" x-show="!checkIn">
-            Clicca su un giorno per selezionare il check-in
+            {% translate "Clicca su un giorno per selezionare il check-in" %}
         </p>
         <p class="text-xs text-primary-400" x-show="checkIn && !checkOut">
-            Ora seleziona la data di check-out
+            {% translate "Ora seleziona la data di check-out" %}
         </p>
     </div>
 </div>

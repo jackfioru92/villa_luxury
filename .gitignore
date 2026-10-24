@@ -49,6 +49,9 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+# I cataloghi compilati vanno invece versionati: sul server non c'e' gettext,
+# quindi compilemessages non si puo' eseguire in fase di deploy.
+!locale/*/LC_MESSAGES/*.mo
 
 # Django stuff:
 *.log

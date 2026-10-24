@@ -60,7 +60,7 @@ class SiteSettings(models.Model):
     @classmethod
     def get_settings(cls):
         """Get or create the singleton instance."""
-        obj, _ = cls.objects.get_or_create(pk=1)
+        obj, _created = cls.objects.get_or_create(pk=1)
         return obj
 
     def __str__(self):

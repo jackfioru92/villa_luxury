@@ -124,6 +124,17 @@ class Booking(UUIDModel, TimeStampedModel):
         help_text=_('Selezionate dall\'ospite durante la prenotazione, separate da virgola')
     )
 
+    # Lingua usata dall'ospite durante la prenotazione: serve per inviare
+    # l'email di conferma nella sua lingua, visto che il webhook Stripe gira
+    # fuori dalla richiesta HTTP e non conosce la lingua attiva.
+    # Senza choices=settings.LANGUAGES: Django congelerebbe l'elenco nella
+    # migration, e aggiungere una lingua genererebbe una migration inutile.
+    language = models.CharField(
+        _('Lingua'),
+        max_length=10,
+        default='it',
+    )
+
     # Notes
     guest_notes = models.TextField(_('Note ospite'), blank=True)
     admin_notes = models.TextField(_('Note admin'), blank=True)

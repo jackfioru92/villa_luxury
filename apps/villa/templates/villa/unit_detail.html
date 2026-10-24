@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}{{ unit.name }} - {{ SITE_NAME }}{% endblock %}
 
@@ -14,9 +14,9 @@
     </div>
     <div class="relative z-10 container mx-auto px-4 lg:px-8 pb-12">
         <nav class="text-white/70 text-sm mb-4">
-            <a href="{% url 'core:home' %}" class="hover:text-white">Home</a>
+            <a href="{% url 'core:home' %}" class="hover:text-white">{% translate "Home" %}</a>
             <span class="mx-2">/</span>
-            <a href="{% url 'villa:list' %}" class="hover:text-white">Villa</a>
+            <a href="{% url 'villa:list' %}" class="hover:text-white">{% translate "Villa" %}</a>
             <span class="mx-2">/</span>
             <span class="text-white">{{ unit.name }}</span>
         </nav>
@@ -40,28 +40,28 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
                         </svg>
-                        <span class="text-primary-700">{{ unit.max_guests }} ospiti max</span>
+                        <span class="text-primary-700">{% blocktranslate with guests=unit.max_guests %}{{ guests }} ospiti max{% endblocktranslate %}</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         <svg class="w-6 h-6 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
-                        <span class="text-primary-700">{{ unit.bedrooms }} {% if unit.unit_type == 'FULL' %}suite{% else %}camer{{ unit.bedrooms|pluralize:"a,e" }}{% endif %}</span>
+                        <span class="text-primary-700">{% if unit.unit_type == 'FULL' %}{% blocktranslate count counter=unit.bedrooms %}{{ counter }} suite{% plural %}{{ counter }} suite{% endblocktranslate %}{% else %}{% blocktranslate count counter=unit.bedrooms %}{{ counter }} camera{% plural %}{{ counter }} camere{% endblocktranslate %}{% endif %}</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         <svg class="w-6 h-6 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
                         </svg>
-                        <span class="text-primary-700">{{ unit.bathrooms }} bagn{{ unit.bathrooms|pluralize:"o,i" }}</span>
+                        <span class="text-primary-700">{% blocktranslate count counter=unit.bathrooms %}{{ counter }} bagno{% plural %}{{ counter }} bagni{% endblocktranslate %}</span>
                     </div>
                     <div class="flex items-center space-x-2">
                         <svg class="w-6 h-6 text-tertiary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M3 14h12a3 3 0 003-3V5H3v9zm0 0a4 4 0 004 4h4a4 4 0 004-4M18 7h1a2 2 0 110 4h-1M3 21h18"/>
                         </svg>
-                        <span class="text-primary-700">Colazione inclusa</span>
+                        <span class="text-primary-700">{% translate "Colazione inclusa" %}</span>
                     </div>
                 </div>
                 
@@ -73,7 +73,7 @@
                 <!-- Amenities -->
                 {% if unit.amenities.exists %}
                 <div class="mb-12">
-                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">Servizi e Comfort</h2>
+                    <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-6">{% translate "Servizi e Comfort" %}</h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {% for amenity in unit.amenities.all %}
                         <div class="flex items-center space-x-3 text-primary-700">
@@ -99,48 +99,48 @@
                     <div class="text-center mb-6">
                         <div class="text-2xl font-serif font-semibold text-primary-900">{{ unit.name }}</div>
                         <p class="text-sm text-primary-600 mt-2">
-                            Pernottamento con colazione inclusa.
+                            {% translate "Pernottamento con colazione inclusa." %}
                         </p>
                         <p class="text-xs text-primary-500 mt-2">
-                            Verifica le date per conoscere la tariffa del periodo.
+                            {% translate "Verifica le date per conoscere la tariffa del periodo." %}
                         </p>
                     </div>
 
                     {% if unit.min_nights > 1 %}
                     <p class="text-sm text-primary-500 text-center mb-4">
-                        Soggiorno minimo: {{ unit.min_nights }} notti
+                        {% blocktranslate count counter=unit.min_nights %}Soggiorno minimo: {{ counter }} notte{% plural %}Soggiorno minimo: {{ counter }} notti{% endblocktranslate %}
                     </p>
                     {% endif %}
 
                     <a href="{% url 'booking:wizard' %}?unit={{ unit.id }}" class="btn-primary w-full text-center mb-4">
-                        Verifica Disponibilità
+                        {% translate "Verifica Disponibilità" %}
                     </a>
 
                     <p class="text-xs text-primary-500 text-center">
-                        Prenota ora, paga l'acconto online
+                        {% translate "Prenota ora, paga l'acconto online" %}
                     </p>
                     {% else %}
                     <div class="text-center mb-6">
-                        <span class="text-sm text-primary-500">Questa suite fa parte di</span>
+                        <span class="text-sm text-primary-500">{% translate "Questa suite fa parte di" %}</span>
                         <div class="text-2xl font-serif font-bold text-primary-900 mt-1">Altèsia</div>
                         <p class="text-sm text-primary-600 mt-3">
-                            La struttura si prenota per intero: tutte le suite, gli spazi comuni
-                            e il parco sono a disposizione dei vostri ospiti.
+                            {% blocktranslate %}La struttura si prenota per intero: tutte le suite, gli spazi comuni
+                            e il parco sono a disposizione dei vostri ospiti.{% endblocktranslate %}
                         </p>
                     </div>
 
                     {% if whole_villa %}
                     <a href="{% url 'booking:wizard' %}?unit={{ whole_villa.id }}" class="btn-primary w-full text-center mb-4">
-                        Verifica Disponibilità
+                        {% translate "Verifica Disponibilità" %}
                     </a>
                     {% else %}
                     <a href="{% url 'booking:wizard' %}" class="btn-primary w-full text-center mb-4">
-                        Verifica Disponibilità
+                        {% translate "Verifica Disponibilità" %}
                     </a>
                     {% endif %}
 
                     <p class="text-xs text-primary-500 text-center">
-                        Prenotazione dell'intera struttura, colazione inclusa
+                        {% translate "Prenotazione dell'intera struttura, colazione inclusa" %}
                     </p>
                     {% endif %}
                 </div>
@@ -153,7 +153,7 @@
 {% if gallery %}
 <section class="py-16 bg-primary-50">
     <div class="container mx-auto px-4 lg:px-8">
-        <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-8 text-center">Galleria</h2>
+        <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-8 text-center">{% translate "Galleria" %}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             {% for image in gallery %}
             <div class="aspect-square overflow-hidden rounded-lg">
@@ -171,7 +171,7 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4 lg:px-8">
         <h2 class="text-2xl font-serif font-semibold text-primary-900 mb-8 text-center">
-            Altre Sistemazioni
+            {% translate "Altre Sistemazioni" %}
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for other in other_units %}
@@ -186,9 +186,9 @@
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-primary-900">{{ other.name }}</h3>
                     {% if other.is_bookable %}
-                    <p class="text-primary-500 text-sm mt-2">Colazione inclusa</p>
+                    <p class="text-primary-500 text-sm mt-2">{% translate "Colazione inclusa" %}</p>
                     {% else %}
-                    <p class="text-primary-500 text-sm mt-2">Inclusa nell'intera struttura</p>
+                    <p class="text-primary-500 text-sm mt-2">{% translate "Inclusa nell'intera struttura" %}</p>
                     {% endif %}
                 </div>
             </a>

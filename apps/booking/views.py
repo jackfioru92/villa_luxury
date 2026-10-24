@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, View, DetailView
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
+from django.utils.dates import WEEKDAYS_ABBR
+from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 from datetime import date, datetime, timedelta
 import calendar as cal_module
@@ -73,11 +75,10 @@ class BookingSearchView(View):
 class HTMXAvailabilityCalendarView(View):
     """HTMX endpoint for availability calendar."""
 
-    WEEKDAYS = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
-    MONTH_NAMES = [
-        '', 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-        'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
-    ]
+    # Nomi di giorni e mesi: arrivano dai cataloghi di Django, che li
+    # traducono in tutte le lingue installate. WEEKDAYS_ABBR parte da lunedì
+    # (0 = lunedì), come la griglia del calendario.
+    WEEKDAYS = [WEEKDAYS_ABBR[i] for i in range(7)]
 
     def get(self, request):
         unit_id = request.GET.get('unit')
@@ -85,7 +86,7 @@ class HTMXAvailabilityCalendarView(View):
         month = int(request.GET.get('month', date.today().month))
 
         if not unit_id:
-            return HttpResponse('Unit required', status=400)
+            return HttpResponse('Unit required', status=400)  # solo diagnostica
 
         unit = get_object_or_404(BookableUnit, pk=unit_id, is_active=True, is_bookable=True)
         calendar_data = AvailabilityService.get_availability_calendar(unit, year, month)
@@ -163,12 +164,12 @@ class HTMXAvailabilityCalendarView(View):
 
         return render(request, 'booking/partials/availability_calendar.html', {
             'calendar_days': calendar_days,
-            'weekdays': self.WEEKDAYS,
+            'weekdays': [str(day).capitalize() for day in self.WEEKDAYS],
             'unit': unit,
             'unit_id': unit_id,
             'year': year,
             'month': month,
-            'month_name': self.MONTH_NAMES[month],
+            'month_name': date_format(date(year, month, 1), 'F').capitalize(),
             'prev_month': prev_month,
             'prev_year': prev_year,
             'next_month': next_month,
@@ -364,21 +365,21 @@ class BookingCreateAPIView(View):
         try:
             data = json_module.loads(request.body)
         except (json_module.JSONDecodeError, ValueError):
-            return JsonResponse({'error': 'Dati non validi.'}, status=400)
+            return JsonResponse({'error': _('Dati non validi.')}, status=400)
 
         # Validate required fields
         required_fields = ['unit', 'check_in', 'check_out', 'first_name', 'last_name', 'email', 'phone']
         missing = [f for f in required_fields if not data.get(f)]
         if missing:
             return JsonResponse(
-                {'error': f'Campi obbligatori mancanti: {", ".join(missing)}'},
+                {'error': _('Campi obbligatori mancanti: %(fields)s') % {'fields': ', '.join(missing)}},
                 status=400
             )
 
         # Validate terms acceptance
         if not data.get('terms_accepted') or not data.get('privacy_accepted'):
             return JsonResponse(
-                {'error': 'Devi accettare i Termini e la Privacy Policy.'},
+                {'error': _('Devi accettare i Termini e la Privacy Policy.')},
                 status=400
             )
 
@@ -387,14 +388,14 @@ class BookingCreateAPIView(View):
             check_in = datetime.strptime(data['check_in'], '%Y-%m-%d').date()
             check_out = datetime.strptime(data['check_out'], '%Y-%m-%d').date()
         except (ValueError, TypeError):
-            return JsonResponse({'error': 'Date non valide.'}, status=400)
+            return JsonResponse({'error': _('Date non valide.')}, status=400)
 
         # Validate dates
         if check_in >= check_out:
-            return JsonResponse({'error': 'Il check-out deve essere dopo il check-in.'}, status=400)
+            return JsonResponse({'error': _('Il check-out deve essere dopo il check-in.')}, status=400)
 
         if check_in <= date.today():
-            return JsonResponse({'error': 'Il check-in deve essere una data futura.'}, status=400)
+            return JsonResponse({'error': _('Il check-in deve essere una data futura.')}, status=400)
 
         num_guests = int(data.get('num_guests', 1))
 

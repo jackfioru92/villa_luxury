@@ -1,31 +1,32 @@
+{% load i18n %}
 <!-- Price Summary Partial - HTMX -->
 <div class="bg-primary-50 rounded-lg p-6">
     {% if price_data %}
-    <h3 class="font-semibold text-primary-900 mb-4">Riepilogo Prezzo</h3>
+    <h3 class="font-semibold text-primary-900 mb-4">{% translate "Riepilogo Prezzo" %}</h3>
     
     <dl class="space-y-2">
         <div class="flex justify-between text-sm">
-            <dt class="text-primary-600">{{ price_data.nights }} notti x €{{ price_data.price_per_night|floatformat:0 }}</dt>
+            <dt class="text-primary-600">{% blocktranslate with nights=price_data.nights price=price_data.price_per_night|floatformat:0 %}{{ nights }} notti x €{{ price }}{% endblocktranslate %}</dt>
             <dd class="font-medium text-primary-900">€{{ price_data.base_total|floatformat:0 }}</dd>
         </div>
         
         {% if price_data.cleaning_fee %}
         <div class="flex justify-between text-sm">
-            <dt class="text-primary-600">Pulizia finale</dt>
+            <dt class="text-primary-600">{% translate "Pulizia finale" %}</dt>
             <dd class="font-medium text-primary-900">€{{ price_data.cleaning_fee|floatformat:0 }}</dd>
         </div>
         {% endif %}
         
         {% if price_data.extra_guest_fee %}
         <div class="flex justify-between text-sm">
-            <dt class="text-primary-600">Ospiti extra ({{ price_data.extra_guests }})</dt>
+            <dt class="text-primary-600">{% blocktranslate with extra=price_data.extra_guests %}Ospiti extra ({{ extra }}){% endblocktranslate %}</dt>
             <dd class="font-medium text-primary-900">€{{ price_data.extra_guest_fee|floatformat:0 }}</dd>
         </div>
         {% endif %}
         
         {% if price_data.discount > 0 %}
         <div class="flex justify-between text-sm text-green-600">
-            <dt>Sconto {{ price_data.discount_type }}</dt>
+            <dt>{% blocktranslate with discount_type=price_data.discount_type %}Sconto {{ discount_type }}{% endblocktranslate %}</dt>
             <dd class="font-medium">-€{{ price_data.discount|floatformat:0 }}</dd>
         </div>
         {% endif %}
@@ -33,18 +34,18 @@
         <hr class="border-primary-200 my-2">
         
         <div class="flex justify-between text-lg">
-            <dt class="font-semibold text-primary-900">Totale</dt>
+            <dt class="font-semibold text-primary-900">{% translate "Totale" %}</dt>
             <dd class="font-bold text-primary-900">€{{ price_data.total|floatformat:0 }}</dd>
         </div>
     </dl>
     
     <div class="mt-4 pt-4 border-t border-primary-200">
         <div class="flex justify-between text-sm">
-            <dt class="text-primary-600">Acconto da versare (30%)</dt>
+            <dt class="text-primary-600">{% translate "Acconto da versare (30%)" %}</dt>
             <dd class="font-bold text-tertiary-500 text-lg">€{{ price_data.deposit|floatformat:0 }}</dd>
         </div>
         <p class="text-xs text-primary-500 mt-1">
-            Saldo di €{{ price_data.balance|floatformat:0 }} al check-in
+            {% blocktranslate with balance=price_data.balance|floatformat:0 %}Saldo di €{{ balance }} al check-in{% endblocktranslate %}
         </p>
     </div>
     
@@ -55,7 +56,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                       d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Le date selezionate non sono disponibili.
+            {% translate "Le date selezionate non sono disponibili." %}
         </p>
     </div>
     {% endif %}
@@ -70,7 +71,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
         </svg>
-        <p>Seleziona le date per vedere il prezzo</p>
+        <p>{% translate "Seleziona le date per vedere il prezzo" %}</p>
     </div>
     {% endif %}
 </div>

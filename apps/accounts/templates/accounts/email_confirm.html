@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Conferma Email - {{ SITE_NAME }}{% endblock %}
+{% block title %}{% translate "Conferma Email" %} - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-primary-50 pt-24 pb-16 flex items-center">
@@ -20,15 +20,15 @@
             </div>
 
             <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-primary-900 mb-4">
-                Email verificata!
+                {% translate "Email verificata!" %}
             </h1>
             <p class="text-primary-600 mb-8">
-                Il tuo indirizzo email <strong>{{ confirmation.email_address.email }}</strong> è stato verificato con successo.
-                Ora puoi accedere al tuo account.
+                {% blocktranslate with email=confirmation.email_address.email %}Il tuo indirizzo email <strong>{{ email }}</strong> è stato verificato con successo.
+                Ora puoi accedere al tuo account.{% endblocktranslate %}
             </p>
 
             <a href="{% url 'accounts:login' %}" class="btn-primary inline-block px-8">
-                Accedi
+                {% translate "Accedi" %}
             </a>
 
             {% else %}
@@ -43,19 +43,19 @@
             </div>
 
             <h1 class="text-2xl sm:text-3xl font-serif font-semibold text-primary-900 mb-4">
-                Link non valido
+                {% translate "Link non valido" %}
             </h1>
             <p class="text-primary-600 mb-8">
-                Questo link di verifica non è valido o è scaduto. 
-                Puoi richiedere un nuovo link di verifica.
+                {% blocktranslate %}Questo link di verifica non è valido o è scaduto.
+                Puoi richiedere un nuovo link di verifica.{% endblocktranslate %}
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{% url 'accounts:resend_verification' %}" class="btn-primary inline-block px-8">
-                    Rinvia email di verifica
+                    {% translate "Rinvia email di verifica" %}
                 </a>
                 <a href="{% url 'accounts:login' %}" class="text-tertiary-500 hover:underline font-medium self-center">
-                    Torna al login
+                    {% translate "Torna al login" %}
                 </a>
             </div>
             {% endif %}
